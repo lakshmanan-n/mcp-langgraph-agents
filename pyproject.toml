@@ -1,0 +1,19 @@
+[project]
+name = "mcp-langgraph-agents"
+version = "0.1.0"
+description = "Sample MCP server that orchestrates simple agents with LangGraph"
+authors = [{ name = "Example Author" }]
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "mcp>=0.1.2",
+  "langgraph>=0.2.0",
+  "pydantic>=2.8.0",
+]
+
+[project.scripts]
+mcp-langgraph-server = "mcp_langgraph_agents.server:run"
+
+[build-system]
+requires = ["setuptools>=68.0.0"]
+build-backend = "setuptools.build_meta"
