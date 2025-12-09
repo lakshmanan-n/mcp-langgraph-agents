@@ -1,9 +1,18 @@
 import os
 from groq import Groq
 
+# Load API key from environment
+API_KEY = os.getenv("GROQ_API_KEY")
+
+if not API_KEY:
+    raise ValueError(
+        "GROQ_API_KEY environment variable is not set. "
+        "Please export GROQ_API_KEY before running this script."
+    )
+
 # Initialize Groq client
-API_KEY = os.environ.get("GROQ_API_KEY")
 client = Groq(api_key=API_KEY)
+
 
 def process_document(message):
     document_text = message.get("document_text", "")
@@ -19,7 +28,7 @@ def process_document(message):
     {document_text}
     """
 
-    # Use chat.completions instead of completions
+    # Use chat.completions (correct Groq API)
     response = client.chat.completions.create(
         model="llama-3.3-70b-versatile",
         messages=[
