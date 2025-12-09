@@ -99,6 +99,31 @@ graph and returns the collected agent responses and the current todo list.
    above. Reuse a `thread_id` to keep conversation context and todo items
    between calls.
 
+### Docker commands to use from PyCharm
+
+If you prefer to build and run the container from PyCharm's built-in terminal,
+use these commands from the project root:
+
+```bash
+# Build the image
+docker build -t mcp-langgraph-agents .
+
+# Run the MCP server in the container over stdio
+docker run --rm -it mcp-langgraph-agents
+```
+
+For a **Docker** run configuration instead of Python:
+
+1. Add a new **Docker** configuration.
+2. Set **Image tag** to `mcp-langgraph-agents` (PyCharm can build it using the
+   Dockerfile in the project root).
+3. Set **Container name** to something like `mcp-langgraph-agents-dev` and add
+   `--rm -it` to **Run options** so stdio is interactive.
+4. Leave the command at the image's default (`mcp-langgraph-server`) or specify
+   `/usr/local/bin/mcp-langgraph-server` explicitly.
+5. Start the configuration and connect your MCP client to the container's
+   stdio stream.
+
 ### Tool contract
 
 The `agent_chat` tool accepts the following JSON payload:
