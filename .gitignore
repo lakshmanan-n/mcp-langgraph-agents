@@ -1,2 +1,26 @@
+# Python bytecode
 __pycache__/
-*.pyc
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+env/
+venv/
+
+# Env files
+.env
+
+# Docker
+*.log
+docker-compose.override.yml
+.dockerignore
+
+# PyCharm
+.idea/
+
+# MacOS system files
+.DS_Store
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
