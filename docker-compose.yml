@@ -1,0 +1,10 @@
+version: '3.9'
+
+services:
+  mcp_demo:
+    build: .
+    container_name: mcp_demo_container
+    command: python src/main.py
+    environment:
+      - GROQ_API_KEY=${GROQ_API_KEY}
+
