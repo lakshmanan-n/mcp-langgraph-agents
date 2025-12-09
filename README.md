@@ -62,10 +62,14 @@ graph and returns the collected agent responses and the current todo list.
    ```
 
 2. Run the MCP server over stdio inside the container. Attach with `-it` so your
-   MCP client can stream input/output through the terminal:
+   MCP client can stream input/output through the terminal. If your client or
+   downstream tools require API keys (for example, `GROQ_API_KEY` for Groq's
+   client), pass them through with `-e`:
 
    ```bash
-   docker run --rm -it mcp-langgraph-agents
+   docker run --rm -it \
+     -e GROQ_API_KEY="<your_api_key_if_needed>" \
+     mcp-langgraph-agents
    ```
 
    The entrypoint executes `mcp-langgraph-server`, so the container will behave
