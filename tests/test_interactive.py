@@ -4,8 +4,8 @@
 import sys
 import os
 
-# Add src to path for imports
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'src'))
+# Add src to path for imports (go up one directory from tests/)
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
 
 from mcp_langgraph_agents.graph import AgentState, build_agent_graph, compile_agent_graph
 
@@ -125,7 +125,7 @@ if __name__ == "__main__":
         
         print("\n" + "=" * 60)
         print("Usage:")
-        print("  python3 test_interactive.py -m 'Your message here'")
-        print("  python3 test_interactive.py -i  (interactive mode)")
+        print("  python3 tests/test_interactive.py -m 'Your message here'")
+        print("  python3 tests/test_interactive.py -i  (interactive mode)")
         print("=" * 60 + "\n")
 

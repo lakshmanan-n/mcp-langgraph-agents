@@ -21,7 +21,11 @@ The router in `graph.py` (lines 23-29) checks messages in this order:
 pip install -e .
 
 # Then run the test script
-python3 test_routing.py
+python3 tests/test_routing.py
+
+# Or run the interactive test
+python3 tests/test_interactive.py -m "Your message here"
+python3 tests/test_interactive.py -i  # Interactive mode
 ```
 
 This will show you:

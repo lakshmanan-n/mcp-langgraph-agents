@@ -4,8 +4,8 @@
 import sys
 import os
 
-# Add src to path for imports
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'src'))
+# Add src to path for imports (go up one directory from tests/)
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
 
 from mcp_langgraph_agents.graph import AgentState, build_agent_graph, compile_agent_graph
 
