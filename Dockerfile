@@ -5,6 +5,7 @@ WORKDIR /app
 # Copy project files
 COPY pyproject.toml README.md LICENSE ./
 COPY src/ ./src/
+COPY tests/ ./tests/
 
 # Install the package in editable mode
 RUN pip install --no-cache-dir -e .
