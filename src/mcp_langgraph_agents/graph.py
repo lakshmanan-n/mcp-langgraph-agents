@@ -5,7 +5,7 @@ from __future__ import annotations
 from typing import Literal, TypedDict
 
 from langgraph.checkpoint.memory import MemorySaver
-from langgraph.graph import END, StateGraph
+from langgraph.graph import END, START, StateGraph
 
 
 class AgentState(TypedDict):
@@ -20,7 +20,13 @@ def _append_agent_message(state: AgentState, content: str) -> AgentState:
     return {**state, "messages": updated_messages}
 
 
+def _router_node(state: AgentState) -> AgentState:
+    """Router node that passes state through without modification."""
+    return state
+
+
 def _route(state: AgentState) -> Literal["todo_agent", "analysis_agent", "echo_agent"]:
+    """Routing function that determines which agent to call next."""
     user_message = state["messages"][-1]["content"].lower()
     if "todo" in user_message:
         return "todo_agent"
@@ -64,7 +70,7 @@ def build_agent_graph() -> tuple[StateGraph[AgentState], MemorySaver]:
 
     graph = StateGraph(AgentState)
 
-    graph.add_node("router", _route)
+    graph.add_node("router", _router_node)
     graph.add_node("todo_agent", _todo_agent)
     graph.add_node("analysis_agent", _analysis_agent)
     graph.add_node("echo_agent", _echo_agent)

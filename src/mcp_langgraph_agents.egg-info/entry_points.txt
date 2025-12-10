@@ -1,0 +1,2 @@
+[console_scripts]
+mcp-langgraph-server = mcp_langgraph_agents.server:run

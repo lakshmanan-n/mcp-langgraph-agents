@@ -1,10 +1,13 @@
 version: '3.9'
 
 services:
-  mcp_demo:
+  mcp-langgraph-server:
     build: .
-    container_name: mcp_demo_container
-    command: python src/main.py
-    environment:
-      - GROQ_API_KEY=${GROQ_API_KEY}
+    container_name: mcp_langgraph_agents
+    stdin_open: true
+    tty: true
+    # Keep container running for stdio communication
+    command: mcp-langgraph-server
+    # For MCP stdio servers, you typically want to keep stdin/stdout open
+    # This allows MCP clients to communicate via stdio
 

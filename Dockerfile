@@ -1,8 +1,14 @@
 FROM python:3.11-slim
 
 WORKDIR /app
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
 
+# Copy project files
+COPY pyproject.toml README.md LICENSE ./
 COPY src/ ./src/
-CMD ["python", "src/main.py"]
+
+# Install the package in editable mode
+RUN pip install --no-cache-dir -e .
+
+# Run the MCP server via stdio
+CMD ["mcp-langgraph-server"]
+

@@ -1,2 +1,0 @@
-# add any dependencies later; for now, Python standard library is enough
-groq
