@@ -1,0 +1,23 @@
+Thanks a lot for the feedback and for raising both the Neo4j governance concern and the Stardog angle.
+
+On Neo4j: I agree that, used tactically, a flexible LPG can drift and become hard to govern after a few years. For this initiative though, the intent is to use Neo4j as a strategic, ontology-driven KG, not as an ad-hoc graph store. We’re planning to mitigate the “ungovernable in a couple of years” risk by:
+
+Ontology-first modelling – the policy / procedure / control model is defined in an enterprise ontology (FIBO/SBVR/BPMN-aligned), and we won’t allow arbitrary labels/relationships to be introduced outside that model.
+
+Git + PR–driven changes – all schema and relationship changes will be authored in Git, reviewed by SMEs/architecture, and applied to Neo4j via automated migrations (no direct model editing in prod).
+
+Constraints and validation – using Neo4j constraints and SHACL-style / custom validation checks to detect model violations and prevent uncontrolled schema growth.
+
+Enterprise edition – we would use the Enterprise build (not Community) to get HA, RBAC and operational support in line with other strategic platforms.
+
+I’d be very happy for you to speak to colleagues or previous clients using Neo4j – external experience on what has and hasn’t worked long-term would be useful input to refine the governance model rather than a blocker to using Neo4j.
+
+On Stardog: we’ve already had an initial session with them to understand their value around RDF/OWL reasoning, SHACL, and LLM/vector integration. They are clearly strong in the formal Semantic Web space. However, for this specific “codifying the bank” use case, most of our requirements are around ontology-aligned modelling, multi-hop traversal, lineage and KG-RAG/agent integration, which Neo4j already covers well as an approved technology. The incremental benefit of full OWL-level reasoning doesn’t currently justify the additional licensing cost, onboarding effort and new infra pattern for a second strategic graph engine, especially given others are indeed catching up in this space.
+
+My proposal is:
+
+We proceed with Neo4j as the strategic KG platform for this initiative, with the governance model above to address schema drift.
+
+We keep Stardog on the radar for future, more reasoning-heavy scenarios or a targeted PoC if/when we find clear limits with Neo4j’s graph-based reasoning and there is appetite to introduce an RDF/OWL stack.
+
+I’ve reflected this positioning in the clear choice analysis, but happy to adjust if you’d like it framed differently.
