@@ -21,3 +21,75 @@ We proceed with Neo4j as the strategic KG platform for this initiative, with the
 We keep Stardog on the radar for future, more reasoning-heavy scenarios or a targeted PoC if/when we find clear limits with Neo4j’s graph-based reasoning and there is appetite to introduce an RDF/OWL stack.
 
 I’ve reflected this positioning in the clear choice analysis, but happy to adjust if you’d like it framed differently.
+
+
+MNPI Platform – Interim vs Strategic State Scope
+Purpose
+
+Provide transparency on capabilities delivered now (interim) versus capabilities deferred to the strategic target state, while demonstrating that the interim solution does not deviate from the approved direction.
+
+Interim State (Phase 1) – Scope Clarity
+✅ Included
+
+Dedicated MNPI Starburst instance as the secure query and virtualisation layer
+
+Direct connectivity to MNPI source systems (no intermediate MNPI storage)
+
+Federated access to non-MNPI Hadoop cluster for enrichment
+
+On-demand virtual CDAs only (no materialisation)
+
+In-transit encryption enforced by Starburst
+
+Application-layer MNPI entitlement with IRS/GIRS integration
+
+Column-level masking and policy enforcement via Ranger
+
+Small-scale, low-volume MNPI use case support
+
+Design aligned for seamless future expansion
+
+❌ Not Included
+
+Dedicated MNPI Hadoop or S3 processing/storage layer
+
+Physical or persistent MNPI data assets
+
+MNPI ingestion pipelines and landing zones
+
+Per-use-case encryption zones and KMS key lifecycle management
+
+Platform-level MNPI entitlement embedded within Starburst
+
+Enterprise-wide MNPI monitoring and breach analytics
+
+Full metadata lineage integration via DataHub
+
+Large-scale MNPI transformations or ML workloads
+
+Strategic Target State – Scope Clarity
+✅ Included
+
+Dedicated MNPI ingestion, processing, and storage layer (Hadoop / on-prem S3)
+
+Physical MNPI data assets with lifecycle management
+
+Per-use-case encryption zones and centralized KMS/HSM integration
+
+Platform-driven MNPI entitlement across ingestion, processing, and consumption
+
+End-to-end monitoring and breach detection across all layers
+
+Enterprise metadata classification and lineage via DataHub
+
+Scalable MNPI analytics, transformations, and future AI/ML workloads
+
+Full regulatory-grade governance and auditability
+
+❌ Not Included
+
+Direct MNPI source-to-consumer access without platform governance
+
+Ad-hoc entitlement handling at application level only
+
+Tactical, use-case-specific shortcuts used in interim phase
