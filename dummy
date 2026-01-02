@@ -180,3 +180,27 @@ a one-slide executive summary of the above (bullet “why Neo4j” + “when Sta
 
 a risk + mitigation appendix (schema drift, approval constraints, federation questions, and how you address them with CI DP + governance).
 
+
+3.5 NebulaGraph
+
+Distributed labelled property graph database designed for high-scale graph storage and traversal.
+
+Strong for large graphs and high-concurrency multi-hop queries (scale-out architecture).
+
+Uses nGQL (with partial openCypher-style patterns), but has a smaller ecosystem than Neo4j for enterprise KG tooling.
+
+Less semantic/ontology tooling out of the box (ontology validation and rule checks typically implemented via application/validation services).
+
+Best suited when scale and throughput are the dominant drivers, rather than formal semantic governance.
+
+3.6 Stardog
+
+Semantic graph platform based on RDF triples with OWL reasoning and SHACL-style constraint validation.
+
+Strong for ontology-first governance, standards alignment (e.g., semantic modelling patterns), and formal rule/consistency validation.
+
+Supports virtual graph / federation patterns (query data in place via mappings when needed).
+
+Uses SPARQL and Semantic Web concepts, which may require specialist skills and onboarding compared to property-graph/Cypher stacks.
+
+Best suited when formal semantics (OWL/SHACL) and/or federation are hard requirements for the KG at runtime.
