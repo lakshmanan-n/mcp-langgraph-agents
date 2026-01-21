@@ -204,3 +204,27 @@ Supports virtual graph / federation patterns (query data in place via mappings w
 Uses SPARQL and Semantic Web concepts, which may require specialist skills and onboarding compared to property-graph/Cypher stacks.
 
 Best suited when formal semantics (OWL/SHACL) and/or federation are hard requirements for the KG at runtime.
+
+
+
+Description (ServiceNow Request)
+
+I am working in the role of Architect, responsible for architecture design, technology evaluation, and tool selection for emerging AI and data platforms.
+
+As part of this responsibility, I am currently delivering a Proof of Concept (PoC) to validate architecture patterns and tooling choices for Agentic AI using Knowledge Graphs and Retrieval-Augmented Generation (RAG). The PoC outcomes are used directly in Design Authority and architecture governance decisions.
+
+This work requires intensive local development and benchmarking, including:
+	•	Running multiple Docker services in parallel (Knowledge Graph databases, vector stores, APIs)
+	•	Building and loading Knowledge Graphs
+	•	Generating vector embeddings
+	•	Executing multi-hop graph traversal and validation queries
+	•	Comparing tool behaviour and performance to support evidence-based technology selection
+
+The current Windows laptop is not suitable for this level of architecture PoC work due to:
+	•	High memory and CPU pressure when running graph and AI workloads
+	•	Slower Docker and filesystem performance
+	•	Frequent UI slowdowns and long execution times during ingestion, graph loading, and benchmarking
+
+These constraints significantly slow down iteration cycles and increase the risk of incomplete or inaccurate architecture evaluation.
+
+I am requesting an upgrade to a MacBook (Apple Silicon preferred) to support efficient local execution of AI, Knowledge Graph, and Agentic workflows, enabling faster iteration, reliable benchmarking, and higher-quality architecture decisions.
