@@ -228,3 +228,16 @@ The current Windows laptop is not suitable for this level of architecture PoC wo
 These constraints significantly slow down iteration cycles and increase the risk of incomplete or inaccurate architecture evaluation.
 
 I am requesting an upgrade to a MacBook (Apple Silicon preferred) to support efficient local execution of AI, Knowledge Graph, and Agentic workflows, enabling faster iteration, reliable benchmarking, and higher-quality architecture decisions.
+
+
+
+If the requested MacBook upgrade is not approved, there will be a direct impact on the delivery, quality, and reliability of the current and future architecture Proof of Concept (PoC) work.
+
+The existing Windows laptop struggles with the memory- and compute-intensive workloads required for Agentic AI, Knowledge Graph, and RAG architecture evaluation. As a result:
+	•	PoC delivery timelines will be extended due to slow local execution, frequent UI freezes, and long iteration cycles.
+	•	Architecture and tool selection decisions may be based on incomplete or constrained testing, as some graph and AI workloads cannot be realistically exercised on the current device.
+	•	Benchmarking and comparison results may be skewed, making it harder to provide evidence-based recommendations to Design Authority.
+	•	Increased reliance on workarounds or reduced-scope testing, which introduces risk into strategic technology decisions.
+	•	Reduced productivity during critical design and validation phases, impacting overall delivery efficiency.
+
+Given that the PoC outcomes directly inform Design Authority decisions and future platform direction, continuing without adequate local development capability increases the risk of sub-optimal or incorrect architecture choices, which could have downstream cost and delivery implications.
