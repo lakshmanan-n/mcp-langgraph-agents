@@ -1,0 +1,652 @@
+{
+  "ontology_version": "0.2",
+  "graph_model": "property-graph",
+  "design_goals": [
+    "DB-agnostic ontology for Neo4j/FalkorDB/NebulaGraph",
+    "Supports KG-RAG with evidence traceability to source documents/chunks",
+    "Supports temporal modelling of index constituents/weights and time-series observations",
+    "Supports rule-driven reasoning from methodology documents",
+    "Supports clear-choice feature test queries"
+  ],
+  "node_labels": {
+    "Fund": [
+      "fund_id",
+      "fund_name",
+      "umbrella_fund",
+      "domicile",
+      "base_currency",
+      "ucits_compliant",
+      "replication_method",
+      "investment_objective",
+      "benchmark_index_name"
+    ],
+    "ShareClass": [
+      "shareclass_id",
+      "isin",
+      "sedol",
+      "ticker",
+      "distribution_policy",
+      "dividend_schedule",
+      "share_currency",
+      "ongoing_charge_pct",
+      "nav_per_share",
+      "shares_in_issue",
+      "fund_size",
+      "risk_category",
+      "uk_reporting_status"
+    ],
+    "Index": [
+      "index_id",
+      "index_name",
+      "index_symbol",
+      "index_currency",
+      "index_type",
+      "description"
+    ],
+    "Company": [
+      "company_id",
+      "company_name",
+      "country",
+      "industry_classification_scheme",
+      "is_financial_company",
+      "cik"
+    ],
+    "Security": [
+      "security_id",
+      "ticker",
+      "security_type",
+      "primary_listing_exchange",
+      "free_float_pct",
+      "shares_outstanding",
+      "isin"
+    ],
+    "MethodologyDocument": [
+      "doc_id",
+      "title",
+      "publisher",
+      "effective_date",
+      "version",
+      "uri"
+    ],
+    "EligibilityRule": [
+      "rule_id",
+      "rule_type",
+      "rule_text",
+      "threshold_value",
+      "threshold_unit"
+    ],
+    "WeightingRule": [
+      "rule_id",
+      "rule_text",
+      "threshold_pct",
+      "cap_single_company_pct",
+      "cap_aggregate_over_threshold_pct"
+    ],
+    "RuleParameter": [
+      "param_id",
+      "name",
+      "value",
+      "unit"
+    ],
+    "RebalanceEvent": [
+      "event_id",
+      "event_type",
+      "reference_date",
+      "announcement_date",
+      "effective_date",
+      "notes"
+    ],
+    "ReconstitutionEvent": [
+      "event_id",
+      "event_type",
+      "reference_date",
+      "announcement_date",
+      "effective_date",
+      "notes"
+    ],
+    "SpecialRebalanceEvent": [
+      "event_id",
+      "event_type",
+      "reference_date",
+      "announcement_date",
+      "effective_date",
+      "notes"
+    ],
+    "CorporateActionEvent": [
+      "event_id",
+      "action_type",
+      "ex_date",
+      "effective_date",
+      "notes"
+    ],
+    "ConstituentSnapshot": [
+      "snapshot_id",
+      "snapshot_date",
+      "snapshot_type",
+      "source",
+      "notes"
+    ],
+    "IndexConstituent": [
+      "membership_id",
+      "as_of_date",
+      "membership_status",
+      "weight_pct",
+      "rank_by_mcap",
+      "notes"
+    ],
+    "IndexLevelObservation": [
+      "obs_id",
+      "as_of_date",
+      "index_level",
+      "currency",
+      "source"
+    ],
+    "NavObservation": [
+      "obs_id",
+      "as_of_date",
+      "nav",
+      "adjusted_nav",
+      "outstanding_shares",
+      "mcap",
+      "currency",
+      "source"
+    ],
+    "MarketPriceObservation": [
+      "obs_id",
+      "as_of_datetime",
+      "last_sale_price",
+      "previous_close",
+      "net_change",
+      "pct_change",
+      "volume",
+      "exchange",
+      "source"
+    ],
+    "PricePoint": [
+      "point_id",
+      "epoch_ms",
+      "value",
+      "label_datetime"
+    ],
+    "DistributionEvent": [
+      "dist_id",
+      "ex_date",
+      "payment_date",
+      "amount_per_unit",
+      "currency",
+      "period_label",
+      "source"
+    ],
+    "ReportableIncomeRecord": [
+      "ri_id",
+      "reporting_period_end",
+      "hmrc_reference",
+      "excess_reportable_income_per_unit",
+      "distribution_date_taxable",
+      "is_reporting_fund",
+      "is_bond_fund",
+      "source"
+    ],
+    "SourceDocument": [
+      "doc_id",
+      "title",
+      "doc_type",
+      "publisher",
+      "effective_date",
+      "file_name",
+      "uri",
+      "hash_sha256"
+    ],
+    "SourceSection": [
+      "section_id",
+      "heading",
+      "page_from",
+      "page_to",
+      "order_index"
+    ],
+    "SourceChunk": [
+      "chunk_id",
+      "text_hash",
+      "chunk_index",
+      "page_no",
+      "embedding_id",
+      "vector_store",
+      "char_start",
+      "char_end"
+    ],
+    "MacroIndicator": [
+      "indicator_id",
+      "name",
+      "unit",
+      "description"
+    ],
+    "MacroObservation": [
+      "obs_id",
+      "as_of_date",
+      "value",
+      "unit",
+      "source"
+    ],
+    "FilingDocument": [
+      "doc_id",
+      "form_type",
+      "filing_date",
+      "period_end",
+      "cik",
+      "company_ticker",
+      "source_path",
+      "uri"
+    ],
+    "FilingSection": [
+      "section_id",
+      "section_name",
+      "item_code",
+      "order_index"
+    ],
+    "Topic": [
+      "topic_id",
+      "name",
+      "type"
+    ]
+  },
+  "relationship_types": [
+    {
+      "type": "HAS_SHARE_CLASS",
+      "from": "Fund",
+      "to": "ShareClass",
+      "properties": []
+    },
+    {
+      "type": "TRACKS",
+      "from": "ShareClass",
+      "to": "Index",
+      "properties": []
+    },
+    {
+      "type": "ISSUED_BY",
+      "from": "Fund",
+      "to": "Company",
+      "properties": []
+    },
+    {
+      "type": "HAS_METHODOLOGY",
+      "from": "Index",
+      "to": "MethodologyDocument",
+      "properties": []
+    },
+    {
+      "type": "DEFINES_ELIGIBILITY",
+      "from": "MethodologyDocument",
+      "to": "EligibilityRule",
+      "properties": []
+    },
+    {
+      "type": "DEFINES_WEIGHTING",
+      "from": "MethodologyDocument",
+      "to": "WeightingRule",
+      "properties": []
+    },
+    {
+      "type": "HAS_PARAMETER",
+      "from": "EligibilityRule",
+      "to": "RuleParameter",
+      "properties": []
+    },
+    {
+      "type": "HAS_PARAMETER",
+      "from": "WeightingRule",
+      "to": "RuleParameter",
+      "properties": []
+    },
+    {
+      "type": "CONSTRAINS",
+      "from": "EligibilityRule",
+      "to": "Index",
+      "properties": [
+        "applies_to"
+      ]
+    },
+    {
+      "type": "CONSTRAINS",
+      "from": "WeightingRule",
+      "to": "Index",
+      "properties": [
+        "applies_to"
+      ]
+    },
+    {
+      "type": "ISSUES",
+      "from": "Company",
+      "to": "Security",
+      "properties": []
+    },
+    {
+      "type": "HAS_SNAPSHOT",
+      "from": "Index",
+      "to": "ConstituentSnapshot",
+      "properties": []
+    },
+    {
+      "type": "INCLUDES",
+      "from": "ConstituentSnapshot",
+      "to": "IndexConstituent",
+      "properties": []
+    },
+    {
+      "type": "OF_SECURITY",
+      "from": "IndexConstituent",
+      "to": "Security",
+      "properties": []
+    },
+    {
+      "type": "OF_COMPANY",
+      "from": "IndexConstituent",
+      "to": "Company",
+      "properties": []
+    },
+    {
+      "type": "SCHEDULES_REBALANCE",
+      "from": "Index",
+      "to": "RebalanceEvent",
+      "properties": []
+    },
+    {
+      "type": "SCHEDULES_RECONSTITUTION",
+      "from": "Index",
+      "to": "ReconstitutionEvent",
+      "properties": []
+    },
+    {
+      "type": "TRIGGERS_SPECIAL_REBALANCE",
+      "from": "Index",
+      "to": "SpecialRebalanceEvent",
+      "properties": []
+    },
+    {
+      "type": "AFFECTS_SECURITY",
+      "from": "CorporateActionEvent",
+      "to": "Security",
+      "properties": []
+    },
+    {
+      "type": "HAS_LEVEL",
+      "from": "Index",
+      "to": "IndexLevelObservation",
+      "properties": []
+    },
+    {
+      "type": "HAS_NAV",
+      "from": "ShareClass",
+      "to": "NavObservation",
+      "properties": []
+    },
+    {
+      "type": "HAS_MARKET_PRICE",
+      "from": "Security",
+      "to": "MarketPriceObservation",
+      "properties": []
+    },
+    {
+      "type": "HAS_POINT",
+      "from": "MarketPriceObservation",
+      "to": "PricePoint",
+      "properties": []
+    },
+    {
+      "type": "PAID_DISTRIBUTION",
+      "from": "ShareClass",
+      "to": "DistributionEvent",
+      "properties": []
+    },
+    {
+      "type": "HAS_REPORTABLE_INCOME",
+      "from": "ShareClass",
+      "to": "ReportableIncomeRecord",
+      "properties": []
+    },
+    {
+      "type": "HAS_SECTION",
+      "from": "SourceDocument",
+      "to": "SourceSection",
+      "properties": []
+    },
+    {
+      "type": "HAS_CHUNK",
+      "from": "SourceSection",
+      "to": "SourceChunk",
+      "properties": []
+    },
+    {
+      "type": "SUPPORTED_BY",
+      "from": "Fund",
+      "to": "SourceChunk",
+      "properties": [
+        "confidence",
+        "rationale"
+      ]
+    },
+    {
+      "type": "SUPPORTED_BY",
+      "from": "ShareClass",
+      "to": "SourceChunk",
+      "properties": [
+        "confidence",
+        "rationale"
+      ]
+    },
+    {
+      "type": "SUPPORTED_BY",
+      "from": "Index",
+      "to": "SourceChunk",
+      "properties": [
+        "confidence",
+        "rationale"
+      ]
+    },
+    {
+      "type": "SUPPORTED_BY",
+      "from": "Company",
+      "to": "SourceChunk",
+      "properties": [
+        "confidence",
+        "rationale"
+      ]
+    },
+    {
+      "type": "SUPPORTED_BY",
+      "from": "Security",
+      "to": "SourceChunk",
+      "properties": [
+        "confidence",
+        "rationale"
+      ]
+    },
+    {
+      "type": "SUPPORTED_BY",
+      "from": "EligibilityRule",
+      "to": "SourceChunk",
+      "properties": [
+        "confidence",
+        "rationale"
+      ]
+    },
+    {
+      "type": "SUPPORTED_BY",
+      "from": "WeightingRule",
+      "to": "SourceChunk",
+      "properties": [
+        "confidence",
+        "rationale"
+      ]
+    },
+    {
+      "type": "SUPPORTED_BY",
+      "from": "DistributionEvent",
+      "to": "SourceChunk",
+      "properties": [
+        "confidence",
+        "rationale"
+      ]
+    },
+    {
+      "type": "SUPPORTED_BY",
+      "from": "ReportableIncomeRecord",
+      "to": "SourceChunk",
+      "properties": [
+        "confidence",
+        "rationale"
+      ]
+    },
+    {
+      "type": "SUPPORTED_BY",
+      "from": "IndexConstituent",
+      "to": "SourceChunk",
+      "properties": [
+        "confidence",
+        "rationale"
+      ]
+    },
+    {
+      "type": "SUPPORTED_BY",
+      "from": "MarketPriceObservation",
+      "to": "SourceChunk",
+      "properties": [
+        "confidence",
+        "rationale"
+      ]
+    },
+    {
+      "type": "SUPPORTED_BY",
+      "from": "NavObservation",
+      "to": "SourceChunk",
+      "properties": [
+        "confidence",
+        "rationale"
+      ]
+    },
+    {
+      "type": "SUPPORTED_BY",
+      "from": "IndexLevelObservation",
+      "to": "SourceChunk",
+      "properties": [
+        "confidence",
+        "rationale"
+      ]
+    },
+    {
+      "type": "OBSERVES",
+      "from": "MacroIndicator",
+      "to": "MacroObservation",
+      "properties": []
+    },
+    {
+      "type": "IMPACTS",
+      "from": "MacroObservation",
+      "to": "Index",
+      "properties": [
+        "direction",
+        "notes"
+      ]
+    },
+    {
+      "type": "IMPACTS",
+      "from": "MacroObservation",
+      "to": "ShareClass",
+      "properties": [
+        "direction",
+        "notes"
+      ]
+    },
+    {
+      "type": "FILED",
+      "from": "Company",
+      "to": "FilingDocument",
+      "properties": []
+    },
+    {
+      "type": "HAS_SECTION",
+      "from": "FilingDocument",
+      "to": "FilingSection",
+      "properties": []
+    },
+    {
+      "type": "MENTIONS_TOPIC",
+      "from": "FilingSection",
+      "to": "Topic",
+      "properties": [
+        "sentiment",
+        "confidence"
+      ]
+    },
+    {
+      "type": "SUPPORTED_BY",
+      "from": "FilingSection",
+      "to": "SourceChunk",
+      "properties": [
+        "confidence",
+        "rationale"
+      ]
+    }
+  ],
+  "identity_keys": {
+    "Fund": [
+      "fund_id"
+    ],
+    "ShareClass": [
+      "isin"
+    ],
+    "Index": [
+      "index_symbol"
+    ],
+    "Company": [
+      "cik",
+      "company_id"
+    ],
+    "Security": [
+      "ticker",
+      "security_id"
+    ],
+    "MethodologyDocument": [
+      "doc_id"
+    ],
+    "SourceDocument": [
+      "doc_id"
+    ],
+    "SourceChunk": [
+      "chunk_id"
+    ],
+    "ConstituentSnapshot": [
+      "snapshot_id"
+    ],
+    "IndexConstituent": [
+      "membership_id"
+    ],
+    "NavObservation": [
+      "obs_id"
+    ],
+    "IndexLevelObservation": [
+      "obs_id"
+    ],
+    "MarketPriceObservation": [
+      "obs_id"
+    ],
+    "PricePoint": [
+      "point_id"
+    ],
+    "DistributionEvent": [
+      "dist_id"
+    ],
+    "ReportableIncomeRecord": [
+      "ri_id"
+    ],
+    "FilingDocument": [
+      "doc_id"
+    ],
+    "FilingSection": [
+      "section_id"
+    ],
+    "Topic": [
+      "topic_id"
+    ]
+  }
+}
