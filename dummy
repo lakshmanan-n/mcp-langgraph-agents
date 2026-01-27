@@ -242,6 +242,55 @@ The existing Windows laptop struggles with the memory- and compute-intensive wor
 
 Given that the PoC outcomes directly inform Design Authority decisions and future platform direction, continuing without adequate local development capability increases the risk of sub-optimal or incorrect architecture choices, which could have downstream cost and delivery implications.
 
-
+docker compose exec api python scripts/eval/compare_rag_output.py --query "What is the latest NAV for each EQQQ share class in the KG (Dist + Acc + hedged classes if present), and for each NAV provide the exact evidence locator (doc_id, table_id, row, col). If any share class has missing locators, flag it explicitly." --backend neo4j
 
 This PoC was executed on a local Mac-based Docker environment using publicly available documents for indicative tooling assessment only; performance results are directional and not representative of production or bank-grade environments.
+
+docker compose exec api python scripts/eval/compare_rag_output.py --query "What is the latest NAV for each EQQQ share class in the KG (Dist + Acc + hedged classes if present), and for each NAV provide the exact evidence locator (doc_id, table_id, row, col). If any share class has missing locators, flag it explicitly." --backend neo4j
+
+================================================================================
+ANSWER (NEO4J)
+================================================================================
+Based on the provided context from Source 1 and Source 2, the latest NAV for each EQQQ share class in the KG is as follows:
+
+1. **Invesco EQQQ Nasdaq-100 UCITS ETF Acc**: NAV 440.01653 as of 2026-01-13.
+   Evidence locator: 075d683c7fa31f3b6ef5a088ef85c86a (Row:0 Col:invesco_eqqq_nasdaq-100_ucits_etf_acc_nav).
+
+2. **Invesco EQQQ Nasdaq-100 UCITS ETF CHF HDG Acc**: NAV 413.71595 as of 2026-01-13.
+   Evidence locator: 075d683c7fa31f3b6ef5a088ef85c86a (Row:0 Col:invesco_eqqq_nasdaq-100_ucits_etf_chf_hdg_acc_nav).
+
+3. **Invesco EQQQ Nasdaq-100 UCITS ETF Dist**: NAV 629.28287 as of 2026-01-13.
+   Evidence locator: 075d683c7fa31f3b6ef5a088ef85c86a (Row:0 Col:invesco_eqqq_nasdaq-100_ucits_etf_dist_nav).
+
+4. **Invesco EQQQ Nasdaq-100 UCITS ETF Dist Adjusted**: NAV 704.3159938339329 as of 2026-01-13.
+   Evidence locator: 075d683c7fa31f3b6ef5a088ef85c86a (Row:0 Col:invesco_eqqq_nasdaq-100_ucits_etf_dist_adjusted_nav).
+
+5. **Invesco EQQQ Nasdaq-100 UCITS ETF EUR HDG Acc**: NAV 448.77782 as of 2026-01-13.
+   Evidence locator: 075d683c7fa31f3b6ef5a088ef85c86a (Row:0 Col:invesco_eqqq_nasdaq-100_ucits_etf_eur_hdg_acc_nav).
+
+6. **Invesco EQQQ Nasdaq-100 UCITS ETF GBP HDG Acc**: NAV 490.1826 as of 2026-01-13.
+   Evidence locator: 075d683c7fa31f3b6ef5a088ef85c86a (Row:0 Col:invesco_eqqq_nasdaq-100_ucits_etf_gbp_hdg_acc_nav).
+
+All share classes have their evidence locators provided. No share class has missing locators. The information is consistent across Source 1 and Source 2.
+
+All share classes have their evidence locators provided. No share class has missing locators. The information is consistent across Source 1 and Source 2.
+================================================================================
+Metrics: Retrieval=41.61s | Gen=1.32s | Total=48.78s
+
+
+
+================================================================================
+ANSWER (FALKOR)
+================================================================================
+Based on the provided context from Source 1 and Source 2, the latest NAV for each EQQQ share class in the KG is as follows:
+
+1. **Invesco EQQQ Nasdaq-100 UCITS ETF GBP HDG Acc**: NAV 490.1826, Evidence Locator: (075d683c7fa31f3b6ef5a088ef85c86a, invesco_eqqq_nasdaq-100_ucits_etf_gbp_hdg_acc_nav, Row:0, Col:invesco_eqqq_nasdaq-100_ucits_etf_gbp_hdg_acc_nav)
+2. **Invesco EQQQ Nasdaq-100 UCITS ETF Acc**: NAV 440.01653, Evidence Locator: (075d683c7fa31f3b6ef5a088ef85c86a, invesco_eqqq_nasdaq-100_ucits_etf_acc_nav, Row:0, Col:invesco_eqqq_nasdaq-100_ucits_etf_acc_nav)
+3. **Invesco EQQQ Nasdaq-100 UCITS ETF Dist**: NAV 629.28287, Evidence Locator: (075d683c7fa31f3b6ef5a088ef85c86a, invesco_eqqq_nasdaq-100_ucits_etf_dist_nav, Row:0, Col:invesco_eqqq_nasdaq-100_ucits_etf_dist_nav)
+4. **Invesco EQQQ Nasdaq-100 UCITS ETF Dist Adjusted**: NAV 704.315993833933, Evidence Locator: (075d683c7fa31f3b6ef5a088ef85c86a, invesco_eqqq_nasdaq-100_ucits_etf_dist_adjusted_nav, Row:0, Col:invesco_eqqq_nasdaq-100_ucits_etf_dist_adjusted_nav)
+5. **Invesco EQQQ Nasdaq-100 UCITS ETF EUR HDG Acc**: NAV 448.77782, Evidence Locator: (075d683c7fa31f3b6ef5a088ef85c86a, invesco_eqqq_nasdaq-100_ucits_etf_eur_hdg_acc_nav, Row:0, Col:invesco_eqqq_nasdaq-100_ucits_etf_eur_hdg_acc_nav)
+6. **Invesco EQQQ Nasdaq-100 UCITS ETF CHF HDG Acc**: NAV 413.71595, Evidence Locator: (075d683c7fa31f3b6ef5a088ef85c86a, invesco_eqqq_nasdaq-100_ucits_etf_chf_hdg_acc_nav, Row:0, Col:invesco_eqqq_nasdaq-100_ucits_etf_chf_hdg_acc_nav)
+
+All share classes have complete evidence locators. The information is consistent across both Source 1 and Source 2.
+================================================================================
+Metrics: Retrieval=2.33s | Gen=1.26s | Total=5.08s
