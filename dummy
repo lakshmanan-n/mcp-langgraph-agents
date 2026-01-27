@@ -241,3 +241,7 @@ The existing Windows laptop struggles with the memory- and compute-intensive wor
 	•	Reduced productivity during critical design and validation phases, impacting overall delivery efficiency.
 
 Given that the PoC outcomes directly inform Design Authority decisions and future platform direction, continuing without adequate local development capability increases the risk of sub-optimal or incorrect architecture choices, which could have downstream cost and delivery implications.
+
+
+
+This PoC was executed on a local Mac-based Docker environment using publicly available documents for indicative tooling assessment only; performance results are directional and not representative of production or bank-grade environments.
