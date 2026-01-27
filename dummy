@@ -294,3 +294,36 @@ Based on the provided context from Source 1 and Source 2, the latest NAV for eac
 All share classes have complete evidence locators. The information is consistent across both Source 1 and Source 2.
 ================================================================================
 Metrics: Retrieval=2.33s | Gen=1.26s | Total=5.08s
+
+
+Mission Accomplished 🎯
+
+Here are the Comparative Evaluation Stats for your NAV Audit Query:
+
+1. Accuracy & Completeness (Tie)
+Both Neo4j and FalkorDB returned 100% identical and correct data:
+
+Share Classes Found: 6 (Acc, Dist, Dist Adjusted, GBP Hdg, EUR Hdg, CHF Hdg)
+NAV Values: identical (e.g., GBP Hdg 490.1826)
+Evidence Locators: 100% match (Correctly identified doc_id, row:0, and col for every share class).
+2. Performance (Winner: FalkorDB)
+FalkorDB was significantly faster for this complex multi-hop graph query.
+
+Neo4j Total Time: 5.92s (Retrieval: 0.63s, Generation: 1.56s)
+
+
+Graph hops required
+ShareClass → HAS_NAV → NavObservation → EVIDENCED_BY → Evidence → TOWARDS_DOCUMENT → SourceDocument
+
+Good output must include
+	•	One row per ShareClass
+	•	Latest as_of_date + NAV
+	•	Evidence locator fields: source_doc_id/source_table_id/source_row/source_col
+	•	A “Missing locator” list if any
+
+
+	=== COMPARISON SUMMARY ===
+Metric          | Neo4j           | FalkorDB
+--------------------------------------------------
+Total Time      | 5.92s           | 3.47s
+Chunks Used     | 2               | 2
