@@ -1,0 +1,150 @@
+Dimension	Neo4j	FalkorDB	Evidence / PoC Observation
+1. Scale Behaviour (TB KG, PB-linked Data)	Disk-first with memory caching. Degrades gracefully as KG grows; higher tolerance for unexpected growth.	Memory-first with disk persistence. Faster at scale but hits harder capacity ceilings as RAM pressure increases.	PoC stable on both; Neo4j offers more predictable long-term growth when KG expands.
+2. Cost Model (Indicative – 1 TB KG)	Requires Enterprise licence; higher commercial cost as scale increases.	Open-source (no licence); infra cost higher due to RAM but lower overall TCO at current scale.	FalkorDB cheaper at TB scale; Neo4j cost driven by licensing rather than infra.
+3. High Availability (HA)	Mature RAFT-based clustering; bank-proven operational model.	Redis-style replication; HA works but requires stricter operational discipline.	Neo4j HA required less tuning; FalkorDB HA validated but more engineering-led.
+4. Backup & Disaster Recovery (DR)	Native enterprise backup tooling; predictable restore and audit readiness.	Snapshot-based backup; DR achievable but relies on custom runbooks.	Neo4j aligns more naturally with regulated DR expectations.
+5. Vector & KG-RAG Capabilities	Native vector indexing (Enterprise); integrated vector + graph queries supported.	Native vector indexing supported; integrated vector + graph queries supported.	PoC showed identical KG-RAG accuracy and results; performance differences outweighed feature gaps.
+
+Evaluation Area
+Preferred Engine
+Scale predictability
+Neo4j
+Cost efficiency (current TB scale)
+FalkorDB
+High availability maturity
+Neo4j
+Backup & DR readiness
+Neo4j
+Vector & KG-RAG fit
+Equivalent (slight edge to FalkorDB on cost)
+
+
+Final Recommendation – Knowledge Graph Platform Selection
+
+Executive Recommendation
+
+Recommendation: Conditional GO with FalkorDB, with Neo4j retained as the low-risk fallback option.
+
+FalkorDB is recommended for the target-state Knowledge Graph and KG-RAG architecture, provided the identified non-functional risks (HA, DR, memory scaling, OSS governance) are explicitly accepted and mitigated. Neo4j remains the safer default for risk-averse adoption but does not materially outperform FalkorDB for the evaluated use cases.
+
+⸻
+
+Summary of Decision Drivers
+
+1. Functional Parity (Proven)
+
+Your PoC conclusively demonstrated that:
+	•	Neo4j and FalkorDB produce identical results for:
+	•	Temporal version-aware queries
+	•	Deep multi-hop lineage
+	•	Semantic reasoning
+	•	KG-RAG (accuracy, hallucination control, explainability)
+	•	No functional requirement failed in FalkorDB.
+	•	All discrepancies encountered were loader and schema discipline issues, not engine limitations.
+
+✅ Outcome: No functional blocker for FalkorDB.
+
+⸻
+
+2. Performance & User Experience (Material Differentiator)
+
+Across your executed benchmarks:
+	•	FalkorDB outperformed Neo4j in 5 of 6 query classes
+	•	Gains were most significant for:
+	•	Multi-hop traversal
+	•	Semantic reasoning
+	•	Metadata-heavy KG-RAG access
+	•	Neo4j only outperformed FalkorDB in materialised inference writes, which is:
+	•	Non-interactive
+	•	Batch-oriented
+	•	Not latency-sensitive
+
+✅ Outcome: FalkorDB is better aligned to real-time, user-facing KG-RAG workloads.
+
+⸻
+
+3. Architecture Alignment with Banking Use Case
+
+Your banking use case explicitly requires:
+	•	PB-scale transactional data to remain in the data lake
+	•	The Knowledge Graph to store:
+	•	Knowledge objects
+	•	Lineage
+	•	Relationships
+	•	Semantics
+	•	Evidence pointers (not raw facts)
+
+Under this model:
+	•	The KG grows to TB scale, not PB
+	•	Graph stores references, not transactions
+	•	Traversal speed and reasoning latency matter more than raw storage
+
+✅ Outcome: FalkorDB’s memory-first execution model is well-suited to this access pattern.
+
+⸻
+
+4. Cost vs Risk Trade-off (Key Decision Axis)
+
+Dimension
+Neo4j
+FalkorDB
+Licence
+High (Enterprise mandatory)
+None (OSS)
+Infra cost
+Moderate
+Higher (RAM-heavy)
+Cost predictability
+Lower (licence escalation)
+Medium (infra scaling)
+Operational maturity
+Higher
+Lower
+Engineering ownership
+Lower
+Higher
+Interpretation:
+	•	Neo4j shifts risk into commercial dependency
+	•	FalkorDB shifts risk into engineering discipline
+
+✅ Outcome: FalkorDB is economically favourable at current scale, with conscious ownership of operational risk.
+
+⸻
+
+5. Non-Functional Requirements (Known & Contained)
+
+Your PoC correctly identified that FalkorDB requires:
+	•	Explicit HA topology design
+	•	Snapshot-based backup discipline
+	•	Careful memory capacity planning
+	•	Legal review of SSPL licence (internal use is acceptable)
+
+Importantly:
+	•	None of these are unknown risks
+	•	All are designable, testable, and governable
+	•	None invalidate the functional findings
+
+⚠ Outcome: FalkorDB is acceptable with governance controls; Neo4j remains the conservative option.
+
+⸻
+
+Final Decision Statement (DA-Ready)
+
+Based on the completed PoC and evidence-based evaluation, FalkorDB and Neo4j demonstrate full functional parity for the target Knowledge Graph and KG-RAG use cases. FalkorDB delivers superior query performance and lower total cost at the evaluated scale, while Neo4j offers stronger operational maturity and out-of-the-box DR capabilities. Given the bank’s architecture pattern—where PB-scale data remains in the lake and the Knowledge Graph stores curated knowledge and lineage—FalkorDB is recommended as the preferred platform, subject to explicit non-functional risk acceptance and mitigation. Neo4j remains a viable fallback option should enterprise operational risk appetite dictate a more conservative choice.
+
+
+Practical Recommendation
+
+Choose FalkorDB if:
+	•	You prioritise performance, cost efficiency, and KG-RAG responsiveness
+	•	You accept engineering-led governance
+	•	You are comfortable owning HA/DR patterns
+	•	You want to avoid long-term vendor lock-in
+
+Choose Neo4j if:
+	•	You prioritise operational maturity over cost
+	•	You require enterprise-grade DR out of the box
+	•	You want minimal platform ownership risk
+	•	Licence cost is acceptable
+
+
