@@ -148,3 +148,10 @@ Choose Neo4j if:
 	•	Licence cost is acceptable
 
 
+
+The decision is to proceed with Neo4j as the initial Knowledge Graph platform. Neo4j is already approved within the bank, aligns well with the immediate functional and non-functional requirements, and enables faster onboarding within the required delivery timelines. Although Neo4j introduces additional enterprise licensing costs and cloud deployment considerations, these are considered acceptable trade-offs for the current phase, particularly given the absence of strict real-time latency requirements.
+
+The Proof of Concept has also demonstrated that FalkorDB is functionally equivalent to Neo4j, with superior query performance observed in several scenarios. However, the additional onboarding effort, operational readiness activities, and governance approvals required for FalkorDB make it less suitable for immediate adoption within the current delivery window.
+
+Importantly, both Neo4j and FalkorDB are labelled property graph databases, and the PoC has confirmed that the underlying data model, query patterns, and KG-RAG logic are portable between the two platforms. This preserves strategic optionality, allowing for a future transition from Neo4j to FalkorDB should performance, cost, or scalability considerations justify such a move, subject to continued alignment with functional and non-functional requirements.
+
