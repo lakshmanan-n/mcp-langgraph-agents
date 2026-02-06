@@ -155,3 +155,12 @@ The Proof of Concept has also demonstrated that FalkorDB is functionally equival
 
 Importantly, both Neo4j and FalkorDB are labelled property graph databases, and the PoC has confirmed that the underlying data model, query patterns, and KG-RAG logic are portable between the two platforms. This preserves strategic optionality, allowing for a future transition from Neo4j to FalkorDB should performance, cost, or scalability considerations justify such a move, subject to continued alignment with functional and non-functional requirements.
 
+1. Vector embeddings and Knowledge Graph representation
+The diagram currently shows both vector embeddings and the knowledge graph under a single service, which may not work well at a platform level. In practice, vector embeddings will be used for all unstructured data, whereas not everything will be persisted in the KG, as this is ontology-driven and use-case specific.
+Keeping these as separate stores allows us to achieve stronger governance and auditability, improved reusability, better KG-RAG patterns, and long-term scalability, compared to a single-store approach that mainly optimises for simplicity, faster retrieval, and cost efficiency.
+
+2. Link to Fabric data products
+I can see a linkage from the KG and vector embeddings to the Fabric data product, which I assume represents the step where artefacts are converted into structured data products for exposure and consumption. Please let me know if that interpretation is correct.
+
+3. Fabric as a single access layer
+I would like to clarify whether Fabric is intended to act as the single access layer for AI consumption, and whether the current Fabric architecture will be extended to support vector processing and retrieval services and Knowledge Graph services, in addition to the existing hybrid data product virtualisation capability (currently based on Starburst).
