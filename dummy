@@ -22,23 +22,40 @@ Codex Architecture Working Group – Progress Update & Target Alignment
 ⸻
 
 Objective of this Session
-	•	Share architecture progress across Req 1 (Reauthoring) and Req 2 (Knowledge Graph v1)
-	•	Reconfirm previously secured platform and technology approvals
-	•	Present the interim proposed architecture covering Req 1, 2 and 3
-	•	Highlight key design challenges and open questions
+	•	Provide a structured update on Codex architecture progress and implementation status
+	•	Reconfirm approved platform foundation and Knowledge Graph direction
+	•	Present the current PoC (As-Is) architecture and key design learnings
+	•	Share the interim Release 1 production design aligned to enterprise direction
+	•	Surface architectural challenges and open considerations for input
 
 ⸻
 
-Outcomes Expected
-	•	Provide transparency on implementation progress and architectural direction
-	•	Gather input from Business Architecture, Product and Delivery stakeholders
-	•	Validate assumptions and constraints impacting Release 1
-	•	Refine the proposed design prior to formal submission to Design Authority
+Agenda
+	1.	Business context & requirement recap (Req 1, 2, 3)
+	2.	Architecture progress & approvals to date
+	3.	Phase 1 foundational architecture
+	4.	Knowledge Graph clear choice outcome
+	5.	As-Is PoC application architecture
+	6.	POC design gaps & enterprise transition view
+	7.	Strategic architecture constraints & Release considerations
+	8.	Interim proposed architecture (Release 1 target state)
+	9.	Alignment to Group L1 strategic direction
+	10.	Open questions & next steps
 
+⸻
 
-Speaker Notes (What You Say Verbally)
+Expected Outcome
+	•	Shared understanding of current state and approved direction
+	•	Alignment on interim Release 1 architectural approach
+	•	Input on open design considerations prior to Design Authority review
 
-“This session is to provide a structured update on where we are architecturally, what has been approved, what has been built, and how we are proposing to evolve the design to cover Requirements 1, 2 and 3.
+⸻
+
+Verbal Framing
+
+“This session provides a structured progression from what has already been approved, through what has been implemented, to how we propose to evolve toward a controlled Release 1 production state aligned to Group L1 direction.”
+
+⸻
 
 
 
