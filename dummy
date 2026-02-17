@@ -150,19 +150,20 @@ Phase 1 Foundational Architecture
 •(Insert Approved Foundational Architecture Diagram Here)
 
 
-Slide 5 Knowledge Graph Clear Choice – Outcome
-•Assessment Scope
-•- Six graph database technologies evaluated
-•- Criteria: ontology support, query capability, operational maturity,
-•  enterprise integration potential, performance
-•
-•Shortlist
-•- FalkorDB
-•- Neo4j
-•
-•Conclusion
-•- Neo4j selected for PoC functional validation
-•- Enables ontology-aligned modelling and hybrid retrieval architecture
+Slide 5 Knowledge Graph – Clear Choice Assessment Completed
+
+The Knowledge Graph Clear Choice assessment has now been formally completed.
+
+A structured evaluation was performed across shortlisted graph platforms, including functional capability testing (temporal lineage, multi-hop traversal, semantic reasoning, and KG-RAG) and technical/non-functional validation (performance benchmarking, governance alignment, portability, and operational readiness).
+
+Based on the assessment findings and architecture review discussions:
+	•	Neo4j Enterprise has been approved as the initial platform for the use case.
+	•	It fully satisfies the current business and technical requirements.
+	•	It aligns with existing bank approvals and onboarding processes, supporting delivery timelines.
+	•	PoC testing confirmed portability of the labelled property graph model, preserving future flexibility should alternative platforms be reconsidered.
+
+This concludes the Clear Choice phase.
+The next stage is progression of the detailed solution design (SDD) and Neo4j onboarding activities.
 
 
 
