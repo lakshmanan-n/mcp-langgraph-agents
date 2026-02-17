@@ -106,10 +106,13 @@ Optional Strong Closing Line (Bottom of Slide)
 
 Slide 3
 Architecture Progress & Approvals to Date
-•Phase 1 Foundational Architecture – Approved
-• CIB authorized GCP data platform confirmed as runtime for UDL use cases.
-• Layered architecture pattern endorsed.
-• Unstructured data processing positioned within approved enterprise boundary.
+Codifying the Bank – Phase 1 SDD Approved
+The Phase 1 Solution Design Document has been formally approved, establishing the architectural foundation for the Codex use case.
+
+This approval confirms:
+	•	Enablement of the Unstructured Data Layer (UDL) platform to store, process and run data pipelines for the Codify the Bank use case.
+	•	Alignment of the use case to the FSA-aligned enterprise data platform standards, including governance and security controls.
+	•	Architectural capability to integrate with Group AI services for LLM-driven functionality under controlled governance.
 •
 •Knowledge Graph Clear Choice – Completed
 • Six graph database technologies assessed.
