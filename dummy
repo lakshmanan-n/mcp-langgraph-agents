@@ -124,6 +124,17 @@ This approval confirms:
 • Group AI positioned as central LLM and agent control plane.
 • Governance-first approach for unstructured data and AI orchestration.
 
+ Phase 2 SDD – Release 1 (In Progress)
+
+Phase 2 design documentation is currently being developed to support Release 1 production deployment.
+
+Scope includes:
+	•	Integration of Neo4j within the authorised CIB data platform.
+	•	Formal integration with the strategic Group AI platform for governed LLM orchestration.
+	•	Integration with GPPS for controlled procedure ingestion and publish-back workflows.
+
+Status:
+Design progressing; subject to formal governance review and approval.
 
 
 Slide 4
