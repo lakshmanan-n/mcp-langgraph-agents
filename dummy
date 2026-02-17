@@ -1,166 +1,200 @@
-Dimension	Neo4j	FalkorDB	Evidence / PoC Observation
-1. Scale Behaviour (TB KG, PB-linked Data)	Disk-first with memory caching. Degrades gracefully as KG grows; higher tolerance for unexpected growth.	Memory-first with disk persistence. Faster at scale but hits harder capacity ceilings as RAM pressure increases.	PoC stable on both; Neo4j offers more predictable long-term growth when KG expands.
-2. Cost Model (Indicative – 1 TB KG)	Requires Enterprise licence; higher commercial cost as scale increases.	Open-source (no licence); infra cost higher due to RAM but lower overall TCO at current scale.	FalkorDB cheaper at TB scale; Neo4j cost driven by licensing rather than infra.
-3. High Availability (HA)	Mature RAFT-based clustering; bank-proven operational model.	Redis-style replication; HA works but requires stricter operational discipline.	Neo4j HA required less tuning; FalkorDB HA validated but more engineering-led.
-4. Backup & Disaster Recovery (DR)	Native enterprise backup tooling; predictable restore and audit readiness.	Snapshot-based backup; DR achievable but relies on custom runbooks.	Neo4j aligns more naturally with regulated DR expectations.
-5. Vector & KG-RAG Capabilities	Native vector indexing (Enterprise); integrated vector + graph queries supported.	Native vector indexing supported; integrated vector + graph queries supported.	PoC showed identical KG-RAG accuracy and results; performance differences outweighed feature gaps.
 
-Evaluation Area
-Preferred Engine
-Scale predictability
-Neo4j
-Cost efficiency (current TB scale)
-FalkorDB
-High availability maturity
-Neo4j
-Backup & DR readiness
-Neo4j
-Vector & KG-RAG fit
-Equivalent (slight edge to FalkorDB on cost)
+	1.	Slide 1 – Objective & agenda
+	2.	Slide 2 – Requirements summary (Req 1/2/3)
+	3.	Slide 3 – Architecture progress & approvals to date (single slide “what’s already agreed”)
+	4.	Slide 4 – Phase 1 foundational architecture (diagram + 3–4 bullets)
+	5.	Slide 5 – KG Clear Choice outcome (diagram/table + conclusion)
+	6.	Slide 6 – As-Is architecture (diagram)
+	7.	Slide 7 – As-Is summary
+	8.	Slide 8 – POC gaps
+	9.	Slide 9 – Strategic constraints
+	10.	Slide 10 – Interim proposed architecture (diagram + summary)
+	11.	Slide 11 – Group direction (work-in-progress)
+	12.	Slide 12 – Open questions / next steps
 
 
-Final Recommendation – Knowledge Graph Platform Selection
+Slide 1 – Codex Architecture Working Group
 
-Executive Recommendation
+Title
 
-Recommendation: Conditional GO with FalkorDB, with Neo4j retained as the low-risk fallback option.
-
-FalkorDB is recommended for the target-state Knowledge Graph and KG-RAG architecture, provided the identified non-functional risks (HA, DR, memory scaling, OSS governance) are explicitly accepted and mitigated. Neo4j remains the safer default for risk-averse adoption but does not materially outperform FalkorDB for the evaluated use cases.
+Codex Architecture Working Group – Progress Update & Target Alignment
 
 ⸻
 
-Summary of Decision Drivers
-
-1. Functional Parity (Proven)
-
-Your PoC conclusively demonstrated that:
-	•	Neo4j and FalkorDB produce identical results for:
-	•	Temporal version-aware queries
-	•	Deep multi-hop lineage
-	•	Semantic reasoning
-	•	KG-RAG (accuracy, hallucination control, explainability)
-	•	No functional requirement failed in FalkorDB.
-	•	All discrepancies encountered were loader and schema discipline issues, not engine limitations.
-
-✅ Outcome: No functional blocker for FalkorDB.
+Objective of this Session
+	•	Share architecture progress across Req 1 (Reauthoring) and Req 2 (Knowledge Graph v1)
+	•	Reconfirm previously secured platform and technology approvals
+	•	Present the interim proposed architecture covering Req 1, 2 and 3
+	•	Highlight key design challenges and open questions
 
 ⸻
 
-2. Performance & User Experience (Material Differentiator)
+Outcomes Expected
+	•	Provide transparency on implementation progress and architectural direction
+	•	Gather input from Business Architecture, Product and Delivery stakeholders
+	•	Validate assumptions and constraints impacting Release 1
+	•	Refine the proposed design prior to formal submission to Design Authority
 
-Across your executed benchmarks:
-	•	FalkorDB outperformed Neo4j in 5 of 6 query classes
-	•	Gains were most significant for:
-	•	Multi-hop traversal
-	•	Semantic reasoning
-	•	Metadata-heavy KG-RAG access
-	•	Neo4j only outperformed FalkorDB in materialised inference writes, which is:
-	•	Non-interactive
-	•	Batch-oriented
-	•	Not latency-sensitive
 
-✅ Outcome: FalkorDB is better aligned to real-time, user-facing KG-RAG workloads.
+Speaker Notes (What You Say Verbally)
 
-⸻
+“This session is to provide a structured update on where we are architecturally, what has been approved, what has been built, and how we are proposing to evolve the design to cover Requirements 1, 2 and 3.
 
-3. Architecture Alignment with Banking Use Case
 
-Your banking use case explicitly requires:
-	•	PB-scale transactional data to remain in the data lake
-	•	The Knowledge Graph to store:
-	•	Knowledge objects
-	•	Lineage
-	•	Relationships
-	•	Semantics
-	•	Evidence pointers (not raw facts)
 
-Under this model:
-	•	The KG grows to TB scale, not PB
-	•	Graph stores references, not transactions
-	•	Traversal speed and reasoning latency matter more than raw storage
+Slide 2 – Summary of Requirements (Req 1, 2 & 3)
 
-✅ Outcome: FalkorDB’s memory-first execution model is well-suited to this access pattern.
+Codex Capability Overview
+
+Req 1 – AI-Assisted Reauthoring & Evaluation
+
+Enable SMEs to semi-automate procedure reauthoring by:
+	•	Rewriting documents into simplified, consistent format
+	•	Quantitatively evaluating differences between source and reauthored versions
+	•	Identifying potential information gaps
+	•	Supporting human-in-the-loop approval workflow
+
+Success Target:
+70% initial reauthoring accuracy + 80% gap detection coverage
 
 ⸻
 
-4. Cost vs Risk Trade-off (Key Decision Axis)
+Req 2 – Knowledge Graph v1 (Procedures & Supporting Docs)
 
-Dimension
-Neo4j
-FalkorDB
-Licence
-High (Enterprise mandatory)
-None (OSS)
-Infra cost
-Moderate
-Higher (RAM-heavy)
-Cost predictability
-Lower (licence escalation)
-Medium (infra scaling)
-Operational maturity
-Higher
-Lower
-Engineering ownership
-Lower
-Higher
-Interpretation:
-	•	Neo4j shifts risk into commercial dependency
-	•	FalkorDB shifts risk into engineering discipline
+Create an ontology-aligned knowledge base by:
+	•	Extracting structured artefacts from procedures
+	•	Building a governed knowledge graph
+	•	Combining graph + vector retrieval for query use cases
+	•	Providing traceable, evidence-backed answers
 
-✅ Outcome: FalkorDB is economically favourable at current scale, with conscious ownership of operational risk.
+Success Target:
+80% accuracy against SME-aligned test questions
 
 ⸻
 
-5. Non-Functional Requirements (Known & Contained)
+Req 3 – Knowledge Graph v2 (Policies + Lineage + Evolution)
 
-Your PoC correctly identified that FalkorDB requires:
-	•	Explicit HA topology design
-	•	Snapshot-based backup discipline
-	•	Careful memory capacity planning
-	•	Legal review of SSPL licence (internal use is acceptable)
-
-Importantly:
-	•	None of these are unknown risks
-	•	All are designable, testable, and governable
-	•	None invalidate the functional findings
-
-⚠ Outcome: FalkorDB is acceptable with governance controls; Neo4j remains the conservative option.
+Extend Codex into an enterprise knowledge platform by:
+	•	Incorporating policies alongside procedures
+	•	Establishing policy–procedure lineage
+	•	Supporting ontology evolution and versioning
+	•	Enabling scalable, managed API-based knowledge access
 
 ⸻
 
-Final Decision Statement (DA-Ready)
-
-Based on the completed PoC and evidence-based evaluation, FalkorDB and Neo4j demonstrate full functional parity for the target Knowledge Graph and KG-RAG use cases. FalkorDB delivers superior query performance and lower total cost at the evaluated scale, while Neo4j offers stronger operational maturity and out-of-the-box DR capabilities. Given the bank’s architecture pattern—where PB-scale data remains in the lake and the Knowledge Graph stores curated knowledge and lineage—FalkorDB is recommended as the preferred platform, subject to explicit non-functional risk acceptance and mitigation. Neo4j remains a viable fallback option should enterprise operational risk appetite dictate a more conservative choice.
-
-
-Practical Recommendation
-
-Choose FalkorDB if:
-	•	You prioritise performance, cost efficiency, and KG-RAG responsiveness
-	•	You accept engineering-led governance
-	•	You are comfortable owning HA/DR patterns
-	•	You want to avoid long-term vendor lock-in
-
-Choose Neo4j if:
-	•	You prioritise operational maturity over cost
-	•	You require enterprise-grade DR out of the box
-	•	You want minimal platform ownership risk
-	•	Licence cost is acceptable
+Optional Strong Closing Line (Bottom of Slide)
 
 
 
-The decision is to proceed with Neo4j as the initial Knowledge Graph platform. Neo4j is already approved within the bank, aligns well with the immediate functional and non-functional requirements, and enables faster onboarding within the required delivery timelines. Although Neo4j introduces additional enterprise licensing costs and cloud deployment considerations, these are considered acceptable trade-offs for the current phase, particularly given the absence of strict real-time latency requirements.
 
-The Proof of Concept has also demonstrated that FalkorDB is functionally equivalent to Neo4j, with superior query performance observed in several scenarios. However, the additional onboarding effort, operational readiness activities, and governance approvals required for FalkorDB make it less suitable for immediate adoption within the current delivery window.
+Slide 3
+Architecture Progress & Approvals to Date
+•Phase 1 Foundational Architecture – Approved
+• CIB authorized GCP data platform confirmed as runtime for UDL use cases.
+• Layered architecture pattern endorsed.
+• Unstructured data processing positioned within approved enterprise boundary.
+•
+•Knowledge Graph Clear Choice – Completed
+• Six graph database technologies assessed.
+• FalkorDB and Neo4j shortlisted for PoC validation.
+• Neo4j selected for PoC functional validation.
+•
+•Strategic Architecture Direction – In Alignment
+• Fabric positioned as unified enterprise access layer.
+• Group AI positioned as central LLM and agent control plane.
+• Governance-first approach for unstructured data and AI orchestration.
 
-Importantly, both Neo4j and FalkorDB are labelled property graph databases, and the PoC has confirmed that the underlying data model, query patterns, and KG-RAG logic are portable between the two platforms. This preserves strategic optionality, allowing for a future transition from Neo4j to FalkorDB should performance, cost, or scalability considerations justify such a move, subject to continued alignment with functional and non-functional requirements.
 
-1. Vector embeddings and Knowledge Graph representation
-The diagram currently shows both vector embeddings and the knowledge graph under a single service, which may not work well at a platform level. In practice, vector embeddings will be used for all unstructured data, whereas not everything will be persisted in the KG, as this is ontology-driven and use-case specific.
-Keeping these as separate stores allows us to achieve stronger governance and auditability, improved reusability, better KG-RAG patterns, and long-term scalability, compared to a single-store approach that mainly optimises for simplicity, faster retrieval, and cost efficiency.
 
-2. Link to Fabric data products
-I can see a linkage from the KG and vector embeddings to the Fabric data product, which I assume represents the step where artefacts are converted into structured data products for exposure and consumption. Please let me know if that interpretation is correct.
+Slide 4
+Phase 1 Foundational Architecture
 
-3. Fabric as a single access layer
-I would like to clarify whether Fabric is intended to act as the single access layer for AI consumption, and whether the current Fabric architecture will be extended to support vector processing and retrieval services and Knowledge Graph services, in addition to the existing hybrid data product virtualisation capability (currently based on Starburst).
+•Key Architectural Principles
+•
+•- Layered separation of concerns (Ingestion → Processing → Storage → Access)
+•- Platform-first design within CIB authorised GCP data platform
+•- Unstructured Data Layer (UDL) enablement
+•- Designed for future integration with Fabric and Group AI services
+•
+•(Insert Approved Foundational Architecture Diagram Here)
+
+
+Slide 5 Knowledge Graph Clear Choice – Outcome
+•Assessment Scope
+•- Six graph database technologies evaluated
+•- Criteria: ontology support, query capability, operational maturity,
+•  enterprise integration potential, performance
+•
+•Shortlist
+•- FalkorDB
+•- Neo4j
+•
+•Conclusion
+•- Neo4j selected for PoC functional validation
+•- Enables ontology-aligned modelling and hybrid retrieval architecture
+
+
+
+
+Slide 6 Alignment to Group L1 Architecture Direction
+Group L1 direction aims to integrate the Unstructured Data Platform with the Group AI platform via Fabric, with metadata-driven enablement for AI use cases. This initiative is currently work in progress, with roadmap and timelines yet to be defined. Updates will be shared as alignment progresses.
+
+
+
+Slide 7:
+This diagram represents the current PoC application architecture implementing Req 1 and Req 2 within a controlled scope.
+
+
+Slide 8
+
+POC Design Gaps – Enterprise Transition View
+
+Design Area	Current POC State	Enterprise Consideration / Next Step
+Ingestion Model	Manual document upload limited to approved sample set	Define scalable ingestion model aligned to GPPS/GMS and controlled onboarding process
+Document Coverage	Limited subset of procedures used for validation	Plan phased onboarding of full procedure corpus with prioritisation model
+Output Persistence Model	Artefacts stored in application-scoped folders	Align to enterprise storage standards with integration-ready canonical formats
+Group AI Integration	Tactical LLM connectivity established for development	Formalise integration model (model governance, prompt registry, monitoring, audit)
+Runtime Environment	Developed in controlled PoC runtime environment	Align deployment to strategic GCP / authorised CIB data platform
+Ontology Linkage	Ontology defined; cross-document relationships partially implemented	Extend KG logic to support corpus-wide entity resolution and lineage consistency
+Vector Store Implementation	FAISS embedded for PoC validation	Select enterprise-managed vector capability with HA, backup, access control
+Graph Platform Operational Model	Neo4j approved and used for PoC	Define production operating model (ownership, scaling, backup, monitoring)
+
+
+Short Verbal Framing:
+
+“This slide summarises the transition gaps between the current PoC implementation and an enterprise-aligned production model.”
+
+
+
+Slide 9
+
+Strategic Architecture Constraints & Release Considerations
+
+
+
+Dimension	Challenge / Constraint	Implication for Release 1
+Fabric Alignment	Capability must be exposed via Fabric as a managed access layer, not as an isolated application	Requires API-first design and integration model before scale-out
+Group AI Integration Model	Strategic direction centralises model governance, guardrails and monitoring	Formalise prompt registry, audit logging, model lifecycle controls
+Platform Deployment Alignment	Foundational architecture positions GCP/CIB authorised data platform as runtime target	Migration from PoC runtime to strategic environment required
+Unstructured Data Governance	UDL strategy requires classification, retention and access controls at ingestion stage	Embed governance controls early in ingestion pipeline
+Enterprise Storage Standardisation	Canonical artefacts and embeddings must align to platform storage standards	Define structured artefact schema & storage contracts
+Agentic AI Control & Observability	Multi-step LLM orchestration introduces non-deterministic behaviour	Implement evaluation framework, monitoring and fallback strategies
+Knowledge Drift & Ontology Evolution	As policies and procedures evolve, graph and lineage must remain consistent	Requires ontology governance model and version-aware KG builds
+Scalability of Hybrid Retrieval	Graph + vector + LLM orchestration increases computational complexity	Validate performance characteristics under enterprise-scale load
+Trust & Explainability Expectations	Regulatory environment requires explainable outputs	Evidence-first response model must be enforced by design
+Operating Model Clarity	Strategic model spans CIB platform, Group AI and domain ownership	Define clear responsibility boundaries before productionisation
+
+
+
+Short Verbal Framing:
+
+“These are the strategic architecture constraints and industry realities that must be addressed as we evolve toward a scalable, governed Release 1 capability.”
+
+
+Slide 10:
+
+Release 1 formalises the PoC capabilities into a controlled production deployment within the approved CIB data platform.
+
+It introduces enterprise-aligned storage, managed graph infrastructure, and governed LLM integration via Group AI, while maintaining scoped document onboarding and evidence-backed retrieval.
+
+This interim design prioritises governance, operational stability and Fabric alignment, with broader automation and scale optimisation planned for future phases.
