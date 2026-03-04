@@ -230,3 +230,151 @@ Release 1 formalises the PoC capabilities into a controlled production deploymen
 It introduces enterprise-aligned storage, managed graph infrastructure, and governed LLM integration via Group AI, while maintaining scoped document onboarding and evidence-backed retrieval.
 
 This interim design prioritises governance, operational stability and Fabric alignment, with broader automation and scale optimisation planned for future phases.
+
+
+
+
+
+The Phase 1 architecture establishes an event-driven unstructured data and agentic AI capability to support procedure/policy reauthoring, validation, and knowledge graph generation within the authorised CIB GCP platform boundary. The solution is built on a layered pattern (Ingestion → Canonicalisation → Chunking → Orchestration → Knowledge Stores → Access) and is designed to be repeatable, auditable, and extensible for future phases where agent workflows will become more complex.
+
+End-to-end flow
+	1.	Ingestion – Policy and procedure content is onboarded from core systems (e.g., GPPS, GMS) and user uploads into a governed raw storage zone. Each document is assigned a version identifier and registered with operational metadata (source, classification, ownership, timestamps).
+	2.	Preprocessing (Canonicalisation) – Raw documents are converted into a canonical representation (chapter/section Markdown) with deterministic segmentation and lineage pointers. Canonical outputs are persisted to a staging zone to enable replay and to avoid repeated parsing of raw formats.
+	3.	Chunking – Canonical sections are chunked into consistent token windows. Chunk content is persisted in GCS and a chunk manifest/registry is maintained in BigQuery to support downstream embedding, retrieval, and traceability.
+	4.	Stateful orchestration (LangGraph on GKE) – Workflow execution is coordinated using LangGraph to provide stateful, multi-step orchestration, parallel chapter processing, retries, and conditional branching. The initial trigger is an event (e.g., CONTENT_READY) emitted after chunking, which starts the reauthoring workflow.
+	5.	Reauthoring + Validation (Human-in-the-loop) – Reauthoring runs automatically after chunking and produces draft outputs. Validation then compares the draft to the source, computes quantitative metrics, and generates gap commentary/remediation suggestions. The workflow pauses at a human review gate where SMEs approve or request rework. Approval produces an explicit “approved” artefact version for downstream knowledge build.
+	6.	Knowledge build (KG + Vector in parallel) – Once approved, the KG workflow extracts ontology-aligned artefacts, normalises/validates them, and writes a versioned snapshot into Neo4j. In parallel, an embedding workflow generates embeddings from chunk content and upserts them into the selected vector capability (pgvector or Vertex AI Vector Search). Both stores are version-tagged and aligned via a common snapshot/version identifier to ensure hybrid retrieval consistency.
+	7.	Metadata, lineage and audit – DataHub is used to register artefacts and datasets, capture lineage across stages (raw → canonical → chunks → draft → approved → KG/vector snapshots), and record ownership metadata. Audit logging and trace propagation are implemented consistently across workflow runs using run_id and version identifiers.
+
+Governance and control points
+	•	MCP tool gateway provides a governed boundary for all data operations (read/write to GCS, BigQuery, Neo4j, vector store, and metadata updates), enforcing authentication/authorisation, audit logging, and lineage emission. This prevents direct datastore access from workflow nodes and ensures consistent security and compliance controls.
+	•	Group AI / UDI integration centralises LLM and embedding model access, providing a controlled interface for model selection, prompt management, monitoring, and guardrails aligned to enterprise standards.
+
+Design principles
+	•	Versioned artefacts and replayability – all outputs are persisted as versioned artefacts to support audit, regression testing, and selective reprocessing (day-2 operations).
+	•	Separation of concerns – orchestration (LangGraph), governed IO (MCP), model execution (Group AI), and knowledge persistence (Neo4j/vector) are clearly separated to support scalability and future extension.
+	•	Evidence-first outputs – all downstream answers and recommendations are designed to be traceable to source document versions, sections, and chunks to meet regulatory and explainability expectations.
+
+
+
+Architecture Design Considerations
+
+The Phase 1 architecture introduces a controlled platform capability for processing unstructured policy and procedure documents using agentic AI workflows. The following design considerations have been incorporated to ensure the solution remains scalable, governed, and aligned with enterprise architecture principles.
+
+⸻
+
+1. Event-Driven Workflow Orchestration
+
+The solution adopts an event-driven architecture where workflow stages are triggered through Pub/Sub events rather than tightly coupled service calls. This approach allows different processing stages (reauthoring, validation, knowledge graph build, and vector embedding) to operate independently while maintaining coordinated execution through run identifiers and version metadata.
+
+Rationale:
+Event-driven orchestration improves system resilience, supports asynchronous processing of long-running AI workflows, and enables individual services to scale independently.
+
+⸻
+
+2. Stateful Agent Orchestration with LangGraph
+
+Agent workflows are orchestrated using LangGraph, deployed on GKE, to support complex multi-step agent pipelines, branching logic, and stateful execution. LangGraph provides a structured mechanism for coordinating agent interactions and managing workflow checkpoints.
+
+Rationale:
+As the system evolves to support more advanced AI agents and multi-step reasoning, a stateful orchestration framework ensures maintainability, observability, and deterministic workflow behaviour.
+
+⸻
+
+3. Human-in-the-Loop Governance
+
+The architecture incorporates a human review and approval stage between validation and knowledge generation workflows. SMEs review the reauthored document alongside validation metrics before the document is approved for downstream knowledge processing.
+
+Rationale:
+Policy and procedure content operates within a regulated environment. Introducing a human control gate ensures that AI-generated outputs are validated before being incorporated into the enterprise knowledge base.
+
+⸻
+
+4. Canonical Representation of Unstructured Content
+
+Raw policy and procedure documents are converted into a canonical chapter/section-based Markdown format during preprocessing. This canonical representation becomes the standard input for downstream processing stages including chunking, embedding generation, and knowledge extraction.
+
+Rationale:
+Standardising the document structure improves consistency of AI processing, reduces parsing variability, and enables deterministic lineage tracking between source content and downstream knowledge artefacts.
+
+⸻
+
+5. Separation of Content Storage and Metadata Management
+
+The architecture separates content storage and operational metadata across appropriate platform services.
+	•	GCS stores document artefacts and chunk content
+	•	BigQuery maintains operational registries and processing metadata
+
+Rationale:
+This separation ensures efficient storage of large unstructured content while enabling fast querying and analytics on workflow metadata.
+
+⸻
+
+6. Knowledge Graph and Vector Index Separation
+
+Knowledge representation is implemented using two complementary mechanisms:
+	•	A Knowledge Graph (Neo4j) to model structured relationships between policies, procedures, controls, and other entities.
+	•	A Vector store to support semantic similarity search across document content.
+
+Rationale:
+Graph and vector retrieval serve different purposes. Combining them enables hybrid retrieval patterns where structured relationships and semantic similarity both contribute to knowledge discovery.
+
+⸻
+
+7. Snapshot-Based Knowledge Builds
+
+Knowledge graph and vector indexes are built using approved document snapshots, ensuring both representations are derived from the same validated content version.
+
+Rationale:
+Maintaining alignment between graph and vector representations prevents inconsistencies during hybrid retrieval and ensures traceability of generated answers back to the source document version.
+
+⸻
+
+8. Ontology Governance and Knowledge Modelling
+
+The enterprise ontology is maintained as the canonical knowledge model, with definitions of entities, relationships, and constraints captured within ontology artefacts. These artefacts guide the extraction of structured knowledge from policy and procedure documents.
+
+Rationale:
+A governed ontology ensures consistent knowledge modelling across domains and enables future expansion into advanced reasoning, compliance analysis, and regulatory impact assessments.
+
+⸻
+
+9. Controlled Access to Data and Platform Services
+
+All workflow components interact with storage and data services through a controlled service layer, ensuring authentication, authorisation, and audit logging are consistently applied across the platform.
+
+Rationale:
+Centralised access control is essential in regulated environments where data lineage, security policies, and audit requirements must be strictly enforced.
+
+⸻
+
+10. Metadata, Lineage and Observability
+
+The platform integrates metadata management to capture lineage across the entire processing lifecycle, including ingestion, transformation, AI processing, and knowledge generation stages.
+
+Rationale:
+Comprehensive lineage tracking enables explainability of AI outputs, supports audit requirements, and provides operational visibility into the platform’s processing pipelines.
+
+⸻
+
+11. Platform Alignment with Enterprise AI Services
+
+AI model access and embedding generation are integrated with the enterprise AI platform, ensuring that model invocation, monitoring, and governance follow organisation-wide standards.
+
+Rationale:
+Centralising model access avoids fragmentation of AI capabilities and ensures consistency in model governance, security controls, and monitoring across AI-enabled applications.
+
+⸻
+
+12. Scalability and Future Expansion
+
+The architecture has been designed with modular processing stages and loosely coupled services, allowing new agent workflows and knowledge capabilities to be introduced without significant architectural change.
+
+Rationale:
+Future phases will expand agent capabilities to support automated policy drafting, regulatory monitoring, and knowledge-driven automation. The current architecture establishes the foundational platform required to support these capabilities.
+
+⸻
+
+Summary
+
+The architecture balances AI-driven automation with strong governance controls, ensuring that knowledge generated from policy and procedure documents remains accurate, traceable, and aligned with enterprise standards. By combining event-driven orchestration, stateful agent workflows, and structured knowledge modelling, the solution provides a scalable foundation for the organisation’s broader knowledge management and AI strategy.
