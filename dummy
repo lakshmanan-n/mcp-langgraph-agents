@@ -378,3 +378,111 @@ Future phases will expand agent capabilities to support automated policy draftin
 Summary
 
 The architecture balances AI-driven automation with strong governance controls, ensuring that knowledge generated from policy and procedure documents remains accurate, traceable, and aligned with enterprise standards. By combining event-driven orchestration, stateful agent workflows, and structured knowledge modelling, the solution provides a scalable foundation for the organisation’s broader knowledge management and AI strategy.
+
+
+
+Key Architecture Dependencies
+
+The successful delivery of Release 1 depends on several platform, integration, and governance capabilities that are external to the application design. These dependencies must be confirmed or provisioned before the solution can transition from PoC to production deployment.
+
+⸻
+
+1. Neo4j Enterprise Platform Provisioning
+
+Dependency
+
+Provisioning of the Neo4j Enterprise Edition database and supporting infrastructure within the authorised CIB GCP platform environment.
+
+Description
+
+The current PoC implementation uses the Neo4j community edition in a single-node configuration. For Release 1, the platform must be upgraded to the enterprise version to support clustering, high availability, backup/restore capabilities, and operational monitoring aligned with enterprise database standards.
+
+⸻
+
+2. GPPS Source System Integration Alignment
+
+Dependency
+
+Integration approach with GPPS (AWS Appian) must be agreed with the source system team.
+
+Description
+
+The target architecture assumes that approved policy and procedure documents will be ingested via an event-driven integration pattern. Alignment is required on the integration mechanism (e.g., event publication, file transfer, or API-based retrieval), document versioning semantics, and metadata attributes required to maintain traceability between source documents and the downstream knowledge platform.
+
+⸻
+
+3. Group Metadata Platform Integration
+
+Dependency
+
+Readiness and approval of the Group metadata catalogue platform to integrate operational metadata generated within the platform (e.g., BigQuery registries).
+
+Description
+
+The architecture proposes publishing operational metadata and lineage information to the enterprise metadata catalogue. This integration is dependent on the availability and approval of the group metadata platform to ingest metadata from the BigQuery operational registries and expose it within the enterprise catalogue.
+
+⸻
+
+Additional Dependencies to Consider
+
+Based on the full architecture, the following dependencies should also be documented.
+
+⸻
+
+4. Enterprise Vector Store Selection
+
+Dependency
+
+Finalisation of the enterprise-supported vector database platform (e.g., pgvector or Vertex AI Vector Search).
+
+Description
+
+The PoC implementation uses FAISS for local vector indexing. For Release 1, a managed and enterprise-supported vector capability must be selected and provisioned to support scalability, security controls, backup, and operational support.
+
+⸻
+
+5. Group AI Platform Integration
+
+Dependency
+
+Availability and onboarding to the Group AI platform (UDI SDK) for model access.
+
+Description
+
+All LLM and embedding model interactions are expected to be routed through the enterprise AI platform to ensure consistent model governance, monitoring, and guardrail enforcement. The integration approach, SDK configuration, and access policies must be confirmed prior to production deployment.
+
+⸻
+
+6. MCP Server Deployment and Governance
+
+Dependency
+
+Operational deployment and ownership model for the MCP tool gateway.
+
+Description
+
+The architecture assumes that all workflow components interact with platform services (GCS, BigQuery, Neo4j, vector store, metadata services) through the MCP server. The operational ownership, hosting environment, and governance model for MCP services must be agreed.
+
+⸻
+
+7. Ontology Governance and Version Management
+
+Dependency
+
+Formal governance model for the enterprise ontology used to build the knowledge graph.
+
+Description
+
+Ontology artefacts must be version-controlled and managed through CI/CD pipelines to ensure that knowledge graph builds remain consistent as the ontology evolves. Governance processes are required to manage schema evolution and approval of ontology changes.
+
+⸻
+
+8. Security and Identity Integration
+
+Dependency
+
+Integration with enterprise SSO and identity services for both system access and SME review workflows.
+
+Description
+
+User authentication and authorisation must align with enterprise identity management standards to ensure that document review, approval actions, and API access follow existing security policies.
