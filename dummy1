@@ -502,7 +502,23 @@ In addition, governed access to platform resources will be centralized through a
 
 The proposed repository structure is outlined below.
 
+Refactored Code Flow Overview
 
+The refactored architecture introduces an event-driven workflow model that separates document ingestion, AI processing workflows, knowledge generation, and user interaction into independent platform components. This approach improves scalability, maintainability, and alignment with the enterprise data and AI platform architecture.
+
+The processing pipeline begins when a document is uploaded through the CTB Workbench UI or received from upstream systems in future integrations. The document is processed by the CTB ingestion pipeline, which performs preprocessing and structural extraction. During this stage, the document is converted into a normalized format and divided into logical sections or chunks that can be processed independently by downstream AI workflows.
+
+Once preprocessing is complete, the ingestion service publishes an event that triggers the workflow orchestration layer implemented using LangGraph. The orchestration service coordinates the execution of the AI processing workflows in a controlled sequence.
+
+The first stage of AI processing is the Reauthor Workflow, which applies a set of LLM-powered agents to rewrite the document sections into a simplified and standardized format. The generated outputs are then passed to the Validation Workflow, where validation agents evaluate the reauthored content against the source document to detect potential information loss or inconsistencies.
+
+Following validation, the outputs are presented to users through the CTB Workbench UI for review and approval. This human-in-the-loop step ensures that domain experts can verify the AI-generated results before they are committed to the knowledge platform.
+
+Once a document is approved, an event is published to trigger the Knowledge Processing workflows. These workflows extract ontology-aligned artefacts from the approved content and generate vector embeddings for semantic retrieval. The extracted knowledge is then stored in the knowledge graph platform, while the embeddings are stored in the vector database for retrieval use cases.
+
+Throughout this process, all platform components interact with storage systems, knowledge services, and metadata platforms through the MCP gateway, which provides governed and auditable access to shared platform resources.
+
+This refactored flow enables the CTB platform to transition from a manual PoC execution model to an automated, event-driven architecture capable of supporting large-scale document processing and knowledge management workflows.
 
 Conclusion
 
