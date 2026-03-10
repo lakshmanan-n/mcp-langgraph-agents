@@ -1,0 +1,442 @@
+1. ctb-orchestration-langgraph
+Purpose: Stateful workflow orchestration for reauthoring, validation, KG build, and embedding workflows.
+
+ctb-orchestration-langgraph/
+├── README.md
+├── pyproject.toml
+├── requirements.txt
+├── Dockerfile
+├── Jenkinsfile
+├── helm/
+│   └── ctb-orchestration/
+├── src/
+│   └── ctb_orchestration/
+│       ├── main.py
+│       ├── config.py
+│       ├── runner/
+│       │   ├── event_consumer.py
+│       │   ├── workflow_dispatcher.py
+│       │   ├── run_context.py
+│       │   ├── checkpoint_store.py
+│       │   └── state_models.py
+│       ├── graphs/
+│       │   ├── reauthor_graph.py
+│       │   ├── validation_graph.py
+│       │   ├── kg_graph.py
+│       │   └── embedding_graph.py
+│       ├── nodes/
+│       │   ├── reauthor/
+│       │   │   ├── load_chapter.py
+│       │   │   ├── tables_writer.py
+│       │   │   ├── escalation_path.py
+│       │   │   ├── business_requirement_writer.py
+│       │   │   ├── information_loss_guard.py
+│       │   │   ├── non_requirement_slimmer.py
+│       │   │   ├── persist_draft.py
+│       │   │   └── merge_draft.py
+│       │   ├── validation/
+│       │   │   ├── load_original_and_draft.py
+│       │   │   ├── diff_metrics.py
+│       │   │   ├── gap_detection.py
+│       │   │   ├── remediation.py
+│       │   │   ├── create_review_task.py
+│       │   │   └── human_review_gate.py
+│       │   ├── kg/
+│       │   │   ├── load_approved_content.py
+│       │   │   ├── load_ontology.py
+│       │   │   ├── extract_artefacts.py
+│       │   │   ├── normalize_validate.py
+│       │   │   └── load_kg_snapshot.py
+│       │   └── embedding/
+│       │       ├── load_chunks.py
+│       │       ├── generate_embeddings.py
+│       │       ├── upsert_vectors.py
+│       │       └── update_vector_registry.py
+│       ├── prompts/
+│       │   ├── reauthor/
+│       │   ├── validation/
+│       │   ├── kg/
+│       │   └── shared/
+│       ├── adapters/
+│       │   ├── group_ai/
+│       │   │   ├── llm_client.py
+│       │   │   ├── embedding_client.py
+│       │   │   └── prompt_registry.py
+│       │   └── mcp/
+│       │       └── client_factory.py
+│       └── utils/
+│           ├── logging.py
+│           ├── tracing.py
+│           └── errors.py
+├── tests/
+│   ├── unit/
+│   ├── integration/
+│   └── e2e/
+└── docs/
+    ├── workflow-overview.md
+    └── run-state-model.md
+
+
+2. ctb-mcp-gateway
+Purpose: Governed tool access layer for GCS, BigQuery, Neo4j, pgvector/Vertex, DataHub, Pub/Sub.
+
+ctb-mcp-gateway/
+├── README.md
+├── pyproject.toml
+├── requirements.txt
+├── Dockerfile
+├── Jenkinsfile
+├── helm/
+│   └── ctb-mcp/
+├── src/
+│   └── ctb_mcp/
+│       ├── main.py
+│       ├── config.py
+│       ├── server/
+│       │   ├── routes.py
+│       │   ├── request_models.py
+│       │   ├── response_models.py
+│       │   └── exception_handlers.py
+│       ├── auth/
+│       │   ├── authentication.py
+│       │   ├── authorization.py
+│       │   └── policy_engine.py
+│       ├── tools/
+│       │   ├── content_tools.py
+│       │   ├── metadata_tools.py
+│       │   ├── workflow_tools.py
+│       │   ├── neo4j_tools.py
+│       │   ├── vector_tools.py
+│       │   ├── lineage_tools.py
+│       │   └── audit_tools.py
+│       ├── adapters/
+│       │   ├── gcs_adapter.py
+│       │   ├── bq_adapter.py
+│       │   ├── neo4j_adapter.py
+│       │   ├── pgvector_adapter.py
+│       │   ├── vertex_vector_adapter.py
+│       │   ├── datahub_adapter.py
+│       │   └── pubsub_adapter.py
+│       └── middleware/
+│           ├── correlation.py
+│           ├── logging.py
+│           └── tracing.py
+├── tests/
+│   ├── unit/
+│   └── integration/
+└── docs/
+    ├── tool-catalog.md
+    └── authz-model.md
+
+
+3. ctb-mcp-client-python
+
+Purpose: Shared Python client package used by LangGraph workflows to call MCP server.
+ctb-mcp-client-python/
+├── README.md
+├── pyproject.toml
+├── requirements.txt
+├── src/
+│   └── ctb_mcp_client/
+│       ├── __init__.py
+│       ├── base.py
+│       ├── models.py
+│       ├── content_tools.py
+│       ├── metadata_tools.py
+│       ├── workflow_tools.py
+│       ├── neo4j_tools.py
+│       ├── vector_tools.py
+│       ├── lineage_tools.py
+│       └── audit_tools.py
+├── tests/
+│   └── unit/
+└── docs/
+    └── usage.md
+
+
+4. ctb-ingestion-pipelines
+Purpose: Raw ingestion, preprocessing, canonicalisation, chunking.
+
+ctb-ingestion-pipelines/
+├── README.md
+├── pyproject.toml
+├── requirements.txt
+├── Dockerfile
+├── Jenkinsfile
+├── helm/
+│   ├── preprocessing-service/
+│   └── chunking-service/
+├── src/
+│   └── ctb_ingestion/
+│       ├── main.py
+│       ├── config.py
+│       ├── ingestion/
+│       │   ├── gpps_ingestion.py
+│       │   ├── gms_ingestion.py
+│       │   ├── ui_upload_ingestion.py
+│       │   └── event_publisher.py
+│       ├── preprocessing/
+│       │   ├── document_parser.py
+│       │   ├── docx_to_markdown.py
+│       │   ├── pdf_to_markdown.py
+│       │   ├── section_extractor.py
+│       │   └── canonical_manifest_builder.py
+│       ├── chunking/
+│       │   ├── chapter_chunker.py
+│       │   ├── token_chunker.py
+│       │   ├── chunk_manifest_builder.py
+│       │   └── chunk_storage_writer.py
+│       ├── storage/
+│       │   ├── gcs_writer.py
+│       │   └── bq_registry_writer.py
+│       └── schemas/
+│           ├── canonical_manifest.json
+│           └── chunk_manifest.json
+├── tests/
+│   ├── unit/
+│   └── integration/
+└── docs/
+    ├── ingestion-flow.md
+    └── chunking-strategy.md
+
+5. ctb-knowledge-graph
+Purpose: KG-specific logic and artefact shaping, independent from orchestration.
+ctb-knowledge-graph/
+├── README.md
+├── pyproject.toml
+├── requirements.txt
+├── Dockerfile
+├── Jenkinsfile
+├── src/
+│   └── ctb_kg/
+│       ├── artefacts/
+│       │   ├── artefact_models.py
+│       │   ├── json_serialization.py
+│       │   └── schema_validation.py
+│       ├── normalization/
+│       │   ├── entity_resolution.py
+│       │   ├── deduplication.py
+│       │   ├── canonicalization.py
+│       │   └── orphan_handling.py
+│       ├── projection/
+│       │   ├── ontology_mapping.py
+│       │   ├── neo4j_projection.py
+│       │   └── constraint_generator.py
+│       ├── loaders/
+│       │   ├── neo4j_snapshot_loader.py
+│       │   └── build_metrics.py
+│       └── utils/
+│           └── lineage.py
+├── tests/
+│   ├── unit/
+│   └── integration/
+└── docs/
+    ├── ontology-projection.md
+    └── kg-build.md
+
+6. ctb-vector-embedding
+Purpose: Embedding generation, pgvector/Vertex upsert, index lifecycle utilities.
+ctb-vector-embedding/
+├── README.md
+├── pyproject.toml
+├── requirements.txt
+├── Dockerfile
+├── Jenkinsfile
+├── src/
+│   └── ctb_vector/
+│       ├── embedding/
+│       │   ├── embedding_models.py
+│       │   ├── embedding_payloads.py
+│       │   └── metadata_enrichment.py
+│       ├── stores/
+│       │   ├── pgvector_writer.py
+│       │   ├── vertex_vector_writer.py
+│       │   └── registry_updater.py
+│       ├── retrieval/
+│       │   ├── similarity_query.py
+│       │   └── query_embedding.py
+│       └── maintenance/
+│           ├── index_health.py
+│           ├── vacuum_analyze.py
+│           └── snapshot_alignment.py
+├── tests/
+│   ├── unit/
+│   └── integration/
+└── docs/
+    ├── embedding-flow.md
+    └── vector-store-decision.md
+
+7. ctb-workbench-ui
+Purpose: Frontend + Spring Boot backend for SME review, approval, rejection, tasking.
+ctb-workbench-ui/
+├── README.md
+├── frontend/
+│   ├── package.json
+│   ├── src/
+│   │   ├── pages/
+│   │   ├── components/
+│   │   ├── services/
+│   │   └── state/
+│   └── tests/
+├── backend/
+│   ├── build.gradle
+│   ├── Dockerfile
+│   ├── src/main/java/com/bank/ctb/
+│   │   ├── controller/
+│   │   ├── service/
+│   │   ├── model/
+│   │   ├── client/
+│   │   │   ├── gcs/
+│   │   │   ├── bq/
+│   │   │   └── pubsub/
+│   │   ├── security/
+│   │   └── config/
+│   └── src/test/
+├── helm/
+└── docs/
+    └── review-approval-flow.md
+
+8. ctb-query-api
+Purpose: Query/chat retrieval APIs for hybrid graph + vector + evidence retrieval.
+ctb-query-api/
+├── README.md
+├── pyproject.toml
+├── requirements.txt
+├── Dockerfile
+├── Jenkinsfile
+├── src/
+│   └── ctb_query/
+│       ├── api/
+│       ├── hybrid/
+│       │   ├── graph_retrieval.py
+│       │   ├── vector_retrieval.py
+│       │   ├── rank_merge.py
+│       │   └── evidence_pack.py
+│       ├── synthesis/
+│       │   ├── answer_builder.py
+│       │   └── citation_formatter.py
+│       └── security/
+├── tests/
+└── docs/
+    └── hybrid-retrieval.md
+
+9. ctb-ontology
+
+Purpose: Canonical OWL ontology, mapping rules, generated JSON-LD and constraints.
+
+ctb-ontology/
+├── README.md
+├── owl/
+│   ├── policy_procedure.owl
+│   └── modules/
+├── mappings/
+│   ├── projection_rules.yaml
+│   ├── identity_rules.yaml
+│   └── naming_conventions.yaml
+├── generated/
+│   ├── jsonld/
+│   ├── neo4j_constraints/
+│   └── build_reports/
+├── scripts/
+│   ├── validate_owl.py
+│   ├── owl_to_jsonld.py
+│   └── generate_constraints.py
+├── Jenkinsfile
+└── docs/
+    ├── ontology-governance.md
+    └── projection-rules.md
+
+
+10. ctb-shared-libraries
+Purpose: Shared models, logging, tracing, event schemas, config helpers.
+ctb-shared-libraries/
+├── README.md
+├── python/
+│   ├── ctb_common/
+│   │   ├── config/
+│   │   ├── logging/
+│   │   ├── tracing/
+│   │   ├── event_models/
+│   │   ├── run_context/
+│   │   └── errors/
+│   └── tests/
+├── java/
+│   └── ctb-common/
+└── docs/
+    ├── logging-standards.md
+    ├── tracing-standards.md
+    └── event-schema.md
+
+11. ctb-data-contracts
+Purpose: Event schemas and API/data contracts.
+ctb-data-contracts/
+├── README.md
+├── events/
+│   ├── content_ready.json
+│   ├── reauthor_done.json
+│   ├── approved_published.json
+│   ├── rework_requested.json
+│   ├── kg_ready.json
+│   └── vector_ready.json
+├── api/
+│   ├── review_api.yaml
+│   └── query_api.yaml
+└── docs/
+    ├── event-contracts.md
+    └── api-contracts.md
+
+12. ctb-infra-gcp
+Purpose: Terraform, Helm, environment overlays, Cloud SQL/GKE/PubSub/GCS/BQ setup.
+ctb-infra-gcp/
+├── README.md
+├── terraform/
+│   ├── gke/
+│   ├── pubsub/
+│   ├── gcs/
+│   ├── bigquery/
+│   ├── cloudsql/
+│   ├── secretmanager/
+│   └── networking/
+├── helm/
+│   ├── orchestration/
+│   ├── mcp/
+│   ├── ingestion/
+│   ├── workbench/
+│   └── query-api/
+├── env/
+│   ├── dev/
+│   ├── test/
+│   └── prod/
+├── ansible/
+└── docs/
+    └── deployment-topology.md
+
+
+Core principle
+
+Split by runtime responsibility, not by “feature names.”
+
+Good split
+	•	orchestration
+	•	governed IO
+	•	ingestion
+	•	KG
+	•	vector
+	•	UI
+	•	ontology
+	•	infra
+	•	contracts
+Bad split
+
+During refactor, tell them:
+	•	Move workflow logic into graphs/ and nodes/
+	•	Move all direct datastore access out of nodes and into MCP tools
+	•	Move prompts out of code and into versioned prompt files
+	•	Move event schemas into a separate contracts repo
+	•	Keep ontology outside runtime services
+
+
+
+
+
+
