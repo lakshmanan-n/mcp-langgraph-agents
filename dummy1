@@ -438,5 +438,80 @@ During refactor, tell them:
 
 
 
+Codebase Refactoring Plan – Codify the Bank (CTB)
+
+Overview
+
+As part of the Codify the Bank (CTB) initiative, an initial Proof of Concept (PoC) has been developed to validate the feasibility of using AI-driven workflows for policy and procedure reauthoring, validation, and knowledge extraction. The PoC implementation successfully demonstrated the core capabilities of the platform, including document reauthoring using LLM-based agents, validation against source content, and generation of knowledge artefacts for knowledge graph and vector-based retrieval.
+
+The current PoC solution was developed in a local on-premise virtual machine environment with a simplified execution model and manual inputs. While this approach was suitable for validating the concept, it does not meet the requirements for production deployment, scalability, governance, or integration with the enterprise data and AI platform.
+
+To support the transition from PoC to a production-ready architecture on the authorised GCP platform, the codebase and repository structure need to be refactored and aligned with the target architecture. This includes adopting an event-driven workflow model, service separation for agent workflows, governed data access through the MCP gateway, and deployment on containerized infrastructure (GKE).
+
+⸻
+
+Purpose of this Document
+
+The purpose of this document is to outline the proposed codebase refactoring approach required to transition the current PoC implementation into a production-aligned architecture. Specifically, this document:
+	•	Provides a summary of the current PoC repository structure and execution flow
+	•	Describes the target repository structure aligned with the CTB platform architecture
+	•	Illustrates the refactoring flow between the current implementation and the proposed architecture
+	•	Defines the engineering backlog required to complete the transition from PoC to production
+
+This document will be used as a working reference for the engineering team to align on the restructuring approach and plan the implementation activities required for the upcoming release.
+
+⸻
+
+Refactoring Principles
+
+The proposed restructuring follows a set of key engineering principles to ensure the platform remains scalable and maintainable as the CTB programme evolves:
+	•	Separation of responsibilities across repositories to prevent monolithic codebases
+	•	Event-driven orchestration of AI workflows using a centralized orchestration service
+	•	Decoupling of agent logic from orchestration logic
+	•	Governed access to storage and platform services through the MCP gateway
+	•	Alignment with enterprise AI and data platform capabilities
+	•	Support for future expansion of agent workflows and knowledge services
+
+These principles ensure that the platform can evolve from the current PoC implementation into a modular and extensible architecture capable of supporting future phases of the CTB programme.
+
+
+Current Implementation Overview
+
+The current Proof of Concept (PoC) implementation was developed to validate the core capabilities of the Codify the Bank (CTB) platform, focusing on AI-assisted document reauthoring, validation, and knowledge extraction. The solution demonstrates the feasibility of using LLM-driven agents to process policy and procedure documents and generate structured knowledge artefacts for downstream use cases.
+
+The PoC implementation consists of several independent repositories developed primarily for functional validation. The reauthoring and validation workflows were implemented within a single repository and executed using manual document inputs. The generated outputs were written to local file system directories, which were subsequently consumed by the UI layer to display the original content, reauthored output, and validation results.
+
+A separate UI application was developed using ReactJS for the frontend and a Spring Boot backend service. The UI enables users to upload input documents and visualize the outputs produced by the reauthoring and validation processes.
+
+Additionally, a knowledge graph and embedding pipeline was implemented in a separate repository. This component processes manually supplied input files to extract structured artefacts, load entities and relationships into a Neo4j community instance, and generate vector embeddings using a FAISS-based index.
+
+Supporting capabilities were also developed through additional repositories, including a shared API integration repository for common service interactions and a session state and persistence service used to manage backend cache and runtime state during execution. Integration with the enterprise AI platform is achieved through the UDI SDK, which is consumed as a shared library from the organisation’s common capability repository.
+
+While the current implementation successfully validates the core functional concepts, the architecture relies on manual execution flows, local storage mechanisms, and on-premise runtime environments. As a result, the existing structure requires refactoring to support the target production architecture, which introduces event-driven orchestration, governed data access, containerized services, and deployment on the authorised GCP platform.
+
+
+Proposed Repository Structure
+
+To support the transition from the current PoC implementation to a production-ready platform architecture, the CTB codebase will be restructured into a set of modular repositories aligned with the target system architecture. The objective of this restructuring is to improve separation of responsibilities, maintainability, scalability, and alignment with enterprise platform standards.
+
+The proposed repository structure separates the platform into distinct components representing ingestion, workflow orchestration, AI processing services, knowledge services, governance, application services, and shared platform capabilities. This approach ensures that individual components can evolve independently while maintaining clear integration boundaries between services.
+
+A key principle of the new structure is the decoupling of orchestration logic from agent workflows. The orchestration layer will coordinate execution of the various AI workflows, while the individual services responsible for reauthoring, validation, knowledge graph generation, and embedding will remain independently maintained.
+
+In addition, governed access to platform resources will be centralized through a dedicated gateway service to ensure that interactions with storage systems, metadata services, and knowledge platforms are consistent and auditable.
+
+The proposed repository structure is outlined below.
+
+
+
+Conclusion
+
+The proposed refactoring approach provides a structured path for transitioning the current PoC implementation into a production-ready architecture aligned with the Codify the Bank (CTB) platform strategy. By separating responsibilities across dedicated repositories and introducing an event-driven workflow model, the platform will move away from manual execution patterns toward a scalable and maintainable architecture.
+
+The refactored structure enables clear separation between workflow orchestration, AI processing services, knowledge generation components, and platform governance capabilities, ensuring that each component can evolve independently as the programme expands. In addition, the introduction of centralized orchestration and governed platform access ensures improved operational visibility, traceability, and compliance with enterprise data and AI platform standards.
+
+This restructuring also establishes the foundation required to support future phases of the CTB programme, including expanded document ingestion sources, additional AI agent workflows, enhanced knowledge graph capabilities, and more advanced retrieval use cases. By aligning the codebase with the target platform architecture early in the development lifecycle, the engineering team can ensure that the platform remains extensible, scalable, and maintainable as adoption grows across the organization.
+
+The engineering refactoring backlog outlined in this document provides a prioritized set of implementation activities required to achieve this transition. These activities will guide the development team in progressively aligning the existing codebase with the target architecture while continuing to support the upcoming release objectives.
 
 
