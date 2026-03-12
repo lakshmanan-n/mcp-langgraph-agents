@@ -531,3 +531,4 @@ This restructuring also establishes the foundation required to support future ph
 The engineering refactoring backlog outlined in this document provides a prioritized set of implementation activities required to achieve this transition. These activities will guide the development team in progressively aligning the existing codebase with the target architecture while continuing to support the upcoming release objectives.
 
 
+We are planning to store embeddings with metadata such as document ID, chunk ID, document type (policy/procedure), domain, and snapshot/version ID rather than maintaining a single flat index. At query time, metadata filters will be applied first before performing vector similarity search, so retrieval will operate within the relevant approved corpus rather than across all embeddings. This approach will allow us to maintain a common vector platform while ensuring logical partitioning and alignment with the corresponding knowledge graph snapshot.
