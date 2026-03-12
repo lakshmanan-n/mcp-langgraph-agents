@@ -532,3 +532,24 @@ The engineering refactoring backlog outlined in this document provides a priorit
 
 
 We are planning to store embeddings with metadata such as document ID, chunk ID, document type (policy/procedure), domain, and snapshot/version ID rather than maintaining a single flat index. At query time, metadata filters will be applied first before performing vector similarity search, so retrieval will operate within the relevant approved corpus rather than across all embeddings. This approach will allow us to maintain a common vector platform while ensuring logical partitioning and alignment with the corresponding knowledge graph snapshot.
+
+
+
+Architecture Governance & Design Approval Path
+
+Overview
+
+The Codify the Bank (CTB) solution follows the established CIB architecture governance process to ensure alignment with enterprise architecture standards, infrastructure policies, security requirements, and AI governance frameworks.
+
+Depending on the scope of the architectural change, the solution design may be reviewed through multiple governance forums including CIB domain architecture review, enterprise architecture review, infrastructure approval, security review, and AI governance review.
+
+This approval process ensures that the solution architecture is validated across:
+	•	Business and data architecture alignment
+	•	Enterprise technology standards
+	•	Infrastructure provisioning and platform compliance
+	•	Security and data governance controls
+	•	Responsible AI governance requirements
+
+
+Architecture Governance Bodies
+
