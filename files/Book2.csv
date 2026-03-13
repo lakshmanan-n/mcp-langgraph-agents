@@ -1,58 +1,83 @@
-﻿ID,Current PoC Component,Target Repository,Refactoring Task,Description,Priority,Must/Would,Owner
-ENG-01,Reauthor + Validation repo,ctb-reauthor-workflow / ctb-validation-workflow,Split workflows into separate services,Separate reauthor and validation agents into independent repos to avoid monolithic agent codebase,P0,Must,AI Engineering
-ENG-02,Reauthor pipeline triggered manually,ctb-orchestration-langgraph,Introduce LangGraph orchestration,Move agent execution into LangGraph workflows triggered by platform events,P0,Must,AI Engineering
-ENG-03,Manual document input for reauthor,ctb-ingestion-pipelines,Implement ingestion service,Create preprocessing and chunking services for structured document ingestion,P0,Must,Data Engineering
-ENG-04,Manual execution pipelines,ctb-orchestration-langgraph,Implement event-driven workflow,Trigger workflows using Pub/Sub events instead of manual execution,P0,Must,Platform
-ENG-05,Output stored in local directories,ctb-mcp-gateway,Implement governed storage access,Replace local filesystem outputs with GCS + BigQuery access through MCP tools,P0,Must,Platform
-ENG-06,UI reads local output files,ctb-workbench-ui,Integrate backend service APIs,Modify UI backend to retrieve outputs from platform storage instead of file system,P1,Must,Application
-ENG-07,UI manual upload,ctb-ingestion-pipelines,Integrate UI ingestion API,File uploads from UI trigger ingestion pipeline,P1,Must,Application
-ENG-08,KG repo using manual input,ctb-knowledge-graph,Integrate KG build workflow,KG build triggered from approved documents through LangGraph orchestration,P0,Must,Knowledge Engineering
-ENG-09,Neo4j community instance,ctb-knowledge-graph,Migrate to Neo4j enterprise,Replace PoC graph database with enterprise cluster,P0,Must,Platform
-ENG-10,FAISS vector index,ctb-vector-embedding,Implement enterprise vector store,Replace FAISS with pgvector or Vertex AI vector search,P0,Must,AI Platform
-ENG-11,KG + embedding combined repo,ctb-knowledge-graph / ctb-vector-embedding,Separate vector service,Split embedding pipeline into dedicated repo for scalability,P1,Must,AI Engineering
-ENG-12,API integration repo,ctb-mcp-gateway,Implement MCP gateway,Convert API integration layer into MCP server for governed access,P0,Must,Platform
-ENG-13,Session state service repo,ctb-orchestration-langgraph,Integrate workflow state management,Replace session service with LangGraph state management and run context,P1,Must,AI Engineering
-ENG-14,Local execution environment,ctb-infra-gcp,Containerize services,Package services as Docker images for deployment,P0,Must,DevOps
-ENG-15,VM-based runtime,ctb-infra-gcp,Deploy services on GKE,Migrate runtime environment from on-prem VM to GKE cluster,P0,Must,Platform
-ENG-16,No event contracts,ctb-data-contracts,Define event schemas,Create standard schemas for Pub/Sub workflow events,P1,Must,Platform
-ENG-17,No metadata lineage,ctb-mcp-gateway,Integrate metadata platform,Publish processing metadata to enterprise metadata catalogue,P2,Would,Data Governance
-ENG-18,LLM calls embedded in agent code,ctb-reauthor-workflow,Integrate Group AI platform,Replace direct LLM calls with UDI SDK integration,P0,Must,AI Engineering
-ENG-19,Prompt definitions in code,ctb-reauthor-workflow,Externalize prompts,Move prompts to versioned YAML configuration files,P1,Must,AI Engineering
-ENG-20,No centralized logging,ctb-shared-libraries,Implement observability,"Add centralized logging, tracing, and monitoring for workflows",P1,Must,Platform
-ENG-21,No security gateway,ctb-mcp-gateway,Implement authentication/authorization,Enforce access control through MCP gateway,P1,Must,Security
-ENG-22,UI reads only processing output,ctb-query-api,Implement hybrid retrieval API,Provide KG + vector query interface for knowledge retrieval,P2,Would,Application
-,,,,,,,
-,,,,,,,
-Core Platform Repositories,,,,,,,
-Repository,Description,,,,,,
-ctb-ingestion-pipelines,"Handles document ingestion, preprocessing, and chunking of input documents before they enter the AI workflows.",,,,,,
-ctb-orchestration-langgraph,"Provides the centralized workflow orchestration layer using LangGraph to coordinate the execution of reauthoring, validation, and knowledge processing pipelines.",,,,,,
-ctb-reauthor-workflow,Contains the AI agents responsible for reauthoring policy and procedure documents using LLM-based processing pipelines.,,,,,,
-ctb-validation-workflow,Implements the validation agents responsible for evaluating the reauthored content against the source documents and identifying information gaps or inconsistencies.,,,,,,
-ctb-knowledge-graph,Responsible for extracting ontology-aligned artefacts from approved documents and loading entities and relationships into the knowledge graph platform.,,,,,,
-ctb-vector-embedding,Generates vector embeddings for document content and maintains the vector index used for semantic retrieval.,,,,,,
-,,,,,,,
-Platform Governance and Integration,,,,,,,
-Repository,Description,,,,,,
-ctb-mcp-gateway,"Provides a governed gateway for accessing platform resources such as storage, knowledge graph databases, vector stores, and metadata services.",,,,,,
-ctb-query-api,Implements the retrieval APIs used for hybrid knowledge retrieval combining knowledge graph queries and vector-based search.,,,,,,
-,,,,,,,
-Application Layer,,,,,,,
-Repository,Description,,,,,,
-ctb-workbench-ui,"Provides the user interface and backend services for document upload, review of reauthoring outputs, validation results, and approval workflows.",,,,,,
-,,,,,,,
-Shared Platform Components,,,,,,,
-Repository,Description,,,,,,
-ctb-shared-libraries,"Contains shared utilities such as logging, configuration management, and common models used across the CTB platform services.",,,,,,
-ctb-data-contracts,"Defines the event schemas, API contracts, and data models used for communication between platform components.",,,,,,
-ctb-ontology,Maintains the canonical ontology definitions used for knowledge graph generation and artefact mapping.,,,,,,
-ctb-infra-gcp,Contains infrastructure-as-code definitions for provisioning and deploying platform services within the GCP environment.,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-Governance Body,Purpose,When It Applies,Owner,,,,
-CIB Design Studio,Primary architecture review forum responsible for approving both data architecture and technical architecture for CIB solutions,Required for all CIB solution designs and architectural changes,CIB Architecture,,,,
-CTO Design Authority,Enterprise architecture review for solutions impacting multiple lines of business or shared enterprise platforms,Required when the architecture has cross-LOB impact,Enterprise Architecture,,,,
-Infrastructure Architecture Review,Approval of new infrastructure provisioning or modifications to existing infrastructure,Required when the solution introduces new infrastructure components or platform changes,Infrastructure Architecture Team,,,,
-Security Architecture Review,"Validation of security controls, data classification, access models, and compliance requirements",Required for all production deployments,Security Architecture Team,,,,
-AIRCO Governance,Governance review for solutions leveraging AI / LLM technologies to ensure responsible AI adoption,Required for applications incorporating AI capabilities,AIRCO Governance Board,,,,
+﻿ID,Current PoC Component,Target Repository,Refactoring Task,Description,Priority,Must/Would,Owner,
+ENG-01,Reauthor + Validation repo,ctb-reauthor-workflow / ctb-validation-workflow,Split workflows into separate services,Separate reauthor and validation agents into independent repos to avoid monolithic agent codebase,P0,Must,AI Engineering,
+ENG-02,Reauthor pipeline triggered manually,ctb-orchestration-langgraph,Introduce LangGraph orchestration,Move agent execution into LangGraph workflows triggered by platform events,P0,Must,AI Engineering,
+ENG-03,Manual document input for reauthor,ctb-ingestion-pipelines,Implement ingestion service,Create preprocessing and chunking services for structured document ingestion,P0,Must,Data Engineering,
+ENG-04,Manual execution pipelines,ctb-orchestration-langgraph,Implement event-driven workflow,Trigger workflows using Pub/Sub events instead of manual execution,P0,Must,Platform,
+ENG-05,Output stored in local directories,ctb-mcp-gateway,Implement governed storage access,Replace local filesystem outputs with GCS + BigQuery access through MCP tools,P0,Must,Platform,
+ENG-06,UI reads local output files,ctb-workbench-ui,Integrate backend service APIs,Modify UI backend to retrieve outputs from platform storage instead of file system,P1,Must,Application,
+ENG-07,UI manual upload,ctb-ingestion-pipelines,Integrate UI ingestion API,File uploads from UI trigger ingestion pipeline,P1,Must,Application,
+ENG-08,KG repo using manual input,ctb-knowledge-graph,Integrate KG build workflow,KG build triggered from approved documents through LangGraph orchestration,P0,Must,Knowledge Engineering,
+ENG-09,Neo4j community instance,ctb-knowledge-graph,Migrate to Neo4j enterprise,Replace PoC graph database with enterprise cluster,P0,Must,Platform,
+ENG-10,FAISS vector index,ctb-vector-embedding,Implement enterprise vector store,Replace FAISS with pgvector or Vertex AI vector search,P0,Must,AI Platform,
+ENG-11,KG + embedding combined repo,ctb-knowledge-graph / ctb-vector-embedding,Separate vector service,Split embedding pipeline into dedicated repo for scalability,P1,Must,AI Engineering,
+ENG-12,API integration repo,ctb-mcp-gateway,Implement MCP gateway,Convert API integration layer into MCP server for governed access,P0,Must,Platform,
+ENG-13,Session state service repo,ctb-orchestration-langgraph,Integrate workflow state management,Replace session service with LangGraph state management and run context,P1,Must,AI Engineering,
+ENG-14,Local execution environment,ctb-infra-gcp,Containerize services,Package services as Docker images for deployment,P0,Must,DevOps,
+ENG-15,VM-based runtime,ctb-infra-gcp,Deploy services on GKE,Migrate runtime environment from on-prem VM to GKE cluster,P0,Must,Platform,
+ENG-16,No event contracts,ctb-data-contracts,Define event schemas,Create standard schemas for Pub/Sub workflow events,P1,Must,Platform,
+ENG-17,No metadata lineage,ctb-mcp-gateway,Integrate metadata platform,Publish processing metadata to enterprise metadata catalogue,P2,Would,Data Governance,
+ENG-18,LLM calls embedded in agent code,ctb-reauthor-workflow,Integrate Group AI platform,Replace direct LLM calls with UDI SDK integration,P0,Must,AI Engineering,
+ENG-19,Prompt definitions in code,ctb-reauthor-workflow,Externalize prompts,Move prompts to versioned YAML configuration files,P1,Must,AI Engineering,
+ENG-20,No centralized logging,ctb-shared-libraries,Implement observability,"Add centralized logging, tracing, and monitoring for workflows",P1,Must,Platform,
+ENG-21,No security gateway,ctb-mcp-gateway,Implement authentication/authorization,Enforce access control through MCP gateway,P1,Must,Security,
+ENG-22,UI reads only processing output,ctb-query-api,Implement hybrid retrieval API,Provide KG + vector query interface for knowledge retrieval,P2,Would,Application,
+,,,,,,,,
+,,,,,,,,
+Core Platform Repositories,,,,,,,,
+Repository,Description,,,,,,,
+ctb-ingestion-pipelines,"Handles document ingestion, preprocessing, and chunking of input documents before they enter the AI workflows.",,,,,,,
+ctb-orchestration-langgraph,"Provides the centralized workflow orchestration layer using LangGraph to coordinate the execution of reauthoring, validation, and knowledge processing pipelines.",,,,,,,
+ctb-reauthor-workflow,Contains the AI agents responsible for reauthoring policy and procedure documents using LLM-based processing pipelines.,,,,,,,
+ctb-validation-workflow,Implements the validation agents responsible for evaluating the reauthored content against the source documents and identifying information gaps or inconsistencies.,,,,,,,
+ctb-knowledge-graph,Responsible for extracting ontology-aligned artefacts from approved documents and loading entities and relationships into the knowledge graph platform.,,,,,,,
+ctb-vector-embedding,Generates vector embeddings for document content and maintains the vector index used for semantic retrieval.,,,,,,,
+,,,,,,,,
+Platform Governance and Integration,,,,,,,,
+Repository,Description,,,,,,,
+ctb-mcp-gateway,"Provides a governed gateway for accessing platform resources such as storage, knowledge graph databases, vector stores, and metadata services.",,,,,,,
+ctb-query-api,Implements the retrieval APIs used for hybrid knowledge retrieval combining knowledge graph queries and vector-based search.,,,,,,,
+,,,,,,,,
+Application Layer,,,,,,,,
+Repository,Description,,,,,,,
+ctb-workbench-ui,"Provides the user interface and backend services for document upload, review of reauthoring outputs, validation results, and approval workflows.",,,,,,,
+,,,,,,,,
+Shared Platform Components,,,,,,,,
+Repository,Description,,,,,,,
+ctb-shared-libraries,"Contains shared utilities such as logging, configuration management, and common models used across the CTB platform services.",,,,,,,
+ctb-data-contracts,"Defines the event schemas, API contracts, and data models used for communication between platform components.",,,,,,,
+ctb-ontology,Maintains the canonical ontology definitions used for knowledge graph generation and artefact mapping.,,,,,,,
+ctb-infra-gcp,Contains infrastructure-as-code definitions for provisioning and deploying platform services within the GCP environment.,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+Governance Body,Purpose,When It Applies,Owner,,,,,
+CIB Design Studio,Primary architecture review forum responsible for approving both data architecture and technical architecture for CIB solutions,Required for all CIB solution designs and architectural changes,CIB Architecture,,,,,
+CTO Design Authority,Enterprise architecture review for solutions impacting multiple lines of business or shared enterprise platforms,Required when the architecture has cross-LOB impact,Enterprise Architecture,,,,,
+Infrastructure Architecture Review,Approval of new infrastructure provisioning or modifications to existing infrastructure,Required when the solution introduces new infrastructure components or platform changes,Infrastructure Architecture Team,,,,,
+Security Architecture Review,"Validation of security controls, data classification, access models, and compliance requirements",Required for all production deployments,Security Architecture Team,,,,,
+AIRCO Governance,Governance review for solutions leveraging AI / LLM technologies to ensure responsible AI adoption,Required for applications incorporating AI capabilities,AIRCO Governance Board,,,,,
+,,,,,,,,
+,,,,,,,,
+ID,Phase,Current PoC Component,Target Repository,Refactoring Task,Description,Priority,Must/Would,Owner
+ENG-01,Release 1,Reauthor + Validation repo,ctb-reauthor-validation-service,Consolidate workflows into production service,Implement FastAPI service hosting reauthor and validation pipelines for production,P0,Must,AI Engineering
+ENG-03,Release 1,Manual document input for reauthor,ctb-ingestion-pipelines,Implement ingestion service,Create preprocessing and chunking services for structured document ingestion,P0,Must,Data Engineering
+ENG-14,Release 1,Local execution environment,ctb-infra-gcp,Containerize services,Package services as Docker images for deployment,P0,Must,DevOps
+ENG-15,Release 1,VM-based runtime,ctb-infra-gcp,Deploy services on GKE,Migrate runtime environment from on-prem VM to GKE cluster,P0,Must,Platform
+ENG-18,Release 1,LLM calls embedded in agent code,ctb-reauthor-validation-service,Integrate Group AI platform,Replace direct LLM calls with UDI SDK integration,P0,Must,AI Engineering
+ENG-06,Release 1,UI reads local output files,ctb-workbench-ui,Integrate backend service APIs,Modify UI backend to retrieve outputs from platform storage instead of file system,P1,Must,Application
+ENG-07,Release 1,UI manual upload,ctb-ingestion-pipelines,Integrate UI ingestion API,File uploads from UI trigger ingestion pipeline,P1,Must,Application
+ENG-19,Release 1,Prompt definitions in code,ctb-reauthor-validation-service,Externalize prompts,Move prompts to versioned YAML configuration files,P1,Must,AI Engineering
+ENG-20,Release 1,No centralized logging,ctb-shared-libraries,Implement observability,"Add centralized logging, tracing, and monitoring for services",P1,Must,Platform
+ENG-02,Release 2,Reauthor pipeline triggered manually,ctb-orchestration-langgraph,Introduce LangGraph orchestration,Move agent execution into LangGraph workflows triggered by platform events,P0,Must,AI Engineering
+ENG-04,Release 2,Manual execution pipelines,ctb-orchestration-langgraph,Implement event-driven workflow,Trigger workflows using Pub/Sub events instead of manual execution,P0,Must,Platform
+ENG-05,Release 2,Output stored in local directories,ctb-mcp-gateway,Implement governed storage access,Replace local filesystem outputs with GCS + BigQuery access through MCP tools,P0,Must,Platform
+ENG-08,Release 2,KG repo using manual input,ctb-knowledge-graph,Integrate KG build workflow,KG build triggered from approved documents through orchestration workflow,P0,Must,Knowledge Engineering
+ENG-09,Release 2,Neo4j community instance,ctb-knowledge-graph,Migrate to Neo4j enterprise,Replace PoC graph database with enterprise cluster,P0,Must,Platform
+ENG-10,Release 2,FAISS vector index,ctb-vector-embedding,Implement enterprise vector store,Replace FAISS with pgvector or Vertex AI vector search,P0,Must,AI Platform
+ENG-12,Release 2,API integration repo,ctb-mcp-gateway,Implement MCP gateway,Convert API integration layer into MCP server for governed access,P0,Must,Platform
+ENG-11,Release 2,KG + embedding combined repo,ctb-knowledge-graph / ctb-vector-embedding,Separate vector service,Split embedding pipeline into dedicated repo for scalability,P1,Must,AI Engineering
+ENG-13,Release 2,Session state service repo,ctb-orchestration-langgraph,Integrate workflow state management,Replace session service with LangGraph state management and run context,P1,Must,AI Engineering
+ENG-16,Release 2,No event contracts,ctb-data-contracts,Define event schemas,Create standard schemas for Pub/Sub workflow events,P1,Must,Platform
+ENG-21,Release 2,No security gateway,ctb-mcp-gateway,Implement authentication/authorization,Enforce access control through MCP gateway,P1,Must,Security
+ENG-17,Release 2,No metadata lineage,ctb-mcp-gateway,Integrate metadata platform,Publish processing metadata to enterprise metadata catalogue,P2,Would,Data Governance
+ENG-22,Release 2,UI reads only processing output,ctb-query-api,Implement hybrid retrieval API,Provide KG + vector query interface for knowledge retrieval,P2,Would,Application

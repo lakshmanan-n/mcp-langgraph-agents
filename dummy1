@@ -553,3 +553,138 @@ This approval process ensures that the solution architecture is validated across
 
 Architecture Governance Bodies
 
+
+
+
+Purpose of this Document
+
+The purpose of this document is to outline the proposed codebase refactoring approach required to transition the current Proof of Concept (PoC) implementation into a production-aligned architecture for the Codify the Bank (CTB) platform.
+
+This document introduces a phased refactoring strategy to allow incremental delivery while progressively aligning the platform with the long-term target architecture.
+
+Specifically, this document:
+
+• Provides a summary of the current PoC repository structure and execution flow
+• Describes the Phase 1 production repository structure required for the upcoming release
+• Outlines the Phase 2 platform architecture refactoring planned for subsequent releases
+• Illustrates the refactoring flow between the current implementation and the proposed architecture
+• Defines the engineering backlog required to complete the transition from PoC to production
+
+This document will be used as a working reference for the engineering team to align on the restructuring approach and plan the implementation activities required for the upcoming release.
+
+Refactoring Principles
+
+The proposed restructuring follows a set of key engineering principles to ensure the platform remains scalable and maintainable as the CTB programme evolves.
+
+These principles apply across both implementation phases.
+
+• Separation of responsibilities across repositories to prevent monolithic codebases
+• Progressive introduction of platform architecture capabilities through phased delivery
+• Clear separation between application services, AI processing workflows, and platform infrastructure
+• Alignment with enterprise AI and data platform capabilities
+• Support for future expansion of agent workflows and knowledge services
+
+The phased approach ensures that the platform can evolve from the current PoC implementation into a modular and extensible architecture capable of supporting future phases of the CTB programme.
+
+
+Current Implementation Overview
+
+The current Proof of Concept (PoC) implementation was developed to validate the core capabilities of the Codify the Bank (CTB) platform, focusing on AI-assisted document reauthoring, validation, and knowledge extraction.
+
+The solution demonstrates the feasibility of using LLM-driven agents to process policy and procedure documents and generate structured knowledge artefacts for downstream use cases.
+
+The PoC implementation consists of several independent repositories developed primarily for functional validation.
+
+The reauthoring and validation workflows were implemented within a single repository and executed using manual document inputs. The generated outputs were written to local file system directories, which were subsequently consumed by the UI layer to display the original content, reauthored output, and validation results.
+
+A separate UI application was developed using ReactJS for the frontend and a Spring Boot backend service. The UI enables users to upload input documents and visualize the outputs produced by the reauthoring and validation processes.
+
+Additionally, a knowledge graph and embedding pipeline was implemented in a separate repository. This component processes manually supplied input files to extract structured artefacts, load entities and relationships into a Neo4j community instance, and generate vector embeddings using a FAISS-based index.
+
+Supporting capabilities were also developed through additional repositories, including a shared API integration repository for common service interactions and a session state and persistence service used to manage backend cache and runtime state during execution.
+
+Integration with the enterprise AI platform is achieved through the UDI SDK, which is consumed as a shared library from the organisation’s common capability repository.
+
+While the current implementation successfully validates the core functional concepts, the architecture relies on manual execution flows, local storage mechanisms, and on-premise runtime environments.
+
+As a result, the existing structure requires refactoring to support a production-ready architecture deployed on the authorised GCP platform.
+
+
+Phased Refactoring Strategy
+
+To reduce platform dependencies and accelerate the initial production deployment, the refactoring approach is structured into two implementation phases.
+
+This approach allows the engineering team to deliver the core functionality required for the upcoming release while progressively introducing the full platform architecture in subsequent releases.
+
+
+Phase 1 – Productionisation of Core Reauthoring Capability
+
+Phase 1 focuses on transitioning the PoC solution into a production-ready service capable of supporting AI-assisted document reauthoring and validation workflows.
+
+To simplify the initial production deployment, this phase introduces a streamlined architecture that consolidates the reauthoring and validation pipelines into a single service and removes several platform components that are not required for the first release.
+
+The Phase 1 architecture includes:
+
+• CTB Workbench UI for document upload and review
+• A FastAPI-based service implementing the reauthoring and validation workflows
+• Document preprocessing and chunking pipelines
+• Integration with the enterprise AI platform through the UDI SDK
+• Storage of processed documents and outputs within the authorised GCP storage platform
+
+Several advanced platform capabilities that were explored during the PoC are intentionally deferred to a later phase. These include workflow orchestration frameworks, knowledge graph generation, vector embeddings, and governed service gateways.
+
+This simplified architecture allows the team to focus on stabilising the core functionality while ensuring that the platform is deployed within the authorised cloud environment.
+
+
+Phase 2 – Knowledge Platform and Workflow Architecture
+
+Phase 2 will extend the platform architecture to introduce the full knowledge management capabilities envisioned for the CTB programme.
+
+This phase will introduce additional platform components required to support scalable AI workflows and enterprise knowledge management use cases.
+
+The Phase 2 architecture will introduce:
+
+• Event-driven workflow orchestration using LangGraph
+• Decoupled AI processing workflows for reauthoring, validation, knowledge extraction, and embeddings
+• Ontology-driven knowledge graph generation
+• Vector embedding generation and semantic retrieval services
+• Governed access to storage and platform services through the MCP gateway
+• Hybrid knowledge retrieval APIs to support chatbot and workbench query capabilities
+
+These capabilities will enable the platform to evolve from a document processing system into a scalable knowledge platform supporting policy and procedure intelligence across the organisation.
+
+
+Proposed Repository Structure
+
+To support the transition from the current PoC implementation to the production platform architecture, the CTB codebase will be restructured into a set of modular repositories aligned with the phased architecture approach.
+
+The repository structure for Phase 1 focuses on stabilising the application services required for document processing and user interaction.
+
+The Phase 2 repository structure will introduce additional platform repositories required to support workflow orchestration, knowledge processing, and platform governance capabilities.
+
+
+Refactored Code Flow Overview
+
+The refactored architecture introduces a structured processing pipeline that separates document ingestion, AI processing workflows, and user interaction into independent platform components.
+
+In Phase 1, document processing begins when a document is uploaded through the CTB Workbench UI.
+
+The document is processed by the ingestion pipeline, which performs preprocessing and structural extraction. The document is converted into a normalized format and divided into logical sections that can be processed independently.
+
+The reauthoring workflow applies a set of LLM-powered agents to rewrite document sections into a simplified and standardized format. The validation workflow then evaluates the generated content against the original document to detect potential information loss or inconsistencies.
+
+Following validation, the outputs are presented to users through the CTB Workbench UI for review and approval.
+
+Future phases will introduce event-driven orchestration, knowledge extraction workflows, and vector embedding generation triggered after document approval.
+
+
+Conclusion
+
+The proposed refactoring approach provides a structured path for transitioning the current PoC implementation into a production-ready architecture aligned with the Codify the Bank (CTB) platform strategy.
+
+By adopting a phased delivery approach, the platform can achieve early production deployment of the core document reauthoring capability while progressively introducing the broader knowledge platform architecture in subsequent releases.
+
+This strategy allows the engineering team to stabilise the core application services while ensuring that the platform remains aligned with the long-term architectural vision.
+
+The engineering refactoring backlog outlined in this document provides a prioritized set of implementation activities required to achieve this transition.
+
