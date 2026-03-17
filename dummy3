@@ -1,0 +1,281 @@
+CTB Architecture Overview – Phased Delivery
+
+The Codify the Bank (CTB) platform will be delivered through a phased implementation approach to enable early production deployment while progressively introducing the broader knowledge platform architecture.
+
+The original target architecture was designed as a full end-to-end agentic AI platform supporting document reauthoring, validation, knowledge graph generation, vector embeddings, and governed retrieval. Following engineering review and release planning, the implementation has now been split into two delivery phases.
+	•	Release 1 focuses on productionising the core document reauthoring and validation capability on the authorised GCP platform using a simplified service model.
+	•	Release 2 introduces the broader knowledge platform architecture, including workflow orchestration, governed service access, knowledge graph generation, vector embeddings, and retrieval services.
+
+This phased approach reduces implementation risk, aligns delivery with engineering capacity, and ensures the platform remains aligned with the long-term CTB target architecture.
+
+⸻
+
+Release 1 Architecture – Production Foundation
+
+Overview
+
+The Release 1 architecture establishes the initial production foundation for CTB by enabling AI-assisted document reauthoring and validation within the authorised CIB GCP platform boundary.
+
+This release focuses on the minimum set of capabilities required to transition the current PoC into a production-aligned solution. The design intentionally simplifies the architecture by removing advanced orchestration and knowledge platform components that are not required for the first release.
+
+The Release 1 solution is built on a layered pattern:
+
+User Interaction → Application Backend → Document Processing → Platform Shared Services → Storage & Metadata
+
+The architecture is designed to be stable, productionisable, and aligned with enterprise AI and cloud platform standards, while also establishing the foundation for future expansion.
+
+⸻
+
+Release 1 End-to-End Flow
+	1.	Document Upload and User Interaction
+Documents are uploaded through the CTB Workbench UI, which provides the user-facing interface for document submission, display of reauthored content, validation outputs, and SME review.
+	2.	Application Backend Processing
+The CTB Processing API Service acts as the central backend service for Release 1. It receives requests from the workbench, coordinates document processing, triggers the AI pipelines, and manages persistence of outputs and metadata.
+	3.	Document Processing
+Input documents are passed through a deterministic document preprocessing stage to convert raw files into a normalized structure. A subsequent chunking step segments the content into logical sections suitable for downstream AI processing.
+	4.	Reauthoring and Validation Pipelines
+The reauthor pipeline applies LLM-powered processing to rewrite policy and procedure content into the required target format. The validation pipeline then compares the generated output with the source content to identify potential information gaps, loss, or inconsistencies.
+	5.	Enterprise AI Platform Integration
+AI processing is integrated with the enterprise Group AI platform through UDI shared services, ensuring that model access, authentication, caching, and other platform capabilities remain aligned with enterprise standards.
+	6.	Storage and Metadata Persistence
+Raw documents, processed outputs, and validation artefacts are persisted in GCS, while operational processing metadata is captured in BigQuery to support traceability, operational monitoring, and future analytics.
+	7.	Human Review and Approval
+Processed outputs are presented back to users through the workbench interface for SME review and approval. This provides a human control point before any future downstream knowledge processing is introduced.
+
+⸻
+
+Release 1 Governance and Control Points
+	•	Enterprise AI access through UDI shared services
+All LLM interactions are routed through the approved enterprise AI integration path, ensuring model access, governance, and monitoring align with organisation-wide standards.
+	•	Controlled storage and metadata persistence
+Outputs are persisted in platform-managed GCS and BigQuery services rather than local file systems, improving auditability and production readiness.
+	•	Human-in-the-loop validation
+SME review remains a core control point in Release 1 to ensure generated outputs are reviewed before adoption.
+
+⸻
+
+Release 1 Design Principles
+	•	Production-first simplification
+The Release 1 design deliberately minimizes architectural complexity to support a stable first production deployment.
+	•	Clear separation of application, processing, and platform capabilities
+The architecture separates UI/backend responsibilities from document processing and platform shared services.
+	•	Enterprise AI alignment
+Model access is integrated through the approved enterprise AI platform rather than direct unmanaged model invocation.
+	•	Foundation for future evolution
+The Release 1 structure is intentionally designed so that additional orchestration and knowledge capabilities can be introduced in later phases without major redesign.
+
+⸻
+
+Release 1 Architecture Design Considerations
+
+1. Simplified Production Architecture
+
+Release 1 intentionally adopts a simplified architecture to accelerate productionisation of the current PoC capability.
+
+Rationale:
+Introducing the full target-state platform in the initial release would increase implementation complexity and platform dependencies without proportionate value for the immediate release scope.
+
+⸻
+
+2. Centralised Application Backend
+
+The CTB Processing API Service acts as the central backend component for coordinating document upload, preprocessing, reauthoring, validation, and result management.
+
+Rationale:
+A single application backend reduces operational complexity for Release 1 while providing a clear integration point for the workbench UI.
+
+⸻
+
+3. Separation of Document Preparation and AI Processing
+
+Document preprocessing and chunking are treated as distinct document processing capabilities rather than being embedded directly into the AI pipelines.
+
+Rationale:
+This maintains clear separation between deterministic document preparation and LLM-powered transformation, improving maintainability and future extensibility.
+
+⸻
+
+4. Human Review as a Release 1 Control Point
+
+SME review remains an explicit step in the Release 1 workflow.
+
+Rationale:
+Given the regulated nature of policy and procedure content, human validation is required to ensure that AI-generated outputs remain acceptable for business use.
+
+⸻
+
+5. Platform-Managed Storage
+
+All artefacts and metadata are persisted in managed GCP services.
+
+Rationale:
+Moving away from local filesystem persistence is a key production readiness requirement and improves governance, auditability, and operational supportability.
+
+⸻
+
+Release 1 Summary
+
+Release 1 provides the production foundation for CTB by moving the core reauthoring and validation capability onto the authorised GCP platform using a simplified but enterprise-aligned architecture. It focuses on production stability, platform migration, and enterprise AI integration, while deferring advanced orchestration and knowledge platform capabilities to a later phase.
+
+⸻
+
+Release 2 Architecture – Knowledge Platform Expansion
+
+Overview
+
+Release 2 extends CTB from a production document-processing service into a broader knowledge platform architecture.
+
+This phase introduces the architectural components required to support stateful workflow orchestration, governed platform access, ontology-aligned knowledge extraction, vector embeddings, and hybrid retrieval.
+
+The Release 2 architecture is built on a layered pattern:
+
+Ingestion → Canonicalisation → Chunking → Workflow Orchestration → AI Workflows → Governance & Integration → Knowledge Stores → Access
+
+This architecture is designed to support more advanced agent workflows and enterprise knowledge use cases across policy and procedure content.
+
+⸻
+
+Release 2 End-to-End Flow
+	1.	Ingestion
+Policy and procedure content is onboarded from approved input sources and persisted in the governed platform storage layer. Documents are versioned and registered with operational metadata.
+	2.	Preprocessing and Canonicalisation
+Raw documents are converted into a canonical chapter/section representation to standardise downstream processing and preserve lineage between source and generated artefacts.
+	3.	Chunking
+Canonical content is segmented into chunks suitable for downstream embedding generation, knowledge extraction, and retrieval use cases.
+	4.	Stateful Workflow Orchestration
+Workflow execution is coordinated through LangGraph, enabling stateful execution, conditional branching, retries, and support for more advanced agent workflows.
+	5.	Reauthoring and Validation Workflows
+Reauthor and validation workflows become independently orchestrated agent pipelines capable of operating within a broader event-driven architecture.
+	6.	Knowledge Graph and Embedding Workflows
+Once approved, the platform triggers:
+	•	Knowledge graph generation, which extracts ontology-aligned artefacts and loads them into Neo4j
+	•	Embedding generation, which produces vectors and persists them into the selected enterprise vector capability
+	7.	Governed Access via MCP
+Platform interaction with storage, metadata, graph, and vector capabilities is mediated through the MCP gateway, providing controlled and auditable access to shared services.
+	8.	Retrieval and Access Layer
+A query/retrieval API enables hybrid access patterns across graph and vector representations to support future workbench and retrieval use cases.
+
+⸻
+
+Release 2 Governance and Control Points
+	•	LangGraph orchestration for stateful AI workflows
+Provides deterministic orchestration for more advanced multi-stage agent workflows.
+	•	MCP gateway for governed service access
+Ensures consistent control over data access, metadata updates, and downstream platform interactions.
+	•	Ontology-governed knowledge modelling
+Ensures structured knowledge generation remains aligned with the enterprise domain model.
+	•	Metadata, lineage, and observability
+Supports explainability, traceability, and operational insight across the end-to-end processing lifecycle.
+
+⸻
+
+Release 2 Design Principles
+	•	Separation of concerns
+Orchestration, model execution, governed I/O, and knowledge persistence are clearly separated.
+	•	Stateful workflow enablement
+Agent workflows are designed to evolve beyond simple deterministic service execution into reusable stateful orchestration patterns.
+	•	Knowledge platform alignment
+Graph and vector layers are built as complementary capabilities to support future hybrid retrieval.
+	•	Governed extensibility
+The architecture supports future AI-driven automation while preserving enterprise control points.
+
+⸻
+
+Release 2 Architecture Design Considerations
+
+1. Event-Driven Workflow Orchestration
+
+The solution adopts an event-driven workflow model to decouple pipeline stages and support asynchronous execution.
+
+Rationale:
+This improves resilience, modularity, and scalability as the platform evolves.
+
+⸻
+
+2. Stateful Orchestration with LangGraph
+
+LangGraph is introduced to manage complex workflow coordination, state handling, and future multi-agent expansion.
+
+Rationale:
+As the solution moves beyond a deterministic document processing pipeline, stateful orchestration becomes necessary for maintainability and controlled workflow evolution.
+
+⸻
+
+3. Knowledge Graph and Vector Separation
+
+Knowledge graph and vector embeddings are treated as distinct but complementary knowledge representations.
+
+Rationale:
+This supports both structured reasoning and semantic retrieval while allowing each capability to evolve independently.
+
+⸻
+
+4. Snapshot-Aligned Knowledge Builds
+
+Knowledge graph and vector outputs are aligned through shared versioning and snapshot identifiers.
+
+Rationale:
+This ensures retrieval remains consistent across multiple representations of the same approved document set.
+
+⸻
+
+5. Controlled Access Through MCP
+
+All downstream data and platform interactions are routed through a governed integration layer.
+
+Rationale:
+This ensures security, auditability, metadata consistency, and separation between workflow logic and platform access logic.
+
+⸻
+
+6. Ontology Governance
+
+Ontology artefacts remain the canonical knowledge model guiding entity and relationship generation.
+
+Rationale:
+This ensures knowledge extraction remains governed and extensible across future use cases.
+
+⸻
+
+Release 2 Summary
+
+Release 2 introduces the broader CTB knowledge platform architecture, enabling stateful AI workflow orchestration, governed platform integration, structured knowledge generation, and semantic retrieval. This phase transforms CTB from a production document-processing solution into a scalable enterprise knowledge platform.
+
+⸻
+
+Architecture Dependencies by Release
+
+Release 1 Dependencies
+
+The successful delivery of Release 1 depends primarily on:
+	1.	GCP runtime and platform provisioning
+GKE, GCS, BigQuery, and associated cloud platform services must be available and approved.
+	2.	Group AI / UDI integration readiness
+UDI shared services and AI platform onboarding must be confirmed.
+	3.	Workbench integration readiness
+UI and backend changes must be aligned to support the production processing flow.
+	4.	Security and identity integration
+Authentication and authorisation for users and application services must align with enterprise standards.
+
+⸻
+
+Release 2 Dependencies
+
+Release 2 introduces additional strategic dependencies including:
+	1.	Neo4j Enterprise platform provisioning
+	2.	Enterprise vector store selection and onboarding
+	3.	LangGraph runtime and state management design
+	4.	MCP gateway deployment and governance
+	5.	Ontology governance and versioning
+	6.	Metadata / lineage platform readiness
+	7.	Event contracts and workflow event model definition
+
+⸻
+
+Overall Summary
+
+The CTB architecture is now intentionally structured as a two-phase platform evolution:
+	•	Release 1 productionises the core reauthoring and validation capability on GCP using a simplified application and processing architecture.
+	•	Release 2 introduces the full target-state platform architecture required for knowledge graph generation, vector embeddings, governed integration, and future AI-driven knowledge services.
+
+This phased architecture ensures the programme can deliver immediate business value while preserving a clear path to the broader CTB knowledge platform vision.
