@@ -81,3 +81,15 @@ ENG-16,Release 2,No event contracts,ctb-data-contracts,Define event schemas,Crea
 ENG-21,Release 2,No security gateway,ctb-mcp-gateway,Implement authentication/authorization,Enforce access control through MCP gateway,P1,Must,Security
 ENG-17,Release 2,No metadata lineage,ctb-mcp-gateway,Integrate metadata platform,Publish processing metadata to enterprise metadata catalogue,P2,Would,Data Governance
 ENG-22,Release 2,UI reads only processing output,ctb-query-api,Implement hybrid retrieval API,Provide KG + vector query interface for knowledge retrieval,P2,Would,Application
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+Layer,Design Dependency,Description,,,,,,
+Enterprise AI Platform,Group AI platform integration (UDI SDK),"All LLM interactions within the reauthor and validation pipelines depend on onboarding to the Group AI platform through the UDI SDK to ensure model access, governance, monitoring, and guardrail enforcement align with enterprise AI standards.",,,,,,
+Application Integration,Workbench UI and backend integration alignment,"The CTB Processing API Service must align with the Workbench UI contract to support document upload, display of reauthor outputs, validation results, and SME approval workflows.",,,,,,
+Document Processing,Document structure standardisation,The preprocessing stage depends on agreement of a canonical document structure (chapter/section representation) to ensure consistent segmentation and traceability between source documents and downstream processing outputs.,,,,,,
+Security and Identity,Enterprise identity integration,"User authentication and authorisation for document upload, review, and approval workflows must align with enterprise SSO and identity management standards.",,,,,,
+AI Governance,Model access and governance approval,"Use of LLM models for document reauthoring and validation must comply with enterprise AI governance processes, including model access policies and usage monitoring.",,,,,,
