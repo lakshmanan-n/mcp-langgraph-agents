@@ -688,3 +688,46 @@ This strategy allows the engineering team to stabilise the core application serv
 
 The engineering refactoring backlog outlined in this document provides a prioritized set of implementation activities required to achieve this transition.
 
+
+
+
+1. Structural Normalisation (Canonicalisation)
+
+Converting unstructured or semi-structured documents into a consistent canonical representation (e.g., structured markdown or section-based format) where document structure cannot be reliably derived using deterministic parsing alone.
+
+⸻
+
+2. Semantic Segmentation / Chunking
+
+Identifying logical content boundaries based on meaning rather than fixed rules, particularly for complex or inconsistently structured documents.
+
+⸻
+
+3. Content Classification and Tagging
+
+Assigning document types, categories, or business metadata based on contextual understanding of content.
+
+⸻
+
+4. Content Transformation and Standardisation
+
+Applying semantic transformations such as summarisation, rewriting, simplification, or normalisation into a consistent target format or style.
+
+⸻
+
+5. Entity and Relationship Extraction
+
+Extracting structured artefacts (e.g., entities, obligations, controls, relationships) from unstructured text, often aligned to an ontology or business model.
+
+⸻
+
+6. Validation and Semantic Comparison
+
+Comparing source and generated content to detect omissions, inconsistencies, or gaps based on meaning rather than exact text matching.
+
+⸻
+
+7. Embedding Generation for Semantic Retrieval
+
+Generating vector representations of document content using embedding models to enable semantic search, similarity matching, and retrieval use cases.
+This capability is distinct from generative LLM usage and is optimised for vectorisation rather than text generation.
