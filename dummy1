@@ -731,3 +731,15 @@ Comparing source and generated content to detect omissions, inconsistencies, or 
 
 Generating vector representations of document content using embedding models to enable semantic search, similarity matching, and retrieval use cases.
 This capability is distinct from generative LLM usage and is optimised for vectorisation rather than text generation.
+
+We connected with Annie and Prasanna today as part of the proposed plan to share the CXO Refinery Neo4j environment with the Codify the Bank (CTB) project.
+
+We understand that this may involve additional costs from both a licensing and operational perspective, and Bill has agreed to further assess and provide clarity on the cost implications.
+
+While we recognise that the full process and approvals for production readiness will take time, we would like to proceed with moving from the current tactical Neo4j Community setup to the CXO Neo4j Enterprise environment at the earliest for development purposes.
+
+Prasanna has requested your confirmation to proceed with the development environment migration.
+
+Could you please let us know if you have any questions and confirm if we can proceed with using the development environment?
+
+We will schedule a follow-up session to discuss and agree on the cost arrangements as required.
