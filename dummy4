@@ -1,0 +1,221 @@
+Unstructured Data and Knowledge Domain Prioritisation for AI Use Cases
+
+1. Purpose
+
+This page provides an initial prioritisation of:
+	•	unstructured and semi-structured data types to be addressed by the workstream
+	•	knowledge domains to be prioritised
+	•	the method used to derive this view from current AI use case descriptions and architecture discussions
+
+This is intended to support immediate programme decisions and provide a first-cut view for refinement as use case discovery progresses.
+
+2. Context
+
+The bank is building a trusted, AI-ready data foundation to accelerate decision-making, enable responsible AI solutions, and drive measurable business outcomes.
+
+As part of this, the Unstructured Data for AI workstream is focusing on establishing a strategic approach for how unstructured and semi-structured content is:
+	•	identified
+	•	prioritised
+	•	ingested
+	•	processed
+	•	governed
+	•	made available for AI use cases
+
+At this stage, a full source-level inventory is not yet available for every use case. Therefore, the initial prioritisation is being derived from:
+	•	current AI use case descriptions
+	•	architecture discussions with use case leads
+	•	known reference implementations where more detail already exists
+
+3. Approach Used
+
+The initial prioritisation is being developed at two levels:
+
+Level 1 — Data type / modality by use case
+
+Where detailed source information is not yet available, the required data is represented by type, for example:
+	•	documents
+	•	emails
+	•	audio
+	•	chat
+	•	images
+	•	transcripts
+	•	semi-structured records
+
+Level 2 — Named source examples
+
+Where architecture understanding is more mature, the prioritisation can be extended to specific named sources or platforms.
+
+For example:
+	•	policy and procedure document repositories
+	•	contact centre call platforms
+	•	knowledge management systems
+	•	chat platforms
+
+This allows the workstream to respond quickly while still providing a path toward a more detailed source inventory.
+
+4. Prioritisation Principles
+
+The following principles have been used to determine priority:
+	1.	Relevance to active AI use cases
+Priority is given to data types and domains already required by in-flight or approved use cases.
+	2.	Reuse potential across multiple use cases
+Priority is given to data that supports more than one AI use case or pattern.
+	3.	Strategic importance to enterprise AI
+Priority is given to data types that are foundational for retrieval, grounding, search, knowledge access, and automation.
+	4.	Standardisation opportunity
+Priority is given to areas where delivery is currently fragmented and would benefit from shared services and controls.
+	5.	Feasibility for Q2 progression
+Priority is given to areas where enough business and architecture input exists to shape initial standards and target architecture.
+
+5. Initial Priority Unstructured Data Types
+
+The following data types are proposed as the initial priority categories for the workstream.
+
+Priority Data Type
+Description
+Why Prioritised
+Documents
+Policies, procedures, manuals, reports, guidance, contracts, knowledge artefacts
+Common across multiple AI use cases and foundational for retrieval, summarisation, and knowledge access
+Audio and transcripts
+Contact centre recordings, voice interactions, transcribed conversations
+Important for customer interaction use cases and requires standardised processing and governance
+Chat and conversational logs
+Live chat, chatbot conversations, agent/customer messaging
+Increasingly relevant for customer and service use cases; overlaps with retrieval and insight generation
+Emails and communications
+Email content and associated message history where relevant
+High business value in many use cases, but requires careful control and governance
+Images and scanned content
+Scanned documents, screenshots, image-based artefacts
+Relevant where content is not born-digital and needs extraction or OCR
+Semi-structured business content
+Forms, exported records, metadata-rich files, structured attachments, logs
+Important bridge between structured and unstructured processing; often used alongside documents and communications
+
+6. Initial Priority Knowledge Domains
+
+The following knowledge domains are proposed as the initial priority areas.
+
+Priority Knowledge Domain
+Description
+Why Prioritised
+Policies and procedures / bank operating knowledge
+Internal policies, procedures, control documents, operating guidance
+Directly supports Codifying the Bank and similar knowledge-heavy AI use cases
+Customer interaction and servicing knowledge
+Contact centre interactions, customer journeys, servicing conversations, support artefacts
+Important for customer journey and service optimisation use cases
+Enterprise knowledge artefacts
+Internal knowledge repositories, guidance content, managed knowledge assets, support content
+Supports knowledge management, enterprise search, chatbot, and retrieval-based AI use cases
+
+Candidate domains to validate as discovery progresses
+
+These may become priority domains depending on the broader use case portfolio:
+	•	product knowledge
+	•	risk and control knowledge
+	•	operational process knowledge
+	•	service and support knowledge
+	•	regulatory and compliance knowledge
+
+
+7. Initial Use Case Mapping
+
+The table below shows how the current reference use cases map to priority data types and knowledge domains.
+
+Priority Data Types
+Known / Likely Sources
+Priority Knowledge Domain
+Notes
+Codifying the Bank
+Documents, semi-structured business content
+Policy and procedure repositories, internal artefacts
+Policies and procedures / bank operating knowledge
+Strong document-centric pattern; source detail more mature
+Customer Journey Insights
+Audio and transcripts, chat and conversational logs, semi-structured records
+Contact centre call platforms, chat platforms, transcript outputs
+Customer interaction and servicing knowledge
+Strong audio/chat-centric pattern
+Knowledge Management System (KMS)
+Documents, enterprise knowledge artefacts, metadata-rich content
+Knowledge repositories, content management platform, blob/document stores
+Enterprise knowledge artefacts
+Strong retrieval and knowledge access pattern
+
+
+8. Current Position
+
+Based on the work completed so far, the current position is:
+	•	initial prioritisation is underway
+	•	the first cut can be derived from AI use case descriptions and architecture discussions
+	•	specific source-level detail is available only for some use cases at this stage
+	•	the most immediate priority areas are:
+	•	documents
+	•	audio/transcripts
+	•	chat/conversational logs
+	•	enterprise knowledge artefacts
+	•	policy/procedure knowledge
+	•	customer servicing knowledge
+
+This is sufficient for a first strategic view, but it will need to be refined as discovery continues.
+
+9. Recommendation
+
+The workstream should proceed with the following immediate prioritisation:
+
+Prioritise these unstructured data types first
+	•	documents
+	•	audio and transcripts
+	•	chat and conversational logs
+	•	enterprise knowledge artefacts
+	•	semi-structured business content
+
+Prioritise these knowledge domains first
+	•	policies and procedures / bank operating knowledge
+	•	customer interaction and servicing knowledge
+	•	enterprise knowledge artefacts
+
+Use this operating approach
+	•	classify needs by data type and knowledge domain first
+	•	add specific named sources where architecture detail is already available
+	•	refine the prioritisation iteratively as use case discovery progresses
+
+
+10. Next Steps
+	1.	Review the current AI use case catalogue and identify which use cases rely on unstructured or semi-structured data.
+	2.	Classify each relevant use case by:
+	•	priority data type
+	•	priority knowledge domain
+	•	known source examples
+	3.	Extend the source inventory where deeper architecture knowledge already exists.
+	4.	Use the output to inform:
+	•	source inventory
+	•	capability prioritisation
+	•	reference architecture
+	•	strategic offerings and PoVs
+
+
+11. Proposed Output Format for Ongoing Tracking
+
+The following structure is recommended for the next iteration.
+
+Use Case
+Uses Unstructured Data?
+Priority Data Types
+Known Sources
+Priority Knowledge Domain
+Confidence / Maturity
+
+This will allow the workstream to move from a first-cut prioritisation to a more detailed source-aligned inventory over time.
+
+12. Summary
+
+The initial prioritisation should be approached pragmatically:
+	•	use the AI use case descriptions to identify where unstructured data is needed
+	•	classify by data type and knowledge domain first
+	•	add named source detail where known
+	•	refine progressively as architecture discovery continues
+
+This approach enables the workstream to provide an immediate strategic response while building toward a more detailed and governed inventory.
