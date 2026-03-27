@@ -746,12 +746,12 @@ We will schedule a follow-up session to discuss and agree on the cost arrangemen
 
 
 
-Workstream mobilisation started this week, with initial architecture discovery underway for unstructured data for AI.
-	•	Connected with the programme lead and architects across related use cases to establish alignment and understand current delivery scope.
-	•	Reviewed the Codifying the Bank architecture and started understanding the Customer Journey Insights and KMS architectures.
-	•	KMS system demo was partially completed to help understand the current application, storage, and AI integration pattern.
-	•	Began capturing existing unstructured data patterns across use cases, including ingestion, processing, storage, retrieval, and governance components.
-	•	Started developing a cross-use-case capability matrix to identify common capabilities, reuse opportunities, and early architecture gaps.
-	•	Early observation is that multiple patterns already exist across document, audio, and knowledge-management use cases, but they are fragmented and need standardisation.
-	•	Current week has focused on discovery, baseline assessment, and stakeholder alignment to support Q2 architecture and planning.
-	•	Next steps are to complete the remaining architecture deep dives, finalise the capability matrix, identify priority gaps, and begin shaping the reference architecture.
+Workstream started this week.
+	•	Initial discussions completed with programme lead and use case architects.
+	•	Reviewed current architecture across key unstructured data use cases.
+	•	KMS demo partially completed.
+	•	Existing unstructured data patterns have started to be captured.
+	•	Cross-use-case capability mapping has started.
+	•	Early view shows good reuse opportunities, but current approaches are fragmented.
+	•	This week focused on discovery, alignment, and establishing the baseline.
+	•	Next step is to complete the assessment and shape the target architecture.
