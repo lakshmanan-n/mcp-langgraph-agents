@@ -412,3 +412,10 @@ The workstream should use this prioritised scope to:
 The intent is not to produce a complete source-level inventory in the first iteration. Instead, the recommendation is to start with the most relevant content categories and known source platforms, then progressively refine the detail as use case discovery and stakeholder engagement continue.
 
 This approach provides a practical and architecture-led basis for moving forward quickly, while keeping enough flexibility to refine scope as understanding matures.
+
+
+The baseline shows that relevant unstructured and semi-structured data capability patterns already exist across the current reference use cases. These include document-centric, audio and conversational-data, and managed-content retrieval patterns, with capabilities already visible across ingestion, transformation, storage, retrieval, metadata handling, access control, and AI guardrails.
+
+At the same time, the current landscape has evolved in a use-case-led manner, with different implementation approaches across platforms and solutions. This indicates that while useful capabilities already exist, they are not yet aligned to a consistent shared model.
+
+The baseline therefore provides the current-state view needed to support subsequent reference architecture development, capability standardisation, and structured gap assessment for the workstream.
