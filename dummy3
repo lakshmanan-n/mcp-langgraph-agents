@@ -348,3 +348,67 @@ This capability is distinct from generative LLM usage and is optimised for vecto
 	•	object or blob storage
 	•	This second step helps move from a high-level view of content needs into a more specific source inventory.
 	•	The approach allows us to start with the business-relevant content needs first, and then progressively refine the view into actual source systems for architecture, ingestion, and governance planning.
+
+
+
+	8. Baseline Observations from Current Reference Use Cases
+
+The current reference use cases indicate that multiple unstructured and semi-structured data patterns are already emerging across the bank. These patterns are valuable because they provide practical implementation examples, but they have evolved in a use-case-led manner rather than through a single strategic architecture.
+
+Key baseline observations are as follows:
+	•	Document-centric pattern already exists
+Codifying the Bank demonstrates a strong document-led architecture pattern, including ingestion, content preparation, chunking, workflow orchestration, knowledge graph generation, embeddings, vector storage, and retrieval.
+	•	Audio and conversational-data pattern already exists
+Customer Journey / Voice AI demonstrates an audio- and chat-led pattern, including ingestion of call and chat data, landing into cloud storage, transcription, ML-driven transformation, and downstream serving through structured data platforms and APIs.
+	•	Knowledge management and retrieval pattern already exists
+The Knowledge Management System demonstrates a managed-content pattern, including authenticated access, content management services, blob and metadata storage, vector search, caching, and AI guardrails.
+	•	Common capability themes are visible across the use cases
+Across the reference implementations, there is already evidence of common needs around ingestion, transformation, storage, metadata handling, retrieval, access control, and governance.
+	•	Current approaches are fragmented
+Although relevant capabilities already exist, they are implemented differently across projects, platforms, and storage models. This indicates duplication of effort, differing patterns, and a lack of a shared enterprise approach for unstructured data.
+	•	Standardisation opportunity is high
+The baseline suggests strong opportunity to define common patterns for source onboarding, content preparation, metadata handling, retrieval, vector and graph usage, and governance controls.
+
+These baseline observations confirm that the workstream is not starting from zero. Instead, it is building on a set of useful but fragmented delivery patterns that now need to be assessed, aligned, and shaped into a more consistent enterprise architecture.
+
+⸻
+
+9. Recommended Position
+
+The recommended immediate position is to proceed with an initial prioritised scope for the Unstructured Data for AI workstream based on two dimensions:
+	•	priority content categories, representing the main unstructured and semi-structured data types required by the AI use cases
+	•	representative source platforms or systems of record, where these are already known or can be reasonably inferred
+
+Recommended priority content categories
+
+The initial priority content categories are:
+	•	documents
+	•	audio and transcripts
+	•	chat and conversational data
+	•	email and communications
+	•	images and scanned content
+	•	semi-structured business records, including tickets, cases, and work items
+
+Recommended source platform focus
+
+The initial source platform focus should include:
+	•	document and collaboration platforms
+	•	service and case management platforms
+	•	email platforms
+	•	contact centre and chat platforms
+	•	content management systems
+	•	storage and repository platforms
+	•	internal application platforms that generate semi-structured records
+
+Recommended architectural position
+
+The workstream should use this prioritised scope to:
+	•	establish the initial source inventory
+	•	define the baseline architecture view
+	•	support capability prioritisation
+	•	inform the reference architecture
+	•	identify standardisation opportunities and key gaps
+
+The intent is not to produce a complete source-level inventory in the first iteration. Instead, the recommendation is to start with the most relevant content categories and known source platforms, then progressively refine the detail as use case discovery and stakeholder engagement continue.
+
+This approach provides a practical and architecture-led basis for moving forward quickly, while keeping enough flexibility to refine scope as understanding matures.
