@@ -321,3 +321,30 @@ Comparing source and generated content to detect omissions, inconsistencies, or 
 
 Generating vector representations of document content using embedding models to enable semantic search, similarity matching, and retrieval use cases.
 This capability is distinct from generative LLM usage and is optimised for vectorisation rather than text generation.
+
+
+
+•	The initial prioritisation is being developed in two steps.
+	•	Step 1 is to identify the type of unstructured or semi-structured content needed by each AI use case.
+	•	This includes content such as:
+	•	documents
+	•	knowledge articles
+	•	emails
+	•	call recordings
+	•	transcripts
+	•	chat conversations
+	•	scanned documents
+	•	tickets or cases
+	•	This first step helps define the content pattern and modality the workstream needs to support, even where the exact source system is not yet known.
+	•	Step 2 is to identify the source platform or system of record where that content resides, where more detail is available.
+	•	This includes platforms such as:
+	•	Confluence
+	•	SharePoint
+	•	ServiceNow
+	•	Jira
+	•	contact centre platforms
+	•	email platforms
+	•	document repositories
+	•	object or blob storage
+	•	This second step helps move from a high-level view of content needs into a more specific source inventory.
+	•	The approach allows us to start with the business-relevant content needs first, and then progressively refine the view into actual source systems for architecture, ingestion, and governance planning.
