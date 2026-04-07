@@ -419,3 +419,23 @@ The baseline shows that relevant unstructured and semi-structured data capabilit
 At the same time, the current landscape has evolved in a use-case-led manner, with different implementation approaches across platforms and solutions. This indicates that while useful capabilities already exist, they are not yet aligned to a consistent shared model.
 
 The baseline therefore provides the current-state view needed to support subsequent reference architecture development, capability standardisation, and structured gap assessment for the workstream.
+
+
+
+Working group update
+	•	Progressed the initial prioritisation of unstructured data for AI use cases, with clearer definition of priority content categories and representative source-system examples.
+	•	Refined the scope to separate unstructured data from knowledge-domain work, in line with architecture review feedback.
+	•	Developed the baseline view of current unstructured data capability patterns across the key reference use cases, highlighting existing strengths, common themes, and areas of fragmentation.
+	•	Completed the audio / Voice AI use case architecture assessment to understand current ingestion, transcription, transformation, storage, and serving patterns.
+	•	Used the reference use cases to establish a broader current-state view across document-centric, audio/chat-centric, and managed-content retrieval patterns.
+	•	Confirmed that relevant capabilities already exist across ingestion, processing, storage, retrieval, metadata, access control, and AI guardrails, but the current landscape remains use-case led and not yet standardised.
+	•	The two documents now provide a stronger basis for the next stage of work on reference architecture, capability alignment, and gap assessment.
+
+Even shorter version for speaking
+
+This week, the main progress has been around strengthening the workstream foundation. I have progressed the initial unstructured data prioritisation, separated the unstructured scope from knowledge-domain work, developed the baseline capability view across the reference use cases, and completed the audio use case architecture assessment. Together, these now give us a clearer current-state picture and a stronger basis for the reference architecture and gap assessment work.
+
+The primary focus for this week is to develop the first draft reference architecture for the workstream.
+	•	This will be based on the known priority data types and source patterns identified so far across the current use cases.
+	•	The intent is to use the current baseline and prioritisation work to shape an initial architecture view covering ingestion, processing, storage, retrieval, and control points.
+	•	This first draft will provide the baseline architecture needed to support capability alignment, gap assessment, and further stakeholder review.
