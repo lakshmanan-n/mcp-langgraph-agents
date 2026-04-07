@@ -439,3 +439,13 @@ The primary focus for this week is to develop the first draft reference architec
 	•	This will be based on the known priority data types and source patterns identified so far across the current use cases.
 	•	The intent is to use the current baseline and prioritisation work to shape an initial architecture view covering ingestion, processing, storage, retrieval, and control points.
 	•	This first draft will provide the baseline architecture needed to support capability alignment, gap assessment, and further stakeholder review.
+
+
+From a target-state architecture perspective, I think we’ll need further clarity across a few areas to shape a more complete view. The points below are initial thoughts rather than a definitive list, and there are likely additional considerations as we progress:
+	1.	Source of truth and system boundaries – Whether the KG is intended to act as the single source of truth, and how that aligns with GPPS (e.g., coexistence vs migration), including required data contracts.
+	2.	Change trigger model – How regulatory, risk, or policy changes are expected to trigger updates and drive agent workflows.
+	3.	Control data integration – Clarification on integration with Helios and how control information is sourced and governed.
+	4.	Data platform integration – Whether there is a requirement to integrate with enterprise data products for evidencing, lineage, or enrichment.
+	5.	Consumption patterns – Understanding downstream consumers (e.g., Bankers Assist, Ops Assist, R&C) and how they will access the knowledge layer.
+
+These are just initial considerations — I expect there will be additional areas we need to address as we define the target-state architecture in more detail.
