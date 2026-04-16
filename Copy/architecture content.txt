@@ -1,0 +1,408 @@
+Initial Reference Architecture for Unstructured Data
+
+1. Purpose
+
+This document provides the initial draft reference architecture for the Unstructured Data for AI workstream.
+
+Its purpose is to define a platform-agnostic, enterprise-level architecture view for how heterogeneous unstructured and semi-structured content can be:
+	•	onboarded from multiple source domains
+	•	prepared and normalised into a governed content form
+	•	processed through deterministic and AI-enabled workflows
+	•	integrated with shared AI services in a governed way
+	•	persisted across role-specific storage services
+	•	exposed for retrieval, analytics, and downstream business use
+
+This is an initial logical reference architecture intended to establish the baseline architectural direction for the workstream and support further refinement, stakeholder alignment, and gap assessment.
+
+⸻
+
+2. Scope
+
+The A1 architecture is intended to support a broad range of source types, including:
+	•	internal knowledge and document content
+	•	workflow and case content
+	•	communication and collaboration content
+	•	audio, transcripts, and interaction media
+	•	external and third-party content
+	•	enterprise file and repository sources
+	•	structured data used to augment or enrich unstructured processing
+
+It is designed to support downstream patterns including:
+	•	retrieval and search
+	•	assistants and RAG experiences
+	•	stateful agent workflows
+	•	knowledge graph construction
+	•	structured downstream data products
+	•	enterprise application integration
+	•	analytics use cases
+
+It is intentionally platform-agnostic and does not assume a single cloud, product, or implementation topology.
+
+⸻
+
+3. Architecture Intent
+
+The architecture addresses a common enterprise problem: unstructured data capabilities already exist across multiple AI use cases, but current delivery patterns remain fragmented, use-case led, and not yet aligned to a shared enterprise model.
+
+The A1 reference architecture therefore provides:
+	•	a common lifecycle model for unstructured content
+	•	a shared capability view across source onboarding, preparation, processing, storage, retrieval, and control
+	•	a clear place for policy-aware routing, retrieval-time governance, provenance, and operational controls
+	•	a platform-agnostic baseline that can support future shared standards and capability alignment
+
+This architecture should be read as a logical enterprise capability model rather than a detailed deployment diagram or project-specific implementation.
+
+⸻
+
+4. Key Architecture Principles
+
+Source-agnostic by design
+
+The architecture must support a broad range of source domains without assuming a single dominant source pattern.
+
+Modality-aware processing
+
+Documents, audio, chat, email, tickets, images, and external content require different preparation paths and should not be forced through a single generic processing flow.
+
+Canonical content before downstream AI use
+
+Content should be normalised, enriched, classified, and governed before it is indexed, embedded, graphed, or exposed for retrieval.
+
+Shared controls across the full lifecycle
+
+Security, policy, lineage, DLP, encryption, observability, and trust controls must apply across ingestion, processing, persistence, and retrieval.
+
+Multiple persistence models with clear roles
+
+Raw, processed, metadata, analytical, vector, graph, and session-state persistence each serve distinct purposes and should be treated separately.
+
+Governed AI and tool interaction
+
+AI runtimes should access tools, services, and models through governed integration patterns rather than unmanaged direct calls.
+
+Support deterministic and agentic execution
+
+The platform must support both deterministic workflows and stateful agent execution, with agentic patterns used where complexity justifies them.
+
+Retrieval is a governed capability
+
+Retrieval must apply entitlement, policy, provenance, and ranking controls rather than acting as a purely technical search function.
+
+Federated deployment is expected
+
+The logical architecture does not imply a single physical platform. Capabilities may be deployed in hybrid, multi-cloud, regional, or on-prem patterns depending on policy and operational needs.
+
+Responsible AI at every layer
+
+AI-enabled processing should remain aligned to moderation, safety, trust, and governance controls across the architecture.
+
+⸻
+
+5. Layered Architecture Overview
+
+The A1 architecture is structured as a left-to-right lifecycle across the following layers:
+	1.	Source Domains
+	2.	Ingestion and Onboarding
+	3.	Preparation and Normalisation
+	4.	Orchestration and Semantic Processing
+	5.	Governed AI Integration
+	6.	Persistence Services
+	7.	Retrieval and Consumption
+	8.	Cross-Cutting Security, Governance and Operations
+
+These layers should be read together as the end-to-end processing and control model for heterogeneous unstructured content.
+
+⸻
+
+6. Layer-by-Layer Description
+
+6.1 Source Domains
+
+This layer represents the domains in which content originates. It includes broad source classes rather than individual products so that the architecture remains stable even as implementation technologies change.
+
+The source domains represented in the A1 architecture are:
+	•	Internal Knowledge
+Trusted internal content such as documents, policies, SOPs, and managed knowledge assets.
+	•	Operational Workflow and Cases
+Workflow systems, tickets, incidents, cases, and work items that contain operational and semi-structured context.
+	•	Communication and Collaboration
+Email, chat, meetings, and collaboration content where context is distributed across interactions.
+	•	Media and Interaction Sources
+Audio, video, transcripts, and image-based interaction content that require modality-specific preparation.
+	•	External and Third-Party Content
+Web, social, and licensed third-party content that may be useful but require stronger trust, provenance, and usage controls.
+	•	Enterprise Storage and Repos
+Object stores, archives, file shares, and repository-style storage that act as content sources.
+	•	Structured Data Augmentation
+Structured reference or contextual data used to enrich unstructured processing and improve downstream quality.
+
+This layer makes it explicit that the platform must support heterogeneous content rather than only document repositories.
+
+⸻
+
+6.2 Ingestion and Onboarding
+
+This layer provides the controlled path by which source content enters the platform.
+
+It includes:
+	•	Source Registration and Ownership
+Establishes source accountability, ownership, and initial source policy context.
+	•	Intake Connectors
+Supports different ingestion patterns such as API, batch, event, stream, and web crawler-based intake.
+	•	Landing, Validation and Quarantine
+Provides a controlled intake zone where content is landed, checked, and isolated where necessary.
+	•	Policy-Aware Routing
+Determines how content should proceed based on sensitivity, trust level, residency needs, and processing profile.
+
+This layer is critical because it ensures onboarding is repeatable, governed, and adaptable to multiple source classes and trust levels.
+
+⸻
+
+6.3 Preparation and Normalisation
+
+This layer transforms heterogeneous source artefacts into a canonical and governed content form.
+
+It includes:
+	•	Format Detection and Modality Routing
+Determines the content type and routes it to the correct preparation path.
+	•	Extraction Services
+Applies parsing, OCR, speech-to-text, thread handling, and other extraction logic depending on modality.
+	•	Normalisation and Deduplication
+Standardises the content into a consistent internal form and removes duplicate or redundant content.
+	•	Metadata Enrichment and Classification
+Adds metadata, business context, provenance-related attributes, and classification markers to the content.
+	•	Redaction and Sensitive Data Controls
+Applies PII detection, DLP, masking, and other controls before downstream semantic indexing or retrieval.
+
+This is one of the most important layers because it converts raw source content into a platform-ready content object that can safely and consistently support downstream processing.
+
+⸻
+
+6.4 Orchestration and Semantic Processing
+
+This layer coordinates how content is processed once it has been normalised.
+
+It includes:
+	•	Deterministic Workflow Engine
+The default controlled processing model for repeatable and policy-driven flows.
+	•	Stateful Agents
+A specialised execution pattern for long-running, multi-step, or tool-using workflows where state and memory are required.
+	•	Chunking and Embedding Generation
+Supports semantic preparation for vector-based retrieval and AI use cases.
+	•	Knowledge Enrichment and Graph Build
+Supports relationship-aware modelling, ontology alignment, and graph construction where use cases justify it.
+	•	Quality Assurance and Validation
+Applies validation, confidence checks, and quality controls to improve trust in downstream outputs.
+
+This layer is intentionally flexible: not all content or use cases need graph, vector, and stateful agent execution at the same time.
+
+⸻
+
+6.5 Governed AI Integration
+
+This layer supports controlled interaction between orchestration/runtime services and shared AI or enterprise tooling.
+
+It includes:
+	•	MCP Client
+Provides the governed tool access pattern from the runtime side.
+	•	MCP Gateway
+Mediates access to tools and services, supporting context propagation and policy-aware interaction.
+	•	Shared AI Platform Services
+Provides shared access to LLMs, embedding models, moderation, guardrails, and ML services.
+	•	AI Observability and FinOps
+Provides token metering, latency tracking, cost visibility, and operational telemetry for AI service interaction.
+
+This layer ensures that AI-enabled processing remains governed, observable, and reusable rather than becoming an unmanaged set of project-specific integrations.
+
+⸻
+
+6.6 Persistence Services
+
+This layer stores the outputs of the platform according to purpose.
+
+It includes:
+	•	Raw and Processed Content Stores
+Preserve original artefacts and processed outputs for replay, traceability, and reuse.
+	•	Metadata and Lineage Store
+Maintains metadata, data contracts, lineage, and provenance information for governance and auditability.
+	•	Analytical / Relational Store
+Holds structured outputs for reporting, BI, or downstream operational consumption.
+	•	Vector Store
+Supports semantic retrieval and similarity-based access patterns.
+	•	Graph Store
+Supports relationship-rich knowledge structures and ontology-aligned models.
+	•	Session State and Cache
+Supports stateful agent execution, retrieval acceleration, and short-lived runtime context.
+
+These stores are logical roles rather than statements of physical deployment. In practice, they may be implemented in federated patterns across cloud, regional, or on-prem environments.
+
+⸻
+
+6.7 Retrieval and Consumption
+
+This layer makes processed and governed content usable.
+
+It includes:
+	•	Retrieval Orchestration and Hybrid Search
+Combines keyword, vector, graph, and metadata-driven retrieval approaches.
+	•	Retrieval-Time Governance
+Applies entitlement, policy, provenance, and ranking controls before content is returned.
+	•	Content and Query APIs
+Provides standard access paths for applications and downstream consumers.
+	•	Assistants, RAG and Agentic Experiences
+Supports interactive AI experiences grounded in governed enterprise content.
+	•	Enterprise Apps and Analytics
+Supports workflow systems, dashboards, BI, and downstream consumers that need governed content or structured outputs.
+
+A key point in this layer is that retrieval is treated as a governed business capability, not just a technical search function.
+
+⸻
+
+6.8 Cross-Cutting Security, Governance and Operations
+
+This is the control plane that applies across all layers.
+
+It includes:
+	•	Identity and Access
+	•	Policy and DLP
+	•	Lineage and Provenance
+	•	Audit and Observability
+	•	Encryption and Keys
+	•	Legal and Trust
+	•	Sovereignty and Residency
+	•	Runtime Entitlement
+	•	Responsible AI
+	•	IaC and Change Mgmt
+
+Together, these controls ensure that the architecture is not only functionally capable, but also enterprise-grade in how it manages access, trust, policy, operational control, and AI safety.
+
+⸻
+
+7. End-to-End Flow Summary
+
+At a high level, the A1 architecture follows this lifecycle:
+	1.	Content originates in one or more source domains.
+	2.	It is onboarded through controlled intake patterns and landing controls.
+	3.	It is routed according to policy and source profile.
+	4.	It is prepared and normalised according to modality and content type.
+	5.	It is processed through deterministic workflows and, where justified, stateful agent execution and semantic services.
+	6.	It interacts with shared AI services through governed integration patterns.
+	7.	It is stored in role-specific persistence services.
+	8.	It is exposed through governed retrieval and API layers for assistants, enterprise applications, analytics, and downstream consumers.
+	9.	Cross-cutting controls apply across the full lifecycle.
+
+⸻
+
+8. Positioning of MCP and Stateful Agents
+
+8.1 MCP
+
+MCP is positioned as part of the governed AI integration layer. Its role is to provide controlled access from AI runtimes to tools and services, including context propagation, policy-aware mediation, and governed runtime interaction.
+
+It should not be interpreted as the integration pattern for all ingestion or enterprise data movement.
+
+8.2 Stateful Agents
+
+Stateful agents are positioned as part of the orchestration and semantic processing layer. They are intended for long-running workflows, multi-step reasoning, governed tool usage, and scenarios where execution state must persist.
+
+They are not assumed to be the default processing path for all content types.
+
+⸻
+
+9. Mapping to Current Use Cases
+
+Codifying the Bank
+
+Provides strong patterns for:
+	•	stateful orchestration
+	•	MCP-based governed integration
+	•	graph and vector use together
+	•	workflow-led knowledge processing
+
+Voice / Audio Use Cases
+
+Provide strong patterns for:
+	•	audio ingestion
+	•	speech-to-text and transcript handling
+	•	sensitive-content controls
+	•	structured downstream serving and analytics
+
+Knowledge Management / Managed Content Patterns
+
+Provide strong patterns for:
+	•	managed content retrieval
+	•	metadata/content separation
+	•	caching/session behaviour
+	•	governed AI interaction
+
+The A1 architecture generalises these patterns into a shared enterprise capability model while avoiding direct coupling to any single project design.
+
+⸻
+
+10. Current Assumptions and Constraints
+	•	The platform must support heterogeneous source types.
+	•	Metadata and lineage capabilities may initially be maintained locally for operational execution, with strategic alignment to broader catalogue and fabric services over time.
+	•	Processing and storage may be federated across cloud and on-prem environments.
+	•	Some content may require restricted routing and cannot use all shared AI services.
+	•	Not all use cases will need graph, vector, and stateful agent processing simultaneously.
+	•	External and third-party content requires additional provenance, legal, and trust controls compared with internal enterprise sources.
+	•	This initial version is a draft logical reference architecture, not a final target-state deployment design.
+
+⸻
+
+11. What This Initial Version Is Intended to Support
+
+This initial version is intended to support:
+	•	capability alignment across use cases
+	•	initial reference architecture review
+	•	structured gap assessment
+	•	identification of shared enterprise patterns
+	•	clearer separation of shared services from use-case-specific workflows
+	•	future refinement into a more detailed architect view and modality-specific swimlane diagrams
+
+⸻
+
+12. Summary
+
+The A1 architecture provides the first shared enterprise view of how unstructured data can be onboarded, processed, governed, stored, and consumed across a broad range of AI use cases.
+
+Its value is in establishing a common architecture language across:
+	•	heterogeneous sources
+	•	policy-aware routing
+	•	modality-aware preparation
+	•	orchestration and semantic processing
+	•	governed AI integration
+	•	role-specific persistence
+	•	retrieval and downstream consumption
+	•	strong security and governance controls
+
+This initial version provides the architectural baseline needed to move from fragmented, use-case-led delivery patterns toward a more consistent and reusable model.
+
+⸻
+
+Updated appendix content
+
+Appendix A. A1 Diagram
+
+The A1 diagram provides the initial logical reference architecture for how heterogeneous unstructured and semi-structured content is onboarded from multiple source domains, prepared and normalised into a canonical governed content form, processed through deterministic and AI-enabled workflows, integrated with shared AI and tool services in a governed way, persisted across role-specific storage services, and exposed for retrieval, analytics, and downstream business use.
+
+This version should be read as a logical enterprise capability view rather than a product-specific or deployment-specific architecture.
+
+Appendix B. Policy and Routing Rules Examples
+
+Keep this appendix, but align the wording to the new routing and control emphasis in the latest diagram. The examples remain valid and should stay.
+
+Appendix C. Open Questions / Next Refinements
+
+Keep this appendix, but add:
+	•	how Runtime Entitlement should be standardised across runtime services
+	•	whether Shared AI Platform Services should explicitly include guardrails in the main label
+	•	how Structured Data Augmentation / Structured Context Sources should be governed
+
+Appendix D. Assumptions and Decisions Log
+
+Keep this appendix, but update the decisions to reflect the latest box labels and the stronger emphasis on:
+	•	policy-aware routing
+	•	governed AI integration
+	•	retrieval-time governance
+	•	AI observability and FinOps
