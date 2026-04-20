@@ -219,3 +219,101 @@ The initial prioritisation should be approached pragmatically:
 	•	refine progressively as architecture discovery continues
 
 This approach enables the workstream to provide an immediate strategic response while building toward a more detailed and governed inventory.
+
+
+
+
+Opening
+
+* This is the latest A1 enterprise reference architecture for unstructured data processing.
+* It provides a logical, platform-agnostic view of how heterogeneous unstructured and semi-structured data is onboarded, processed, governed, published, and consumed.
+* The architecture is designed to support both runtime AI use cases and enterprise data product exposure.
+
+How to read the diagram
+
+* Read it left to right as the end-to-end lifecycle.
+* The top shows the main architecture flow.
+* The bottom shows the cross-cutting control plane that applies across all layers.
+* A key addition in this version is the Fabric / Data Product Access Layer.
+
+Source domains
+
+* The architecture starts with a broad set of source domains, including internal knowledge, workflow and case systems, collaboration content, media and interaction sources, external content, repositories, and structured data augmentation.
+* This makes it clear the platform is designed for heterogeneous sources, not only documents.
+
+Ingestion and onboarding
+
+* This is the controlled front door of the platform.
+* It includes source registration, connectors, landing and validation, and policy-aware routing.
+* Policy-aware routing is a major design choice, because not all content should follow the same path.
+
+Preparation and normalisation
+
+* This layer converts raw content into a canonical and governed content form.
+* It includes format detection, extraction, normalisation, metadata enrichment and classification, and redaction / sensitive data controls.
+* This is a key control point before content is indexed, embedded, or exposed to AI services.
+
+Orchestration and semantic processing
+
+* The default model is the deterministic workflow engine.
+* Stateful agents are included as a specialised pattern for long-running or multi-step workflows, not as the default for everything.
+* This layer also covers chunking, embedding generation, knowledge enrichment, graph build, and quality assurance.
+
+Governed AI integration
+
+* This layer shows how AI runtimes interact with shared AI services in a governed way.
+* It includes MCP Client, MCP Gateway, Shared AI Platform Services, and AI Observability and FinOps.
+* MCP is positioned as a governed runtime interaction pattern, not as the primary mechanism for all enterprise integration.
+
+Persistence services
+
+* Persistence is separated by purpose.
+* This includes raw and processed content, metadata and lineage, analytical outputs, vector, graph, and session state / cache.
+* The architecture does not assume one storage model is enough for everything.
+
+Fabric / Data Product Access Layer
+
+* This is one of the key changes in the latest version.
+* It shows that outputs from the unstructured platform can be published as governed enterprise data products through Fabric.
+* This includes:
+    * structured analytical products
+    * knowledge graph products
+    * curated unstructured products
+* This aligns unstructured outputs with the existing enterprise data product access model already used for structured data.
+
+Retrieval and consumption
+
+* This layer supports direct runtime retrieval for search, RAG, assistants, and agentic experiences.
+* It also includes retrieval-time governance, which applies entitlement, policy, provenance, and ranking controls.
+* Enterprise apps and analytics can consume through this layer as well.
+
+Dual access model
+
+* A key architectural point is that we now support two complementary access patterns:
+    1. Published data product access through Fabric
+    2. Direct runtime retrieval for latency-sensitive AI use cases
+* These are complementary, not competing models.
+
+Cross-cutting controls
+
+* Across all layers, the architecture applies:
+    * identity and access
+    * policy and DLP
+    * lineage and provenance
+    * audit and observability
+    * encryption and keys
+    * legal and trust
+    * sovereignty and residency
+    * runtime entitlement
+    * responsible AI
+    * infrastructure and change management
+* Governance is built into the architecture, not added later.
+
+Key closing point
+
+* This version establishes the first enterprise architecture baseline for how unstructured data can be processed, governed, published, and consumed across AI use cases.
+* It gives us a shared model to align current and future use cases and a foundation for further refinement.
+
+Short closing line
+
+* The main change in this version is the addition of Fabric as the enterprise data product access layer, while retaining direct governed runtime retrieval for interactive AI use cases.
