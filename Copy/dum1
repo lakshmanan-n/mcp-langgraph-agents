@@ -433,3 +433,21 @@ You may want to add these sections as expandable panels or child pages later:
 
 
 
+Design Principles
+"Eight non-negotiables that govern every design choice. The four that matter most: deterministic-first orchestration, one governed AI path via MCP, a mandatory human gate on every AI output, and an ontology-anchored semantic model. Every principle maps back to a layer of the enterprise UDL reference architecture — so this is governance by construction, not by aspiration."
+
+Key Design Decisions
+"Six architectural calls, each framed as Decision, Rationale and Benefit. The headline three: LangGraph for deterministic, reproducible workflows; MCP as the single AI access path for governed tracing and safety; and a hybrid KG-plus-Vector store — because graph and vectors solve different retrieval problems, and together they give us precision and recall. Neo4j on-prem, the HITL gate and the OWL ontology are the other three — data residency, regulatory accountability and semantic consistency."
+
+Technical Architecture
+"Release 1 in five blocks, left to right: Document Preparation, AI Workflow Orchestration, Governed AI Integration, Knowledge & Storage, and Consumption. Every model call — without exception — traverses the MCP Gateway. Cross-cutting governance applies across all five. Release 1 is manual ingestion only; event-driven connectors and the Fabric layer are in R2."
+
+Technical Flow
+"Same architecture as a pipeline: nine steps, three phases — Prepare, Orchestrate, Persist-and-Serve. Step 6 is the hard stop — no AI-generated content reaches the Knowledge Graph or Vector store without explicit SME approval. Three guarantees: every AI call through MCP, every AI output gated by a human, and hybrid retrieval by default."
+
+Enterprise Reference Architecture
+"This is the enterprise blueprint for unstructured data — not a Codify-specific design. Eight lifecycle layers across Data, Intelligence and Service planes, wrapped by a cross-cutting layer for security, governance and operations. Codify inherits this structure by construction."
+
+Codify Mapped to the Reference
+"Same blueprint, populated with Release 1 components. Seven of eight layers are delivered in R1 — Source through Consumption. Fabric is deliberately deferred to Release 2. Bottom strip captures the three scope commitments: manual ingestion, KG on-premise for UK data residency, Fabric in R2. That's our defensible R1 scope statement."
+
