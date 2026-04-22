@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Codify – Technical Architecture · Release 1</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Inter',sans-serif;background:#e2e8f0;}
+
+.canvas{
+  width:2400px;height:1350px;position:relative;
+  background:linear-gradient(180deg,#f8fafc 0%,#f1f5f9 100%);
+  overflow:hidden;margin:0 auto;
+}
+
+/* ══ HEADER ══ */
+.hdr{position:absolute;top:0;left:0;right:0;height:58px;
+  background:linear-gradient(135deg,#0f172a 0%,#1e293b 100%);
+  display:flex;align-items:center;padding:0 36px;
+  box-shadow:0 2px 12px rgba(0,0,0,0.18);}
+.hdr .badge{background:#2563eb;color:#fff;font-size:10px;font-weight:800;
+  letter-spacing:1.5px;padding:5px 16px;border-radius:4px;margin-right:20px;}
+.hdr h1{color:#fff;font-size:22px;font-weight:700;letter-spacing:-0.3px;}
+.hdr .right{margin-left:auto;color:#94a3b8;font-size:13px;}
+
+/* ══ LANE HEADERS ══ */
+.lh{position:absolute;top:66px;height:30px;border-radius:6px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:700;letter-spacing:0.3px;
+  box-shadow:0 1px 3px rgba(0,0,0,0.08);}
+
+/* ══ ZONE BACKGROUNDS ══ */
+.zbg{position:absolute;border-radius:8px;border:2px dashed;opacity:0.95;}
+
+/* ══ COMPONENT BOXES ══ */
+.box{position:absolute;border-radius:8px;text-align:center;
+  box-shadow:0 2px 8px rgba(0,0,0,0.06);}
+.box .icon{font-size:20px;margin-bottom:3px;}
+.box .t{font-weight:700;font-size:15px;color:#0f172a;line-height:1.3;}
+.box .s{font-size:12px;color:#475569;line-height:1.4;margin-top:3px;}
+.box .st{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:4px;}
+.box .detail{font-size:11px;color:#64748b;line-height:1.6;margin-top:6px;text-align:left;padding:0 8px;}
+
+.szh{position:absolute;font-size:12px;font-weight:700;display:flex;align-items:center;gap:6px;}
+.ln{position:absolute;bottom:60px;width:36px;height:36px;border-radius:50%;border:2px solid;
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;font-weight:800;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,0.08);}
+
+.xcut{position:absolute;bottom:18px;left:16px;right:16px;
+  border:2px dashed #94a3b8;border-radius:8px;padding:9px 20px;background:#f8fafc;
+  display:flex;align-items:center;gap:12px;box-shadow:0 1px 4px rgba(0,0,0,0.05);}
+.xcut .label{font-size:13px;font-weight:700;color:#334155;min-width:420px;}
+.xcut .chip{background:#e2e8f0;border:1px solid #cbd5e1;border-radius:5px;
+  padding:5px 16px;font-size:11px;color:#1e293b;font-weight:600;}
+
+svg.arrows{position:absolute;top:0;left:0;width:2400px;height:1350px;pointer-events:none;z-index:50;}
+svg.arrows line,svg.arrows polyline{fill:none;stroke-linecap:round;stroke-linejoin:round;}
+
+.albl{position:absolute;font-size:10px;font-weight:700;
+  background:rgba(255,255,255,0.92);padding:2px 6px;border-radius:3px;
+  z-index:51;white-space:nowrap;box-shadow:0 1px 3px rgba(0,0,0,0.06);}
+
+.footer{position:absolute;bottom:2px;left:20px;right:20px;display:flex;justify-content:space-between;font-size:10px;color:#94a3b8;}
+</style>
+</head>
+<body>
+<div class="canvas" id="c">
+
+<div class="hdr">
+  <span class="badge">TECHNICAL ARCHITECTURE</span>
+  <h1>Codify the Bank — Release 1 End-to-End Architecture</h1>
+  <span class="right">Manual Ingestion · UK Data Residency · April 2026</span>
+</div>
+
+<!-- ═══ LANE HEADERS ═══ -->
+<div class="lh" style="left:16px;  width:186px;background:#e5e7eb;color:#374151;">1 &nbsp;Source Domain</div>
+<div class="lh" style="left:210px; width:210px;background:#ede9fe;color:#6d28d9;">2 &nbsp;Ingestion Layer</div>
+<div class="lh" style="left:428px; width:210px;background:#ffe4e6;color:#be123c;">3 &nbsp;Preprocessing</div>
+<div class="lh" style="left:646px; width:460px;background:#dbeafe;color:#1d4ed8;">4 &nbsp;Orchestration Engine</div>
+<div class="lh" style="left:1114px;width:220px;background:#fef3c7;color:#92400e;">5 &nbsp;MCP Layer</div>
+<div class="lh" style="left:1342px;width:254px;background:#ffedd5;color:#92400e;">6 &nbsp;AI Services</div>
+<div class="lh" style="left:1604px;width:378px;background:#d1fae5;color:#047857;">7 &nbsp;Persistence</div>
+<div class="lh" style="left:1990px;width:394px;background:#ffedd5;color:#9a3412;">8 &nbsp;Serving Layer</div>
+
+<!-- ═══ ZONE BACKGROUNDS ═══ -->
+<div class="zbg" style="left:16px;  top:102px;width:186px;bottom:102px;background:#fafafa;border-color:#d1d5db;"></div>
+<div class="zbg" style="left:210px; top:102px;width:210px;bottom:102px;background:#faf5ff;border-color:#c4b5fd;"></div>
+<div class="zbg" style="left:428px; top:102px;width:210px;bottom:102px;background:#fff5f5;border-color:#fca5a5;"></div>
+<div class="zbg" style="left:646px; top:102px;width:460px;bottom:102px;background:#eff6ff;border-color:#93c5fd;"></div>
+<div class="zbg" style="left:1114px;top:102px;width:220px;bottom:102px;background:#fffbeb;border-color:#fcd34d;"></div>
+<div class="zbg" style="left:1342px;top:102px;width:254px;bottom:102px;background:#fffbeb;border-color:#fbbf24;"></div>
+<div class="zbg" style="left:1604px;top:102px;width:378px;bottom:102px;background:#ecfdf5;border-color:#6ee7b7;"></div>
+<div class="zbg" style="left:1990px;top:102px;width:394px;bottom:102px;background:#fff7ed;border-color:#fdba74;"></div>
+
+<!-- ═══════════════════════════════════════════
+     COL 1 · SOURCE   (centre Y: 300 & 660)
+     ═══════════════════════════════════════════ -->
+<div class="box" id="b-src-pp" style="left:30px;top:200px;width:158px;height:100px;
+  background:#f9fafb;border:2px solid #9ca3af;padding:14px;">
+  <div class="icon">📄</div>
+  <div class="t" style="font-size:15px;">P&P Documents</div>
+  <div class="s">GPPS · Appiant · AWS</div>
+</div>
+
+<div class="box" id="b-src-ont" style="left:30px;top:540px;width:158px;height:100px;
+  background:#f9fafb;border:2px solid #9ca3af;padding:14px;">
+  <div class="icon">🗂️</div>
+  <div class="t" style="font-size:15px;">Ontology Source</div>
+  <div class="s">OWL / RDF Format</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     COL 2 · INGESTION
+     ═══════════════════════════════════════════ -->
+<div class="box" id="b-ing-man" style="left:222px;top:200px;width:186px;height:100px;
+  background:#f3e8ff;border:2px dashed #8b5cf6;padding:14px;">
+  <div class="t">Manual Copy Process</div>
+  <div class="s" style="margin-top:6px;">Document Upload<br>to Cloud Storage</div>
+</div>
+
+<div class="box" id="b-ing-ci" style="left:222px;top:540px;width:186px;height:110px;
+  background:#f3e8ff;border:2px dashed #8b5cf6;padding:12px;">
+  <div class="st" style="color:#6d28d9;">CI/CD Process</div>
+  <div class="t">OWL → JSON-LD</div>
+  <div class="s" style="margin-top:6px;">Jenkins Agents<br>Automated Pipeline</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     COL 3 · PREPROCESSING
+     ═══════════════════════════════════════════ -->
+<div class="box" id="b-pre-proc" style="left:440px;top:200px;width:186px;height:110px;
+  background:#ffe4e6;border:2px solid #f87171;padding:12px;">
+  <div class="st" style="color:#be123c;">Preprocessing</div>
+  <div class="t">Raw → Chapter → MD</div>
+  <div class="s">Extraction Pipeline<br>Microservices · GKE</div>
+</div>
+
+<div class="box" id="b-pre-chk" style="left:440px;top:440px;width:186px;height:110px;
+  background:#ffe4e6;border:2px solid #f87171;padding:12px;">
+  <div class="st" style="color:#be123c;">Chunking</div>
+  <div class="t">Chapter MD → Chunks</div>
+  <div class="s">Semantic Splitting<br>Microservices · GKE</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     COL 4 · ORCHESTRATION   (use full vertical)
+     ═══════════════════════════════════════════ -->
+<div class="box" id="b-orch-eng" style="left:658px;top:116px;width:436px;height:62px;
+  background:linear-gradient(135deg,#dbeafe,#bfdbfe);border:2px solid #3b82f6;
+  padding:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+  <div class="t" style="font-size:15px;">⚙️ Deterministic Orchestration Engine · GKE</div>
+  <div class="s" style="font-size:11px;">Event-driven · Stateful Graphs · Retries · Parallelism &nbsp;│&nbsp; <strong>LangGraph</strong></div>
+</div>
+
+<div class="box" id="b-wf-ra" style="left:658px;top:200px;width:436px;height:95px;
+  background:#fff;border:2px solid #3b82f6;border-left:5px solid #3b82f6;padding:14px 16px;">
+  <div class="t" style="font-size:15px;">⚡ ReAuthor Agentic Workflow</div>
+  <div class="s" style="font-size:12px;">Structure, rewrite, simplify and merge policy chapters<br>into codified output format</div>
+</div>
+
+<div class="box" id="b-wf-va" style="left:658px;top:320px;width:436px;height:95px;
+  background:#fff;border:2px solid #3b82f6;border-left:5px solid #3b82f6;padding:14px 16px;">
+  <div class="t" style="font-size:15px;">✅ Validation Agentic Workflow</div>
+  <div class="s" style="font-size:12px;">Per-chapter validation with precision/recall scoring<br>and A/B/C final judge evaluation</div>
+</div>
+
+<div class="box" id="b-wf-kg" style="left:658px;top:440px;width:436px;height:95px;
+  background:#fff;border:2px solid #3b82f6;border-left:5px solid #3b82f6;padding:14px 16px;">
+  <div class="t" style="font-size:15px;">📊 KG & Vector Agentic Workflow</div>
+  <div class="s" style="font-size:12px;">Knowledge Graph entity extraction, embedding generation<br>and vector upsert pipeline</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     COL 5 · MCP
+     ═══════════════════════════════════════════ -->
+<div class="box" id="b-mcp-cl" style="left:1126px;top:200px;width:196px;height:180px;
+  background:#fef3c7;border:2px solid #f59e0b;padding:14px;">
+  <div class="t" style="font-size:16px;">🔌 MCP Client</div>
+  <div class="s" style="font-weight:600;margin:6px 0;">Library Layer</div>
+  <div class="detail">
+    1. Typed Tool Wrappers<br>
+    2. Run Context Propagation<br>
+    3. Auth Retries<br>
+    4. Trace & Lineage Headers
+  </div>
+</div>
+
+<div class="box" id="b-mcp-sv" style="left:1126px;top:460px;width:196px;height:100px;
+  background:#fef3c7;border:2px solid #f59e0b;padding:14px;">
+  <div class="t" style="font-size:16px;">🔌 MCP Server</div>
+  <div class="s" style="font-weight:600;">GKE Tool Gateway</div>
+  <div class="s">OTel Tracing · Governance</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     COL 6 · AI SERVICES
+     ═══════════════════════════════════════════ -->
+<div class="box" id="b-ai-adp" style="left:1354px;top:200px;width:230px;height:135px;
+  background:linear-gradient(135deg,#ffcd28,#fbbf24);border:2px solid #d79b00;padding:14px;
+  box-shadow:0 3px 12px rgba(215,155,0,0.18);">
+  <div class="t" style="font-size:16px;">⚡ CIB UDL Platform</div>
+  <div class="s" style="font-weight:700;font-size:13px;color:#1e293b;margin:4px 0;">LLM Service Adapter</div>
+  <div class="s">Abstraction SDK for LLM<br>access via Group AI Platform</div>
+</div>
+
+<div class="box" id="b-ai-grp" style="left:1354px;top:440px;width:230px;height:120px;
+  background:linear-gradient(135deg,#ffcd28,#fbbf24);border:2px solid #d79b00;padding:14px;
+  box-shadow:0 3px 12px rgba(215,155,0,0.18);">
+  <div class="t" style="font-size:16px;">🧠 Group AI Platform</div>
+  <div class="s" style="font-weight:700;font-size:13px;color:#1e293b;margin:4px 0;">LLM · Embeddings</div>
+  <div class="s">Content Moderation Services</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     COL 7 · PERSISTENCE
+     ═══════════════════════════════════════════ -->
+<!-- GCP sub-zone -->
+<div class="zbg" style="left:1616px;top:120px;width:354px;height:480px;
+  background:rgba(209,250,229,0.15);border:2px solid #34d399;z-index:1;"></div>
+<div class="szh" style="left:1628px;top:128px;color:#059669;">
+  <span style="font-size:16px;">☁️</span> Google Cloud Platform
+</div>
+
+<div class="box" id="b-st-gcs" style="left:1628px;top:165px;width:200px;height:85px;
+  background:#fff;border:1.5px solid #10b981;padding:12px;z-index:2;">
+  <div class="t" style="font-size:14px;">🗄️ Object Storage</div>
+  <div class="s">Versioned Artefact Store<br>GCS Buckets</div>
+</div>
+
+<div class="box" id="b-st-bq" style="left:1628px;top:276px;width:200px;height:85px;
+  background:#fff;border:1.5px solid #10b981;padding:12px;z-index:2;">
+  <div class="t" style="font-size:14px;">📋 Operational Metadata</div>
+  <div class="s">BigQuery<br>Pipeline Lineage</div>
+</div>
+
+<div class="box" id="b-st-vec" style="left:1628px;top:387px;width:200px;height:85px;
+  background:#fff;border:1.5px solid #10b981;padding:12px;z-index:2;">
+  <div class="t" style="font-size:14px;">🔍 Vector DB</div>
+  <div class="s">Semantic Search Index<br>Embedding Store</div>
+</div>
+
+<!-- UDL Core sidebar -->
+<div class="box" style="left:1842px;top:165px;width:116px;height:307px;z-index:2;
+  background:rgba(236,253,245,0.5);border:2px dashed #34d399;padding:12px 8px;">
+  <div style="font-size:10px;font-weight:800;color:#047857;margin-bottom:12px;text-align:center;">
+    UDL Core<br>Capabilities
+  </div>
+  <div style="font-size:10px;color:#059669;line-height:2.0;text-align:center;">
+    LLM Adapter<br>
+    API Integ.<br>
+    Session<br>
+    Cache<br>
+    Auth<br>
+    Observability
+  </div>
+</div>
+
+<!-- On-prem sub-zone -->
+<div class="zbg" style="left:1616px;top:625px;width:354px;height:165px;
+  background:rgba(209,250,229,0.25);border:2px dashed #34d399;z-index:1;"></div>
+<div class="szh" style="left:1628px;top:633px;color:#059669;">
+  <span style="font-size:14px;">🏢</span> On Premise &nbsp;│&nbsp; Neo4j
+</div>
+
+<div class="box" id="b-st-kg" style="left:1628px;top:662px;width:330px;height:100px;
+  background:#fff;border:2px solid #10b981;padding:14px;z-index:2;">
+  <div class="t" style="font-size:15px;">📊 Knowledge Graph</div>
+  <div class="s">Ontology-Aligned Entity & Relationship Model<br>Cross-Document Lineage & Linkage</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     COL 8 · SERVING
+     ═══════════════════════════════════════════ -->
+<!-- GCP sub-zone -->
+<div class="zbg" style="left:2002px;top:120px;width:378px;height:480px;
+  background:rgba(255,237,213,0.2);border:2px solid #fb923c;z-index:1;"></div>
+<div class="szh" style="left:2014px;top:128px;color:#9a3412;">
+  <span style="font-size:16px;">☁️</span> Google Cloud Platform
+</div>
+
+<div class="box" id="b-sv-be" style="left:2020px;top:170px;width:348px;height:90px;
+  background:#fff;border:1.5px solid #ea580c;padding:12px;z-index:2;">
+  <div class="t" style="font-size:15px;">🖥️ Backend · Spring Boot</div>
+  <div class="s">REST APIs · Reporting Services<br>SDK Integration · GKE Deployment</div>
+</div>
+
+<div class="box" id="b-sv-fe" style="left:2020px;top:310px;width:348px;height:90px;
+  background:#fff;border:1.5px solid #ea580c;padding:12px;z-index:2;">
+  <div class="t" style="font-size:15px;">🌐 Frontend · React SPA</div>
+  <div class="s">Document Viewer · Human-in-the-Loop<br>Review · KG-RAG Retriever</div>
+</div>
+
+<!-- Retrieval -->
+<div class="box" id="b-sv-sem" style="left:2020px;top:450px;width:168px;height:55px;
+  background:#ffedd5;border:1.5px solid #ea580c;padding:8px;z-index:2;">
+  <div class="t" style="font-size:12px;color:#9a3412;">Semantic Retrieval</div>
+  <div class="s" style="font-size:10px;">Vector + Graph Search</div>
+</div>
+<div class="box" id="b-sv-kgr" style="left:2200px;top:450px;width:168px;height:55px;
+  background:#ffedd5;border:1.5px solid #ea580c;padding:8px;z-index:2;">
+  <div class="t" style="font-size:12px;color:#9a3412;">KG Retrieval</div>
+  <div class="s" style="font-size:10px;">Graph Traversal</div>
+</div>
+
+<!-- Actor -->
+<div class="box" id="b-sv-act" style="left:2090px;top:640px;width:200px;height:90px;
+  background:#fff7ed;border:2px solid #c2410c;padding:14px;z-index:2;">
+  <div class="icon">👤</div>
+  <div class="t" style="font-size:16px;">Actors</div>
+  <div class="s">Reviewers · Approvers · SME</div>
+</div>
+
+<!-- ═══ LANE NUMBERS ═══ -->
+<div class="ln" style="left:91px;  border-color:#6b7280;color:#6b7280;">1</div>
+<div class="ln" style="left:297px; border-color:#7c3aed;color:#7c3aed;">2</div>
+<div class="ln" style="left:515px; border-color:#be123c;color:#be123c;">3</div>
+<div class="ln" style="left:858px; border-color:#1d4ed8;color:#1d4ed8;">4</div>
+<div class="ln" style="left:1206px;border-color:#b45309;color:#b45309;">5</div>
+<div class="ln" style="left:1451px;border-color:#92400e;color:#92400e;">6</div>
+<div class="ln" style="left:1775px;border-color:#059669;color:#059669;">7</div>
+<div class="ln" style="left:2170px;border-color:#9a3412;color:#9a3412;">8</div>
+
+<!-- ═══════════════════════════════════════════
+     SVG ARROWS — STRICT ORTHOGONAL routing
+     Every arrow: horizontal straight, or vertical straight, or right-angle polyline
+     NO diagonal lines
+     ═══════════════════════════════════════════ -->
+<svg class="arrows" viewBox="0 0 2400 1350" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="a-pur"  markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0,0 10,3.5 0,7" fill="#7c3aed"/></marker>
+    <marker id="a-red"  markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0,0 10,3.5 0,7" fill="#be123c"/></marker>
+    <marker id="a-blue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0,0 10,3.5 0,7" fill="#2563eb"/></marker>
+    <marker id="a-org"  markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0,0 10,3.5 0,7" fill="#c2410c"/></marker>
+    <marker id="a-gold" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0,0 10,3.5 0,7" fill="#b45309"/></marker>
+    <marker id="a-grn"  markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0,0 10,3.5 0,7" fill="#059669"/></marker>
+    <marker id="a-brn"  markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0,0 10,3.5 0,7" fill="#9a3412"/></marker>
+  </defs>
+
+  <!-- ═══ HORIZONTAL STRAIGHT ARROWS ═══ -->
+
+  <!-- Source P&P → Manual Copy (y=250, centre of both boxes) -->
+  <line x1="188" y1="250" x2="222" y2="250" stroke="#7c3aed" stroke-width="2.5" marker-end="url(#a-pur)"/>
+
+  <!-- Source Ontology → CI/CD (y=590) -->
+  <line x1="188" y1="590" x2="222" y2="590" stroke="#7c3aed" stroke-width="2.5" marker-end="url(#a-pur)"/>
+
+  <!-- Manual Copy → Preprocessing (y=250) -->
+  <line x1="408" y1="250" x2="440" y2="250" stroke="#be123c" stroke-width="2.5" marker-end="url(#a-red)"/>
+
+  <!-- ReAuthor → MCP Client (y=248 straight horizontal) -->
+  <line x1="1094" y1="248" x2="1126" y2="248" stroke="#c2410c" stroke-width="2.5" marker-end="url(#a-org)"/>
+
+  <!-- Validation → MCP Client (orthogonal: right from Validation, up, then into MCP Client) -->
+  <polyline points="1094,368 1110,368 1110,320 1126,320"
+    stroke="#c2410c" stroke-width="2" fill="none" marker-end="url(#a-org)"/>
+
+  <!-- KG Wf → MCP Client (orthogonal: right, up, into MCP Client) -->
+  <polyline points="1094,488 1110,488 1110,360 1126,360"
+    stroke="#c2410c" stroke-width="2" fill="none" marker-end="url(#a-org)"/>
+
+  <!-- MCP Server → AI Adapter (y=510 straight horizontal) -->
+  <line x1="1322" y1="510" x2="1354" y2="510" stroke="#b45309" stroke-width="2.5" marker-end="url(#a-gold)"/>
+
+  <!-- GCS → Backend (y=210 straight horizontal) -->
+  <line x1="1828" y1="210" x2="2020" y2="210" stroke="#9a3412" stroke-width="2" marker-end="url(#a-brn)"/>
+
+  <!-- Vector DB → Semantic Retrieval (orthogonal) -->
+  <polyline points="1828,430 1960,430 1960,478 2020,478"
+    stroke="#9a3412" stroke-width="2" fill="none" marker-end="url(#a-brn)"/>
+
+  <!-- KG → KG Retrieval (orthogonal, goes right then up then right) -->
+  <polyline points="1958,712 1985,712 1985,478 2200,478"
+    stroke="#9a3412" stroke-width="2" fill="none" marker-end="url(#a-brn)"/>
+
+  <!-- ═══ VERTICAL STRAIGHT ARROWS ═══ -->
+
+  <!-- Preprocessing ↓ Chunking -->
+  <line x1="533" y1="310" x2="533" y2="440" stroke="#be123c" stroke-width="2.5" marker-end="url(#a-red)"/>
+
+  <!-- ReAuthor ↓ Validation -->
+  <line x1="876" y1="295" x2="876" y2="320" stroke="#2563eb" stroke-width="2.5" marker-end="url(#a-blue)"/>
+
+  <!-- Validation ↓ KG -->
+  <line x1="876" y1="415" x2="876" y2="440" stroke="#2563eb" stroke-width="2.5" marker-end="url(#a-blue)"/>
+
+  <!-- MCP Client ↓ MCP Server -->
+  <line x1="1224" y1="380" x2="1224" y2="460" stroke="#c2410c" stroke-width="2.5" marker-end="url(#a-org)"/>
+
+  <!-- AI Adapter ↓ Group AI -->
+  <line x1="1469" y1="335" x2="1469" y2="440" stroke="#b45309" stroke-width="2.5" marker-end="url(#a-gold)"/>
+
+  <!-- Backend ↓ Frontend -->
+  <line x1="2194" y1="260" x2="2194" y2="310" stroke="#9a3412" stroke-width="2.5" marker-end="url(#a-brn)"/>
+
+  <!-- Frontend ↓ Retrieval blocks (centre, down) -->
+  <line x1="2194" y1="400" x2="2194" y2="450" stroke="#9a3412" stroke-width="2" marker-end="url(#a-brn)"/>
+
+  <!-- Retrieval → Actor (centre, down) -->
+  <polyline points="2104,505 2104,580 2190,580 2190,640"
+    stroke="#9a3412" stroke-width="2" fill="none" marker-end="url(#a-brn)"/>
+
+  <!-- ═══ CROSS-COLUMN ORTHOGONAL ROUTES ═══ -->
+
+  <!-- Chunking → Orchestration/ReAuthor (right from chunk, up, right) -->
+  <polyline points="626,495 642,495 642,248 658,248"
+    stroke="#2563eb" stroke-width="2.5" fill="none" marker-end="url(#a-blue)"/>
+
+  <!-- MCP Server → Persistence GCS (right, down to persistence zone, right into GCS) -->
+  <polyline points="1322,510 1560,510 1560,210 1628,210"
+    stroke="#059669" stroke-width="2" fill="none" marker-end="url(#a-grn)" stroke-dasharray="6,3"/>
+
+  <!-- CI/CD → MCP Server (bottom horizontal route) -->
+  <polyline points="315,650 315,770 1224,770 1224,560"
+    stroke="#c2410c" stroke-width="1.5" fill="none" marker-end="url(#a-org)" stroke-dasharray="5,4"/>
+
+</svg>
+
+<!-- ═══ ARROW LABELS ═══ -->
+<div class="albl" style="left:1905px;top:192px;color:#9a3412;">File Upload</div>
+<div class="albl" style="left:1905px;top:442px;color:#9a3412;">Semantic</div>
+<div class="albl" style="left:1905px;top:700px;color:#9a3412;">KG Retrieval</div>
+<div class="albl" style="left:700px;top:772px;color:#c2410c;font-size:9px;">Ontology via CI/CD Pipeline</div>
+
+<!-- ═══ CROSS-CUTTING BAR ═══ -->
+<div class="xcut">
+  <span class="label">9 · Cross-Cutting Platform Core Services — Applies to All Layers</span>
+  <span class="chip">🔐 Auth & Identity · DMS</span>
+  <span class="chip">🔗 API Integration Layer</span>
+  <span class="chip">💾 Session & Cache</span>
+  <span class="chip">📊 Observability · OTel</span>
+  <span class="chip">🚀 CI/CD · Jenkins · GitOps</span>
+</div>
+
+<div class="footer">
+  <span>Release 1 · Manual Ingestion · Fabric Deferred to R2 · UK Data Residency</span>
+  <span>April 2026 · Architecture Working Group</span>
+</div>
+
+</div>
+</body>
+</html>
