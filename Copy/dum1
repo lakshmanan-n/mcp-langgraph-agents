@@ -459,3 +459,51 @@ Codify Mapped to the Reference
 * Identify cross-use-case gaps, common patterns, and dependencies to support prioritisation of the core unstructured capabilities.
 * Track dependencies and alignment with related teams such as Fabric, Group AI platform, metadata/catalogue, knowledge graph, and security/governance stakeholders.
 * Produce structured artefacts for the workstream, including source inventories, capability mapping, requirements packs, and working-group action tracking.
+
+
+
+Business benefit
+
+* Ensures the workstream is driven by real business demand and priority use cases rather than isolated architecture activity.
+* Creates clarity on which unstructured data capabilities are genuinely needed across the bank and where reuse is possible.
+* Helps prioritise investment by linking business use cases to specific capability needs and gaps.
+* Reduces the risk of building services that are not adopted or that do not solve the highest-value problems.
+* Provides the evidence base for shaping the roadmap, shared services, and targeted POCs.
+
+
+
+1. Unstructured reference architecture
+
+Business benefit:
+
+* Creates a common enterprise blueprint, reducing fragmented design decisions across use cases.
+* Speeds up future delivery by giving teams a reusable starting point rather than designing from scratch.
+* Improves governance and risk control by embedding policy, lineage, security, and retrieval controls into the architecture from the start.
+* Supports better investment decisions by showing where shared services can be reused across multiple use cases.
+
+2. Core shared unstructured capabilities
+
+Business benefit:
+
+* Reduces duplication by building common services once and reusing them across multiple AI use cases.
+* Lowers delivery cost and implementation effort for future projects.
+* Improves consistency in ingestion, preparation, metadata, redaction, retrieval, and semantic processing.
+* Increases scalability by moving from bespoke point solutions to reusable enterprise capabilities.
+
+3. Priority use case alignment / POCs
+
+Business benefit:
+
+* Validates the architecture against real business use cases rather than keeping it theoretical.
+* Helps prove which capabilities deliver immediate value and which gaps need targeted investment.
+* Reduces delivery risk by testing critical patterns early before wider rollout.
+* Creates a practical adoption path for priority AI use cases and future reuse across the bank.
+
+4. Fabric integration / unstructured data product exposure
+
+Business benefit:
+
+* Aligns unstructured outputs with the bank’s standard enterprise data access model.
+* Makes curated unstructured products, analytical outputs, and knowledge graph products more discoverable and reusable.
+* Improves governed access for downstream consumers through standardised product exposure.
+* Strengthens long-term enterprise integration by connecting unstructured and structured data consumption patterns.
