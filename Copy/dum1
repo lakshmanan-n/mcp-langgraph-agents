@@ -451,3 +451,11 @@ Enterprise Reference Architecture
 Codify Mapped to the Reference
 "Same blueprint, populated with Release 1 components. Seven of eight layers are delivered in R1 — Source through Consumption. Fabric is deliberately deferred to Release 2. Bottom strip captures the three scope commitments: manual ingestion, KG on-premise for UK data residency, Fabric in R2. That's our defensible R1 scope statement."
 
+* Coordinate with priority AI use case teams to gather unstructured data requirements, source systems, content types, sensitivities, and consumption needs.
+* Maintain the inventory of priority unstructured and semi-structured sources, including ownership, business purpose, and key access constraints.
+* Map each use case to the unstructured reference architecture and identify which shared capabilities are needed versus what remains use-case-specific.
+* Elicit requirements for the common shared services needed across use cases, such as ingestion, extraction, normalisation, metadata, redaction, chunking, embeddings, graph, retrieval, and Fabric publication.
+* Capture governance and control requirements from use cases, including sensitivity, DLP, provenance, residency, retention, and runtime access expectations.
+* Identify cross-use-case gaps, common patterns, and dependencies to support prioritisation of the core unstructured capabilities.
+* Track dependencies and alignment with related teams such as Fabric, Group AI platform, metadata/catalogue, knowledge graph, and security/governance stakeholders.
+* Produce structured artefacts for the workstream, including source inventories, capability mapping, requirements packs, and working-group action tracking.
