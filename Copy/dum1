@@ -507,3 +507,9 @@ Business benefit:
 * Makes curated unstructured products, analytical outputs, and knowledge graph products more discoverable and reusable.
 * Improves governed access for downstream consumers through standardised product exposure.
 * Strengthens long-term enterprise integration by connecting unstructured and structured data consumption patterns.
+
+
+* What has been achieved: Completed the initial version of the unstructured data reference architecture and socialised it across the AI for Tech working group and key stakeholders, including Group AI, Codifying the Bank, R&C, and other related teams.
+    This matters because: It establishes a shared enterprise architecture baseline for how unstructured data should be governed, processed, published, and consumed across AI use cases.
+* What has been achieved: Progressed the initial draft of the POC gap assessment for core unstructured capabilities, using the current reference architecture and existing use case designs to identify priority gaps, common patterns, and candidate validation areas.
+    This matters because: It moves the workstream from architecture definition into practical capability validation and helps prioritise the shared services and POCs needed for future use case adoption.
