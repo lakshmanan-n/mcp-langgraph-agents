@@ -390,3 +390,24 @@ Out of Scope
 * Integration with upstream source systems (e.g., GPPS, GMS)
 * Automation of ingestion (manual ingestion remains in place)
 * Downstream consumer integrations beyond initial platform capability
+
+
+
+🧾 Service Overview
+
+The GCP Unstructured Data Layer (UDL) platform provides a scalable and secure environment for the end-to-end processing of unstructured data, from ingestion and preparation through to AI-driven processing, knowledge generation, and consumption. The platform aligns with the enterprise unstructured data reference architecture and supports capabilities such as document ingestion, content normalisation, semantic processing, and knowledge persistence.
+
+🎯 Purpose
+
+* Enable AI-driven processing and decision support from unstructured data
+* Provide a scalable and standardised platform for ingestion, processing, and retrieval of unstructured content
+* Support semantic understanding and knowledge generation using LLMs, embedding models, and graph/vector capabilities
+* Enable semantic search and contextual retrieval across unstructured data domains
+* Establish a foundation for structured, governed, and reusable enterprise knowledge
+* Integrate enterprise AI capabilities to support content transformation, validation, and reasoning
+* Support onboarding of multiple unstructured data use cases across business domains
+
+
+UDL Use Cases
+
+The platform supports a range of unstructured data use cases across business domains. As part of this, the Codify the Bank (CTB) use case leverages the platform to transform unstructured policy and procedure documents into structured, validated, and reusable enterprise knowledge. It enables AI-driven reauthoring, validation, and knowledge graph generation to support improved consistency, traceability, and downstream consumption.
