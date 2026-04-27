@@ -322,3 +322,71 @@ Short closing line
 Thanks for raising this.
 The position has moved on from the earlier model where unstructured data was mainly treated as a pre-processor to convert content into structured outputs for downstream platforms. The current direction in AI for Tech is broader: we are shaping an unstructured data processing architecture that coexists alongside the structured data platform and supports not only structured extraction, but also governed retrieval, semantic processing, graph generation, and Fabric-based publication where needed. The reference architecture has been socialised across AI for Tech, Group AI, Codifying the Bank, and R&C and is the current agreed direction.
 For the WPB / IWPB document-to-text use case, it would be good to connect it into the AI for Tech working group so we can align it to the reference architecture and identify which reusable capabilities can be shared rather than solved locally again. Happy to share the architecture and the current capability gap assessment as the starting point.
+
+
+🧾 Project Description
+
+This phase extends the previously approved CIB UDL platform implementation to enable the Codify the Bank (CTB) use case to progress towards production by integrating with enterprise knowledge and AI capabilities.
+
+The focus of this phase is to:
+
+* integrate with the on-premise Neo4j enterprise knowledge graph platform
+* enable AI model access via the Group AI platform
+* support the generation and consumption of structured knowledge from processed documents
+
+This establishes the foundation for CTB to evolve from a document processing capability into an enterprise-aligned knowledge platform.
+
+⸻
+
+🎯 Objectives
+
+* Enable integration with the enterprise Neo4j knowledge graph platform
+* Establish AI integration via the Group AI platform for LLM and embedding capabilities
+* Support knowledge graph and embedding generation from validated document outputs
+* Enable hybrid knowledge representation (graph and vector) for downstream use cases
+* Align the solution with enterprise architecture standards for AI and knowledge platforms
+
+⸻
+
+🏗️ Scope
+
+In Scope
+
+1. Knowledge Graph Integration
+
+* Integration with the on-premise Neo4j enterprise platform
+* Implementation of knowledge graph build workflows (entity and relationship extraction, transformation, and load)
+* Alignment with enterprise ontology and schema models
+
+⸻
+
+2. Group AI Platform Integration
+
+* Integration with the Group AI platform (UDI) for:
+    * LLM-based processing (reauthoring and validation)
+    * Embedding generation for semantic retrieval
+
+⸻
+
+3. Knowledge Generation
+
+* Enablement of:
+    * knowledge graph population from approved content
+    * vector embedding generation and storage
+
+⸻
+
+4. Knowledge Retrieval Capability
+
+* Support for:
+    * semantic retrieval using embeddings
+    * graph-based retrieval from the knowledge graph
+    * hybrid retrieval combining graph and vector approaches
+
+⸻
+
+Out of Scope
+
+* Integration with upstream source systems (e.g., GPPS, GMS)
+* Automation of ingestion (manual ingestion remains in place)
+* Downstream consumer integrations beyond initial platform capability
