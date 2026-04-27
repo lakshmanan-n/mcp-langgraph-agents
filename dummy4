@@ -411,3 +411,13 @@ The GCP Unstructured Data Layer (UDL) platform provides a scalable and secure en
 UDL Use Cases
 
 The platform supports a range of unstructured data use cases across business domains. As part of this, the Codify the Bank (CTB) use case leverages the platform to transform unstructured policy and procedure documents into structured, validated, and reusable enterprise knowledge. It enables AI-driven reauthoring, validation, and knowledge graph generation to support improved consistency, traceability, and downstream consumption.
+
+
+* Support manual ingestion and processing of unstructured policy and procedure documents
+* Enable AI-driven reauthoring and validation workflows to standardise and improve document quality
+* Provide human-in-the-loop review and approval to ensure accuracy and compliance
+* Generate structured knowledge artefacts from approved content using knowledge graph modelling
+* Enable semantic understanding and retrieval through vector embedding generation
+* Support hybrid knowledge retrieval combining graph-based and vector-based approaches
+* Provide access to processed content and knowledge outputs via UI and APIs
+* Establish a foundation for scalable onboarding of additional unstructured data use cases
