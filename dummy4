@@ -421,3 +421,56 @@ The platform supports a range of unstructured data use cases across business dom
 * Support hybrid knowledge retrieval combining graph-based and vector-based approaches
 * Provide access to processed content and knowledge outputs via UI and APIs
 * Establish a foundation for scalable onboarding of additional unstructured data use cases
+
+
+Function
+
+Description
+
+Document Upload
+
+Allows users to manually upload policy and procedure documents into the platform for processing
+
+Document Management
+
+Enables viewing, tracking, and management of uploaded documents and their processing status
+
+Reauthoring Workflow
+
+Provides AI-driven transformation of documents into standardised and simplified formats
+
+Validation Workflow
+
+Compares reauthored outputs against source documents to identify gaps, inconsistencies, and quality issues
+
+Human Review & Approval
+
+Enables SMEs to review, validate, and approve AI-generated outputs before downstream use
+
+Knowledge Generation
+
+Extracts structured knowledge (entities and relationships) from approved content for knowledge graph creation
+
+Embedding Generation
+
+Generates vector embeddings from document content to support semantic search and retrieval
+
+Semantic Search & Retrieval
+
+Allows users to search and retrieve content using semantic similarity and contextual understanding
+
+Knowledge Exploration
+
+Enables exploration of relationships and insights from the knowledge graph
+
+Metadata & Lineage Tracking
+
+Provides visibility into document versions, processing history, and lineage for audit and traceability
+
+Reporting & Monitoring
+
+Enables monitoring of processing status, workflow metrics, and system activity
+
+API Access
+
+Provides programmatic access to processed data and knowledge outputs for integration with other systems
