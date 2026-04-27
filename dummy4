@@ -317,3 +317,8 @@ Key closing point
 Short closing line
 
 * The main change in this version is the addition of Fabric as the enterprise data product access layer, while retaining direct governed runtime retrieval for interactive AI use cases.
+
+
+Thanks for raising this.
+The position has moved on from the earlier model where unstructured data was mainly treated as a pre-processor to convert content into structured outputs for downstream platforms. The current direction in AI for Tech is broader: we are shaping an unstructured data processing architecture that coexists alongside the structured data platform and supports not only structured extraction, but also governed retrieval, semantic processing, graph generation, and Fabric-based publication where needed. The reference architecture has been socialised across AI for Tech, Group AI, Codifying the Bank, and R&C and is the current agreed direction.
+For the WPB / IWPB document-to-text use case, it would be good to connect it into the AI for Tech working group so we can align it to the reference architecture and identify which reusable capabilities can be shared rather than solved locally again. Happy to share the architecture and the current capability gap assessment as the starting point.
