@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>VectorDBaaS — Enterprise Architecture v2.1</title>
+<style>
+  body { margin: 0; padding: 24px; background: #f0f2f5; display: flex; flex-direction: column; align-items: center; font-family: Helvetica, Arial, sans-serif; }
+  .diagram { max-width: 1500px; width: 100%; background: white; border-radius: 12px; box-shadow: 0 4px 24px rgba(0,0,0,0.12); overflow: hidden; }
+  .footer { max-width: 1500px; width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 16px 8px 8px; }
+  .footer-text { font-size: 12px; color: #5B6878; font-style: italic; line-height: 1.5; max-width: 80%; }
+  .footer-version { font-size: 12px; color: #5B6878; font-weight: 600; white-space: nowrap; }
+</style>
+</head>
+<body>
+<div class="diagram">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1480 1110" width="1480" height="1110" font-family="Helvetica, Arial, sans-serif">
+<defs>
+  <filter id="card-shadow" x="-5%" y="-5%" width="110%" height="115%">
+    <feDropShadow dx="0" dy="1.5" stdDeviation="1.5" flood-color="#0B1A2C" flood-opacity="0.10"/>
+  </filter>
+  <marker id="arrowDark" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M0,1 L9,5 L0,9 z" fill="#445063"/>
+  </marker>
+</defs>
+<rect x="0" y="0" width="1480" height="1110" fill="#FFFFFF"/>
+
+<!-- HEADER -->
+<rect x="0" y="0" width="1480" height="64" fill="#1F3A5F"/>
+<text x="24" y="28" font-size="13" font-weight="700" fill="#9CC0E5" letter-spacing="1.4">AI FOR TECH — UNSTRUCTURED DATA WORKSTREAM</text>
+<text x="24" y="52" font-size="22" font-weight="700" fill="#FFFFFF">Vector DB as a Service — Proposed Enterprise Architecture</text>
+
+
+
+<!-- CONSUMERS -->
+<rect x="24" y="82" width="1432" height="110" rx="14" ry="14" fill="#E0ECFA" stroke="#5B8AC2" stroke-width="1.2" stroke-opacity="0.55"/>
+<text x="42" y="104" font-size="11" font-weight="700" fill="#1E4F8B" letter-spacing="1.2">CONSUMERS</text>
+<rect x="42" y="120" width="337" height="56" rx="10" ry="10" fill="#FFFFFF" stroke="#5B8AC2" stroke-width="1.4" filter="url(#card-shadow)"/>
+<text x="210.5" y="144" text-anchor="middle" font-size="13" font-weight="700" fill="#1B2A3A">RAG / Copilot Apps</text>
+<text x="210.5" y="163" text-anchor="middle" font-size="10" fill="#4A5868">Conversational and assistant experiences</text>
+<rect x="395" y="120" width="337" height="56" rx="10" ry="10" fill="#FFFFFF" stroke="#5B8AC2" stroke-width="1.4" filter="url(#card-shadow)"/>
+<text x="563.5" y="144" text-anchor="middle" font-size="13" font-weight="700" fill="#1B2A3A">Agentic Workflows</text>
+<text x="563.5" y="163" text-anchor="middle" font-size="10" fill="#4A5868">Stateful agent retrieval</text>
+<rect x="748" y="120" width="337" height="56" rx="10" ry="10" fill="#FFFFFF" stroke="#5B8AC2" stroke-width="1.4" filter="url(#card-shadow)"/>
+<text x="916.5" y="144" text-anchor="middle" font-size="13" font-weight="700" fill="#1B2A3A">Retrieval Orchestration</text>
+<text x="916.5" y="163" text-anchor="middle" font-size="10" fill="#4A5868">Hybrid search composition</text>
+<rect x="1101" y="120" width="337" height="56" rx="10" ry="10" fill="#FFFFFF" stroke="#5B8AC2" stroke-width="1.4" filter="url(#card-shadow)"/>
+<text x="1269.5" y="144" text-anchor="middle" font-size="13" font-weight="700" fill="#1B2A3A">BI / Data Product Consumers</text>
+<text x="1269.5" y="163" text-anchor="middle" font-size="10" fill="#4A5868">BI, apps, analytical workloads</text>
+
+<!-- FLOW ARROWS -->
+<line x1="386" y1="178" x2="386" y2="240" stroke="#445063" stroke-width="1.4" stroke-dasharray="4,3" marker-end="url(#arrowDark)"/>
+<line x1="1093" y1="178" x2="1093" y2="240" stroke="#445063" stroke-width="1.4" stroke-dasharray="4,3" marker-end="url(#arrowDark)"/>
+
+<!-- ACCESS LAYER -->
+<rect x="24" y="206" width="1432" height="110" rx="14" ry="14" fill="#D5E5F5" stroke="#3F6EA0" stroke-width="1.2" stroke-opacity="0.55"/>
+<text x="42" y="228" font-size="11" font-weight="700" fill="#0F3D6E" letter-spacing="1.2">ACCESS LAYER  —  DUAL ACCESS MODEL</text>
+<rect x="42" y="244" width="689" height="56" rx="10" ry="10" fill="#FFFFFF" stroke="#3F6EA0" stroke-width="1.4" filter="url(#card-shadow)"/>
+<text x="386" y="268" text-anchor="middle" font-size="13" font-weight="700" fill="#1B2A3A">Direct Runtime Retrieval</text>
+<text x="386" y="287" text-anchor="middle" font-size="10" fill="#4A5868">Low-latency RAG and agentic retrieval | governed at retrieval time</text>
+<rect x="749" y="244" width="689" height="56" rx="10" ry="10" fill="#FFFFFF" stroke="#3F6EA0" stroke-width="1.4" filter="url(#card-shadow)"/>
+<text x="1093" y="268" text-anchor="middle" font-size="13" font-weight="700" fill="#1B2A3A">Fabric-Published Semantic &amp; Vector-Derived Products</text>
+<text x="1093" y="287" text-anchor="middle" font-size="10" fill="#4A5868">Curated semantic products, governed views | under data product contract</text>
+
+<!-- FLOW ARROWS -->
+<line x1="386" y1="302" x2="386" y2="328" stroke="#445063" stroke-width="1.4" marker-end="url(#arrowDark)"/>
+<line x1="1093" y1="302" x2="1093" y2="328" stroke="#445063" stroke-width="1.4" marker-end="url(#arrowDark)"/>
+
+<!-- CONTROL PLANE -->
+<rect x="24" y="330" width="1432" height="200" rx="14" ry="14" fill="#E5F2EA" stroke="#3E8C5B" stroke-width="1.2" stroke-opacity="0.55"/>
+<text x="42" y="352" font-size="11" font-weight="700" fill="#1F5C3A" letter-spacing="1.2">CONTROL PLANE  —  CENTRALLY OWNED (AI FOR TECH)</text>
+<rect x="42" y="368" width="453" height="65" rx="10" ry="10" fill="#FFFFFF" stroke="#3E8C5B" stroke-width="1.4" filter="url(#card-shadow)"/>
+<text x="268.5" y="396" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1B2A3A">Service Registry &amp; Contracts</text>
+<text x="268.5" y="415" text-anchor="middle" font-size="10" fill="#4A5868">Collection contracts, owners, SLAs, schemas</text>
+<rect x="513" y="368" width="453" height="65" rx="10" ry="10" fill="#FFFFFF" stroke="#3E8C5B" stroke-width="1.4" filter="url(#card-shadow)"/>
+<text x="739.5" y="396" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1B2A3A">Embedding Model Registry &amp; Governance</text>
+<text x="739.5" y="415" text-anchor="middle" font-size="10" fill="#4A5868">Approved models, versioning, drift, refresh</text>
+<rect x="985" y="368" width="453" height="65" rx="10" ry="10" fill="#FFFFFF" stroke="#3E8C5B" stroke-width="1.4" filter="url(#card-shadow)"/>
+<text x="1211.5" y="396" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1B2A3A">Index Lifecycle Service</text>
+<text x="1211.5" y="415" text-anchor="middle" font-size="10" fill="#4A5868">Provisioning, refresh, reindex, retire</text>
+<rect x="42" y="447" width="340" height="65" rx="10" ry="10" fill="#FFFFFF" stroke="#3E8C5B" stroke-width="1.4" filter="url(#card-shadow)"/>
+<text x="212.0" y="475" text-anchor="middle" font-size="12" font-weight="700" fill="#1B2A3A">Classification &amp; DLP Gate</text>
+<text x="212.0" y="494" text-anchor="middle" font-size="10" fill="#4A5868">Pre-vector classification and provenance</text>
+<rect x="394" y="447" width="340" height="65" rx="10" ry="10" fill="#FFFFFF" stroke="#3E8C5B" stroke-width="1.4" filter="url(#card-shadow)"/>
+<text x="564.0" y="475" text-anchor="middle" font-size="12" font-weight="700" fill="#1B2A3A">Lineage &amp; Metadata Publisher</text>
+<text x="564.0" y="494" text-anchor="middle" font-size="10" fill="#4A5868">Catalogue and Fabric publication</text>
+<rect x="746" y="447" width="340" height="65" rx="10" ry="10" fill="#FFFFFF" stroke="#3E8C5B" stroke-width="1.4" filter="url(#card-shadow)"/>
+<text x="916.0" y="475" text-anchor="middle" font-size="12" font-weight="700" fill="#1B2A3A">Retrieval Quality Governance</text>
+<text x="916.0" y="494" text-anchor="middle" font-size="10" fill="#4A5868">Baselines, relevance monitoring, drift</text>
+<rect x="1098" y="447" width="340" height="65" rx="10" ry="10" fill="#FFFFFF" stroke="#3E8C5B" stroke-width="1.4" filter="url(#card-shadow)"/>
+<text x="1268.0" y="475" text-anchor="middle" font-size="12" font-weight="700" fill="#1B2A3A">AI Observability &amp; FinOps</text>
+<text x="1268.0" y="494" text-anchor="middle" font-size="10" fill="#4A5868">Cost, quota, latency, model governance</text>
+
+<!-- FLOW ARROW -->
+<line x1="740" y1="530" x2="740" y2="542" stroke="#445063" stroke-width="1.4" marker-end="url(#arrowDark)"/>
+
+<!-- DATA PLANES -->
+<rect x="24" y="544" width="1432" height="290" rx="14" ry="14" fill="#FCF1DD" stroke="#B98835" stroke-width="1.2" stroke-opacity="0.55"/>
+<text x="42" y="566" font-size="11" font-weight="700" fill="#7A5417" letter-spacing="1.2">DATA PLANES  —  FEDERATED, ONE PER DATA PLATFORM (RESIDENCY- AND PLATFORM-LOCAL)</text>
+<rect x="42" y="582" width="453" height="234" rx="12" ry="12" fill="#FFFFFF" stroke="#B98835" stroke-width="1.4" filter="url(#card-shadow)"/>
+<text x="268.5" y="600" text-anchor="middle" font-size="13" font-weight="700" fill="#7A5417">Data Plane A</text>
+<text x="268.5" y="614" text-anchor="middle" font-size="10" fill="#5B6878">Platform 1 / Region 1</text>
+<rect x="54" y="620" width="429" height="36" rx="8" ry="8" fill="#FFF8E8" stroke="#C29644" stroke-width="1.4" filter="url(#card-shadow)"/>
+<text x="268.5" y="634" text-anchor="middle" font-size="11" font-weight="700" fill="#1B2A3A">Vector Engine</text>
+<text x="268.5" y="648" text-anchor="middle" font-size="9" fill="#4A5868">Managed/OSS engine; collections, indexes</text>
+<rect x="54" y="660" width="429" height="36" rx="8" ry="8" fill="#FFF8E8" stroke="#C29644" stroke-width="1.4" filter="url(#card-shadow)"/>
+<text x="268.5" y="674" text-anchor="middle" font-size="11" font-weight="700" fill="#1B2A3A">Embedding Execution Service</text>
+<text x="268.5" y="688" text-anchor="middle" font-size="9" fill="#4A5868">Calls Group AI embeddings via MCP</text>
+<rect x="54" y="700" width="429" height="36" rx="8" ry="8" fill="#FFF8E8" stroke="#C29644" stroke-width="1.4" filter="url(#card-shadow)"/>
+<text x="268.5" y="714" text-anchor="middle" font-size="11" font-weight="700" fill="#1B2A3A">Retrieval API</text>
+<text x="268.5" y="728" text-anchor="middle" font-size="9" fill="#4A5868">Filtered search, hybrid hooks</text>
+<rect x="54" y="740" width="429" height="36" rx="8" ry="8" fill="#FFF8E8" stroke="#C29644" stroke-width="1.4" filter="url(#card-shadow)"/>
+<text x="268.5" y="754" text-anchor="middle" font-size="11" font-weight="700" fill="#1B2A3A">Runtime Access &amp; Policy Enforcement</text>
+<text x="268.5" y="768" text-anchor="middle" font-size="9" fill="#4A5868">Entitlement, access control, classification</text>
+<rect x="54" y="780" width="429" height="36" rx="8" ry="8" fill="#FFF8E8" stroke="#C29644" stroke-width="1.4" filter="url(#card-shadow)"/>
+<text x="268.5" y="794" text-anchor="middle" font-size="11" font-weight="700" fill="#1B2A3A">Cache &amp; Session Store</text>
+<text x="268.5" y="808" text-anchor="middle" font-size="9" fill="#4A5868">Latency-sensitive working memory</text>
+<rect x="513" y="582" width="453" height="234" rx="12" ry="12" fill="#FFFFFF" stroke="#B98835" stroke-width="1.4" filter="url(#card-shadow)"/>
+<text x="739.5" y="600" text-anchor="middle" font-size="13" font-weight="700" fill="#7A5417">Data Plane B</text>
+<text x="739.5" y="614" text-anchor="middle" font-size="10" fill="#5B6878">Platform 2 / Region 2</text>
+<rect x="525" y="620" width="429" height="36" rx="8" ry="8" fill="#FFF8E8" stroke="#C29644" stroke-width="1.4" filter="url(#card-shadow)"/>
+<text x="739.5" y="634" text-anchor="middle" font-size="11" font-weight="700" fill="#1B2A3A">Vector Engine</text>
+<text x="739.5" y="648" text-anchor="middle" font-size="9" fill="#4A5868">Managed/OSS engine; collections, indexes</text>
+<rect x="525" y="660" width="429" height="36" rx="8" ry="8" fill="#FFF8E8" stroke="#C29644" stroke-width="1.4" filter="url(#card-shadow)"/>
+<text x="739.5" y="674" text-anchor="middle" font-size="11" font-weight="700" fill="#1B2A3A">Embedding Execution Service</text>
+<text x="739.5" y="688" text-anchor="middle" font-size="9" fill="#4A5868">Calls Group AI embeddings via MCP</text>
+<rect x="525" y="700" width="429" height="36" rx="8" ry="8" fill="#FFF8E8" stroke="#C29644" stroke-width="1.4" filter="url(#card-shadow)"/>
+<text x="739.5" y="714" text-anchor="middle" font-size="11" font-weight="700" fill="#1B2A3A">Retrieval API</text>
+<text x="739.5" y="728" text-anchor="middle" font-size="9" fill="#4A5868">Filtered search, hybrid hooks</text>
+<rect x="525" y="740" width="429" height="36" rx="8" ry="8" fill="#FFF8E8" stroke="#C29644" stroke-width="1.4" filter="url(#card-shadow)"/>
+<text x="739.5" y="754" text-anchor="middle" font-size="11" font-weight="700" fill="#1B2A3A">Runtime Access &amp; Policy Enforcement</text>
+<text x="739.5" y="768" text-anchor="middle" font-size="9" fill="#4A5868">Entitlement, access control, classification</text>
+<rect x="525" y="780" width="429" height="36" rx="8" ry="8" fill="#FFF8E8" stroke="#C29644" stroke-width="1.4" filter="url(#card-shadow)"/>
+<text x="739.5" y="794" text-anchor="middle" font-size="11" font-weight="700" fill="#1B2A3A">Cache &amp; Session Store</text>
+<text x="739.5" y="808" text-anchor="middle" font-size="9" fill="#4A5868">Latency-sensitive working memory</text>
+<rect x="985" y="582" width="453" height="234" rx="12" ry="12" fill="#FFFFFF" stroke="#B98835" stroke-width="1.4" filter="url(#card-shadow)"/>
+<text x="1211.5" y="600" text-anchor="middle" font-size="13" font-weight="700" fill="#7A5417">Data Plane C</text>
+<text x="1211.5" y="614" text-anchor="middle" font-size="10" fill="#5B6878">Platform 3 / Region 3</text>
+<rect x="997" y="620" width="429" height="36" rx="8" ry="8" fill="#FFF8E8" stroke="#C29644" stroke-width="1.4" filter="url(#card-shadow)"/>
+<text x="1211.5" y="634" text-anchor="middle" font-size="11" font-weight="700" fill="#1B2A3A">Vector Engine</text>
+<text x="1211.5" y="648" text-anchor="middle" font-size="9" fill="#4A5868">Managed/OSS engine; collections, indexes</text>
+<rect x="997" y="660" width="429" height="36" rx="8" ry="8" fill="#FFF8E8" stroke="#C29644" stroke-width="1.4" filter="url(#card-shadow)"/>
+<text x="1211.5" y="674" text-anchor="middle" font-size="11" font-weight="700" fill="#1B2A3A">Embedding Execution Service</text>
+<text x="1211.5" y="688" text-anchor="middle" font-size="9" fill="#4A5868">Calls Group AI embeddings via MCP</text>
+<rect x="997" y="700" width="429" height="36" rx="8" ry="8" fill="#FFF8E8" stroke="#C29644" stroke-width="1.4" filter="url(#card-shadow)"/>
+<text x="1211.5" y="714" text-anchor="middle" font-size="11" font-weight="700" fill="#1B2A3A">Retrieval API</text>
+<text x="1211.5" y="728" text-anchor="middle" font-size="9" fill="#4A5868">Filtered search, hybrid hooks</text>
+<rect x="997" y="740" width="429" height="36" rx="8" ry="8" fill="#FFF8E8" stroke="#C29644" stroke-width="1.4" filter="url(#card-shadow)"/>
+<text x="1211.5" y="754" text-anchor="middle" font-size="11" font-weight="700" fill="#1B2A3A">Runtime Access &amp; Policy Enforcement</text>
+<text x="1211.5" y="768" text-anchor="middle" font-size="9" fill="#4A5868">Entitlement, access control, classification</text>
+<rect x="997" y="780" width="429" height="36" rx="8" ry="8" fill="#FFF8E8" stroke="#C29644" stroke-width="1.4" filter="url(#card-shadow)"/>
+<text x="1211.5" y="794" text-anchor="middle" font-size="11" font-weight="700" fill="#1B2A3A">Cache &amp; Session Store</text>
+<text x="1211.5" y="808" text-anchor="middle" font-size="9" fill="#4A5868">Latency-sensitive working memory</text>
+
+<!-- SHARED ENTERPRISE SERVICES -->
+<rect x="24" y="852" width="1432" height="110" rx="14" ry="14" fill="#EDE4F7" stroke="#7C5BB3" stroke-width="1.2" stroke-opacity="0.55"/>
+<text x="42" y="874" font-size="11" font-weight="700" fill="#4B2D7B" letter-spacing="1.2">SHARED ENTERPRISE SERVICES CONSUMED</text>
+<rect x="42" y="890" width="266" height="56" rx="10" ry="10" fill="#FFFFFF" stroke="#7C5BB3" stroke-width="1.4" filter="url(#card-shadow)"/>
+<text x="175" y="914" text-anchor="middle" font-size="12" font-weight="700" fill="#1B2A3A">Group AI Embeddings</text>
+<text x="175" y="930" text-anchor="middle" font-size="10" fill="#4A5868">(via MCP Gateway)</text>
+<rect x="324" y="890" width="266" height="56" rx="10" ry="10" fill="#FFFFFF" stroke="#7C5BB3" stroke-width="1.4" filter="url(#card-shadow)"/>
+<text x="457" y="914" text-anchor="middle" font-size="12" font-weight="700" fill="#1B2A3A">Enterprise Catalogue</text>
+<text x="457" y="930" text-anchor="middle" font-size="10" fill="#4A5868">Lineage / metadata</text>
+<rect x="607" y="890" width="266" height="56" rx="10" ry="10" fill="#FFFFFF" stroke="#7C5BB3" stroke-width="1.4" filter="url(#card-shadow)"/>
+<text x="740" y="914" text-anchor="middle" font-size="12" font-weight="700" fill="#1B2A3A">Fabric / Data Product Layer</text>
+<text x="740" y="930" text-anchor="middle" font-size="10" fill="#4A5868">Publication &amp; federation</text>
+<rect x="889" y="890" width="266" height="56" rx="10" ry="10" fill="#FFFFFF" stroke="#7C5BB3" stroke-width="1.4" filter="url(#card-shadow)"/>
+<text x="1022" y="914" text-anchor="middle" font-size="12" font-weight="700" fill="#1B2A3A">Enterprise IAM</text>
+<text x="1022" y="930" text-anchor="middle" font-size="10" fill="#4A5868">Identity &amp; entitlement</text>
+<rect x="1172" y="890" width="266" height="56" rx="10" ry="10" fill="#FFFFFF" stroke="#7C5BB3" stroke-width="1.4" filter="url(#card-shadow)"/>
+<text x="1305" y="914" text-anchor="middle" font-size="12" font-weight="700" fill="#1B2A3A">DLP / Content Safety</text>
+<text x="1305" y="930" text-anchor="middle" font-size="10" fill="#4A5868">Classification policy</text>
+
+<!-- CROSS-CUTTING CONTROLS -->
+<rect x="24" y="980" width="1432" height="70" rx="14" ry="14" fill="#F2F4F7" stroke="#9AA4B2" stroke-width="1.2" stroke-opacity="0.55"/>
+<text x="42" y="1002" font-size="11" font-weight="700" fill="#384250" letter-spacing="1.2">CROSS-CUTTING CONTROLS (APPLY ACROSS ALL LAYERS)</text>
+<rect x="42" y="1010" width="148" height="32" rx="6" ry="6" fill="#FFFFFF" stroke="#9AA4B2" stroke-width="1"/>
+<text x="116" y="1030" text-anchor="middle" font-size="10.5" fill="#384250" font-weight="600">Identity &amp; Access</text>
+<rect x="198" y="1010" width="148" height="32" rx="6" ry="6" fill="#FFFFFF" stroke="#9AA4B2" stroke-width="1"/>
+<text x="272" y="1030" text-anchor="middle" font-size="10.5" fill="#384250" font-weight="600">Policy &amp; DLP</text>
+<rect x="354" y="1010" width="148" height="32" rx="6" ry="6" fill="#FFFFFF" stroke="#9AA4B2" stroke-width="1"/>
+<text x="428" y="1030" text-anchor="middle" font-size="10.5" fill="#384250" font-weight="600">Lineage &amp; Provenance</text>
+<rect x="510" y="1010" width="148" height="32" rx="6" ry="6" fill="#FFFFFF" stroke="#9AA4B2" stroke-width="1"/>
+<text x="584" y="1030" text-anchor="middle" font-size="10.5" fill="#384250" font-weight="600">Audit &amp; Observability</text>
+<rect x="666" y="1010" width="148" height="32" rx="6" ry="6" fill="#FFFFFF" stroke="#9AA4B2" stroke-width="1"/>
+<text x="740" y="1030" text-anchor="middle" font-size="10.5" fill="#384250" font-weight="600">Encryption &amp; Keys</text>
+<rect x="822" y="1010" width="148" height="32" rx="6" ry="6" fill="#FFFFFF" stroke="#9AA4B2" stroke-width="1"/>
+<text x="896" y="1030" text-anchor="middle" font-size="10.5" fill="#384250" font-weight="600">Sovereignty &amp; Residency</text>
+<rect x="978" y="1010" width="148" height="32" rx="6" ry="6" fill="#FFFFFF" stroke="#9AA4B2" stroke-width="1"/>
+<text x="1052" y="1030" text-anchor="middle" font-size="10.5" fill="#384250" font-weight="600">Runtime Entitlement</text>
+<rect x="1134" y="1010" width="148" height="32" rx="6" ry="6" fill="#FFFFFF" stroke="#9AA4B2" stroke-width="1"/>
+<text x="1208" y="1030" text-anchor="middle" font-size="10.5" fill="#384250" font-weight="600">Responsible AI</text>
+<rect x="1290" y="1010" width="148" height="32" rx="6" ry="6" fill="#FFFFFF" stroke="#9AA4B2" stroke-width="1"/>
+<text x="1364" y="1030" text-anchor="middle" font-size="10.5" fill="#384250" font-weight="600">FinOps</text>
+
+<!-- FOOTER -->
+<text x="24" y="1080" font-size="10.5" fill="#5B6878" font-style="italic">Proposed logical service architecture. Data planes are deployed per data platform (e.g. IWPB, WPB, CIB, R&amp;C) under common control-plane contracts. Engine choice (e.g. pgvector, Vertex AI Search) is an implementation detail behind the data-plane contract.</text>
+
+</svg>
+</div>
+
+</body>
+</html>
