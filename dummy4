@@ -731,3 +731,93 @@ I would start them on these immediately:
 5. Build the architecture capability mapping sheet.
 6. Produce the first cross-use-case summary of common needs and gaps.
 7. Bring the first findings back to you for architecture interpretation.
+
+
+1. Build the master list of the 16 shortlisted use cases
+
+Direction:
+Create and maintain a single controlled inventory of all shortlisted use cases in one place. For each use case, capture the name, business area, sponsor, architect / tech contact, business objective, current stage, and priority.
+
+What this is for:
+This becomes the baseline working list for the whole workstream and avoids fragmented tracking across emails, slides, and meeting notes.
+
+Outcome expected:
+One agreed use case register that the workstream can use as the source of truth.
+
+⸻
+
+2. Create a standard discovery template
+
+Direction:
+Develop one structured template or questionnaire that will be used for every use case discussion. It should cover business objective, source systems, content types, sensitivity, processing needs, consumption pattern, controls, dependencies, current state, and known gaps.
+
+What this is for:
+Ensures every use case is assessed in a consistent way so they can be compared properly.
+
+Outcome expected:
+A repeatable discovery pack that supports consistent requirement capture across all use cases.
+
+⸻
+
+3. Schedule discovery sessions with each use case
+
+Direction:
+Coordinate sessions with the relevant business, architecture, and technical contacts for each shortlisted use case. Ensure the right stakeholders are invited, the discovery template is sent in advance, and actions are followed up after the meeting.
+
+What this is for:
+Moves the workstream from high-level assumptions into real structured engagement with delivery teams.
+
+Outcome expected:
+A planned and managed engagement schedule for all shortlisted use cases, with clear ownership and follow-up.
+
+⸻
+
+4. Build the source / content inventory
+
+Direction:
+Capture a detailed inventory of the source systems and content types used by each use case. This should include source owner, source type, modality, data classification, internal/external status, expected volume, refresh frequency, and access constraints.
+
+What this is for:
+Helps the workstream understand the real scope of unstructured demand across the bank and the complexity of onboarding and control requirements.
+
+Outcome expected:
+A reusable source and modality inventory that supports architecture, onboarding, and capability planning.
+
+⸻
+
+5. Build the architecture capability mapping sheet
+
+Direction:
+Map each use case against the unstructured reference architecture and the emerging shared capability model. For each use case, identify which capabilities are needed across ingestion, preparation, normalisation, metadata, redaction, semantic processing, vector, graph, Fabric publication, retrieval, and controls.
+
+What this is for:
+Creates traceability from use case demand to architecture capability need.
+
+Outcome expected:
+A structured mapping showing which architecture capabilities are repeatedly needed, partially available, or missing.
+
+⸻
+
+6. Produce the first cross-use-case summary of common needs and gaps
+
+Direction:
+Review the discovery outputs across all use cases and produce a summary showing common patterns, repeated capability needs, major gaps, and dependencies. Separate what looks reusable at enterprise level from what is use-case-specific.
+
+What this is for:
+This is the core input into shared service design, POC prioritisation, and roadmap decisions.
+
+Outcome expected:
+An evidence-based summary of where the bank should invest in common unstructured capabilities and where local solutions may remain appropriate.
+
+⸻
+
+7. Bring the first findings back to you for architecture interpretation
+
+Direction:
+Do not stop at data gathering. Consolidate the findings into a clear pack for review with you, including issues, common themes, candidate shared services, high-priority gaps, and open questions needing architecture decisions.
+
+What this is for:
+Allows you, as lead architect, to interpret the evidence and convert it into architecture direction, priority recommendations, and workstream decisions.
+
+Outcome expected:
+A structured review pack that supports your architecture decisions, stakeholder discussions, and next-phase planning.
