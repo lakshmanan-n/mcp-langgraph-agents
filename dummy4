@@ -474,3 +474,260 @@ Enables monitoring of processing status, workflow metrics, and system activity
 API Access
 
 Provides programmatic access to processed data and knowledge outputs for integration with other systems
+
+
+
+1. Use case engagement and discovery
+
+The BA should coordinate with each shortlisted use case and gather:
+
+* business objective
+* current state
+* target outcome
+* source systems
+* data types
+* sensitivity / classification
+* expected consumption pattern
+* current blockers
+* platform dependencies
+
+Why this matters
+
+Because you need one consistent view across all 16 use cases, not 16 different stories told in different ways.
+
+Goal achieved
+
+A structured demand inventory for the workstream.
+
+⸻
+
+2. Source and content inventory
+
+The BA should maintain a single inventory showing for each use case:
+
+* source system
+* source owner
+* content type
+* modality
+* internal / external
+* structured / semi-structured / unstructured
+* expected volume / frequency
+* jurisdiction / residency considerations
+* key access constraints
+
+Why this matters
+
+Because source complexity is one of the biggest drivers of architecture design.
+
+Goal achieved
+
+A reusable source inventory that supports architecture, onboarding, and prioritisation.
+
+⸻
+
+3. Capability mapping to the reference architecture
+
+The BA should map each use case against your architecture layers, for example:
+
+* ingestion and onboarding
+* preparation and normalisation
+* semantic processing
+* governed AI integration
+* persistence
+* Fabric publication
+* retrieval and consumption
+* cross-cutting controls
+
+And for each use case, identify:
+
+* needed capabilities
+* already-available capabilities
+* partial capabilities
+* missing capabilities
+
+Why this matters
+
+Because this turns the architecture into a practical assessment tool.
+
+Goal achieved
+
+Traceability from use case demand to architecture capability need.
+
+⸻
+
+4. Shared vs use-case-specific capability analysis
+
+The BA should help identify:
+
+* what capabilities repeat across multiple use cases
+* what is unique to one use case
+* where a shared service makes sense
+* where a use-case-specific pattern is acceptable
+
+Examples:
+
+* OCR / extraction
+* redaction
+* metadata capture
+* chunking
+* embeddings
+* vector persistence
+* graph build
+* retrieval APIs
+* Fabric publication
+* runtime entitlement
+
+Why this matters
+
+Because the workstream is about reusable enterprise capability, not solving every use case individually.
+
+Goal achieved
+
+A fact-based input into your core shared capability roadmap.
+
+⸻
+
+5. Dependency and stakeholder tracking
+
+The BA should track for each use case:
+
+* dependency on Group AI
+* dependency on Fabric
+* dependency on metadata / catalogue
+* dependency on platform teams
+* dependency on IAM / DLP / governance
+* whether another central capability already exists
+* where decisions are blocked
+
+Why this matters
+
+Because many use cases will not fail because of architecture — they will fail because no one is managing the dependency map.
+
+Goal achieved
+
+A clearer mobilisation and escalation picture for the workstream.
+
+⸻
+
+6. Working-group reporting and artefact management
+
+The BA should produce and maintain:
+
+* use case tracker
+* source inventory
+* capability mapping matrix
+* gap log
+* decision / assumption log
+* action tracker
+* meeting notes with actions and owners
+* prioritisation packs
+
+Why this matters
+
+Because the workstream needs repeatable artefacts, not just conversations.
+
+Goal achieved
+
+Better governance, continuity, and momentum in the workstream.
+
+
+
+The exact directions I would give the BA
+
+I would brief them like this:
+
+Core mission
+
+Your role is to help turn shortlisted unstructured AI use cases into a consistent, architecture-aligned demand view that can inform:
+
+* core shared capability design
+* POC gap assessment
+* roadmap prioritisation
+* use case onboarding into the target architecture
+
+Your key deliverables
+
+You are expected to produce:
+
+* a consistent use case inventory
+* a source and content inventory
+* a capability mapping view against the reference architecture
+* a shared vs use-case-specific capability analysis
+* a dependency / blocker log
+* a prioritised summary for architecture and working-group decisions
+
+Your way of working
+
+* engage directly with use case teams
+* use a consistent questionnaire / template
+* capture facts, not vague statements
+* escalate ambiguity early
+* separate business need from proposed solution
+* identify where a use case is asking for something that may already be provided elsewhere
+* feed architecture implications back to the lead architect
+
+⸻
+
+The questions the BA should ask each use case
+
+I would give the BA a standard discovery template with questions like:
+
+Business and outcome
+
+* What problem is the use case trying to solve?
+* What is the business outcome?
+* What decisions or actions depend on it?
+
+Data and sources
+
+* What source systems are involved?
+* What content types are involved?
+* What modality is involved: document, audio, image, email, chat, web, mixed?
+* Is the data internal, external, or third-party?
+* What is the expected volume and refresh pattern?
+
+Processing needs
+
+* Do you need extraction only?
+* Do you need OCR / STT / parsing?
+* Do you need metadata enrichment?
+* Do you need redaction?
+* Do you need chunking / embeddings?
+* Do you need graph / relationship extraction?
+* Do you need structured downstream outputs?
+
+Consumption needs
+
+* Who consumes the output?
+* Is it for runtime retrieval, Fabric publication, analytics, workflow, or downstream API use?
+* Does it need low latency?
+* Does it need human review?
+
+Governance and controls
+
+* What is the expected classification level?
+* Are there DLP / PII / PCI / customer confidentiality concerns?
+* Are there residency / sovereignty constraints?
+* What retention / deletion expectations apply?
+* What runtime access control is needed?
+
+Current state
+
+* How is this handled today?
+* Are there already components in place?
+* What is working?
+* What are the main gaps or blockers?
+
+
+
+My recommended first tasks for the BA
+
+I would start them on these immediately:
+
+1. Build the master list of the 16 shortlisted use cases.
+2. Create a standard discovery template.
+3. Schedule discovery sessions with each use case.
+4. Build the source / content inventory.
+5. Build the architecture capability mapping sheet.
+6. Produce the first cross-use-case summary of common needs and gaps.
+7. Bring the first findings back to you for architecture interpretation.
