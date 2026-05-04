@@ -833,3 +833,32 @@ This matters because:
 
 * It moves the VectorDBaaS work from architecture definition into a more actionable delivery position by setting out both the target service design and a realistic implementation path.
 * It also gives the wider unstructured workstream a consistent mechanism to gather use case demand, source requirements, control needs, and shared capability gaps, which supports prioritisation, roadmap decisions, and alignment to the reference architecture.
+
+
+Description
+
+This phase extends the previously approved infrastructure architecture to enable enterprise-aligned integration for the Codify the Bank (CTB) use case.
+
+The scope includes:
+
+* integrating with the on-premise Neo4j enterprise platform for knowledge graph storage
+* enabling LLM and embedding model access via the Group AI platform
+* decommissioning the tactical OAAI service and replacing it with enterprise-governed AI integration
+
+This phase ensures that the platform aligns with enterprise infrastructure standards for AI and knowledge services, supporting scalable and governed deployment of CTB capabilities.
+
+⸻
+
+✅ Acceptance Criteria
+
+* Integration with Neo4j (on-premise) and Group AI platform is successfully implemented and validated
+* All AI model interactions are migrated from OAAI to Group AI platform
+* Infrastructure supports knowledge graph and embedding workflows for CTB use case
+* End-to-end flow using enterprise infrastructure components is validated
+
+⸻
+
+📈 Business Impact (2 lines)
+
+Enables transition from tactical to enterprise-aligned AI and knowledge infrastructure, supporting scalable and governed deployment.
+Improves compliance, maintainability, and long-term sustainability of AI-driven use cases.
