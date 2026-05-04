@@ -926,3 +926,30 @@ This phase improves governance, scalability, and sustainability by replacing tac
 
 
 This request assesses the impact of Phase 2 changes to the CTB platform, including migration from OAAI to Group AI platform and integration with on-prem Neo4j. The update extends the approved UDL architecture without changes to core processing patterns, enabling enterprise-aligned AI and knowledge capabilities.
+
+
+Description
+
+This risk highlights the absence of a formal Disaster Recovery (DR) commitment for Phase 2 of the Codify the Bank (CTB) platform.
+
+The solution continues to rely on standard GCP platform-level DR capabilities for core processing components and enterprise-managed resilience for integrated services (e.g., Group AI platform and Neo4j). A dedicated DR strategy specific to the CTB use case has not been defined at this stage.
+
+This approach is consistent with Phase 1 and reflects the current deployment model, where DR is inherited from underlying platform capabilities rather than application-specific design.
+
+⸻
+
+✅ Acceptance Criteria
+
+* Risk is formally acknowledged and recorded for Phase 2
+* Confirmation that the solution relies on GCP standard DR capabilities and enterprise-managed resilience for integrated services
+* No additional application-level DR controls are implemented as part of Phase 2 scope
+* Agreement that no change in DR posture is introduced compared to Phase 1
+
+⸻
+
+📈 Business Impact (2 lines)
+
+No material business impact, as the solution leverages standard GCP and enterprise platform DR capabilities.
+The risk is limited to the absence of application-specific DR design, with mitigation inherited from underlying platform resilience.
+
+⸻
