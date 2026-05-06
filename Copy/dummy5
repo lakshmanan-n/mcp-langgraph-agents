@@ -1,0 +1,15 @@
+What good looks like
+
+* One enterprise capability model for unstructured data to AI, aligned to the reference architecture and reusable across platforms.
+* Federated adoption by data platform, with common standards, contracts, and controls rather than isolated local implementations.
+* Shared building blocks for ingestion, preparation, semantic processing, governed persistence, retrieval, and publication.
+* A governed operating model covering classification, lineage, audit, residency, IAM, and embedding model governance end to end.
+* New use cases onboard through a repeatable, evidence-led path, reducing bespoke design and accelerating delivery.
+
+Scope guardrails
+
+* We are not creating one central monolithic unstructured data platform for the whole bank.
+* We are not building use-case-specific prompt logic, ranking logic, or business workflow orchestration inside shared services.
+* We are not bypassing enterprise controls such as security, privacy, model risk, TPRM, audit, or change governance.
+* We are not trying to build every adjacent capability at once; delivery will focus on the highest-value reusable building blocks first.
+* VectorDBaaS is one shared service within the wider workstream, not the entirety of the unstructured architecture.
