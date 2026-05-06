@@ -29,3 +29,14 @@ Scope guardrails
 * No bypass of enterprise controls including security, privacy, model risk, TPRM, audit, or change governance.
 * No attempt to build every adjacent capability at once; priority remains on reusable core building blocks.
 * VectorDBaaS is one shared service within the wider workstream, not the full scope.
+
+
+As part of the previously approved Phase 1 SDD, the initial approach was to repurpose the GDMS GCP platform as the hosting foundation for the CIB Unstructured Data Layer (UDL) platform, based on the proposed plan at the time for GDMS to be merged into the CIB platform landscape. The SDD approval was granted on this basis.
+
+Since then, the direction for GDMS has changed, with GDMS now expected to continue operating as a separate service rather than being consolidated into the CIB platform. As a result, the GDMS GCP project can no longer be used as the target hosting platform for the CIB UDL capability.
+
+To avoid delays associated with provisioning a new EIM/GCP project, and also to support the broader objective of reducing proliferation of EIMs where feasible, the current proposal is to utilise the existing CIB Metadata GCP project as the hosting platform for the CIB UDL capability.
+
+From an architecture perspective, the proposed change does not materially alter the approved technical architecture or processing patterns. However, as this direction may introduce future considerations around data classification — potentially moving from the current “Internal” classification towards “Highly Restricted” depending on future onboarding and use-case evolution — I would like to confirm whether there are any concerns or additional considerations from an architecture or ITSO/security perspective before we proceed further.
+
+Could you please review and confirm whether you are comfortable with this proposed change in hosting direction, or let us know if you would prefer a follow-up discussion on the implications and next steps.
