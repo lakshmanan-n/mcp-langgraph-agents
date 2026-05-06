@@ -13,3 +13,19 @@ Scope guardrails
 * We are not bypassing enterprise controls such as security, privacy, model risk, TPRM, audit, or change governance.
 * We are not trying to build every adjacent capability at once; delivery will focus on the highest-value reusable building blocks first.
 * VectorDBaaS is one shared service within the wider workstream, not the entirety of the unstructured architecture.
+
+What good looks like
+
+* One enterprise capability model for unstructured data to AI, aligned to the reference architecture.
+* Federated adoption by data platform with common standards, contracts, and controls.
+* Shared building blocks for ingestion, preparation, semantic processing, persistence, retrieval, and publication.
+* End-to-end governance across classification, lineage, audit, residency, IAM, and model governance.
+* A repeatable onboarding path that reduces bespoke design and accelerates use case adoption.
+
+Scope guardrails
+
+* Not a single monolithic unstructured data platform for the whole bank.
+* Not use-case-specific prompt, ranking, or workflow logic inside shared services.
+* No bypass of enterprise controls including security, privacy, model risk, TPRM, audit, or change governance.
+* No attempt to build every adjacent capability at once; priority remains on reusable core building blocks.
+* VectorDBaaS is one shared service within the wider workstream, not the full scope.
