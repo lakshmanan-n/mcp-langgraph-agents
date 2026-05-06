@@ -40,3 +40,33 @@ To avoid delays associated with provisioning a new EIM/GCP project, and also to 
 From an architecture perspective, the proposed change does not materially alter the approved technical architecture or processing patterns. However, as this direction may introduce future considerations around data classification — potentially moving from the current “Internal” classification towards “Highly Restricted” depending on future onboarding and use-case evolution — I would like to confirm whether there are any concerns or additional considerations from an architecture or ITSO/security perspective before we proceed further.
 
 Could you please review and confirm whether you are comfortable with this proposed change in hosting direction, or let us know if you would prefer a follow-up discussion on the implications and next steps.
+
+
+
+wanted to raise a concern regarding my current 50/50 allocation across the AI for Tech Unstructured Data workstream and Codify the Bank.
+
+Both initiatives are strategically important and each now has a significant architecture delivery scope. In practice, it is becoming increasingly difficult to provide the level of focus, continuity, stakeholder engagement, and decision support needed across two equally demanding workstreams under an even split.
+
+For AI for Tech Unstructured Data, the workstream is part of a broader enterprise initiative to define and shape the core reusable capabilities required for platform-centric unstructured data processing across the bank. The architecture deliverables progressed so far include:
+
+* baseline view of current unstructured data capabilities
+* existing patterns for unstructured data
+* unstructured reference architecture
+* unstructured core capability gap assessment
+* VectorDBaaS detailed reference view
+* VectorDBaaS roadmap
+* unstructured AI use case discovery template
+
+For Codify the Bank, the work also requires dedicated architecture leadership to progress the use case effectively while maintaining alignment to enterprise standards, governance expectations, and the emerging unstructured target architecture. The architecture deliverables progressed so far include:
+
+* CIB UDL Phase 1 design approval for platform enablement
+* Knowledge Graph clear-choice POC and conclusion
+* Codify the Bank Release 1 and Release 2 architecture
+* refactored design for Release 1 and Release 2
+* ongoing work towards approvals
+
+The challenge is that both initiatives require sustained architecture ownership and active engagement. AI for Tech Unstructured Data is shaping the wider enterprise direction and core capability model, while Codify the Bank needs focused support to progress delivery in line with that direction. Continuing to support both under a 50/50 allocation is becoming increasingly difficult and may limit the level of attention each now requires.
+
+Given the scale, importance, and current delivery expectations of both initiatives, I would like to suggest a review of my allocation so that it better reflects the priority and architectural demand across the two areas. My intention in raising this is to ensure that both are set up for success and that architecture capacity is aligned to where it can add the most value.
+
+Please let me know if we could discuss this and agree a more suitable allocation model based on current priorities.
