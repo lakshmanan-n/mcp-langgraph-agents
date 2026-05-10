@@ -1115,3 +1115,43 @@ Roadmap phases	6 (P0–P5)
 Control plane capabilities	7 boxes
 Data plane capabilities	5 boxes per plane
 Ownership parties	6 (AI for Tech, Data Platforms, Group AI, Data Gov, Security, Risk)
+
+
+Phase 2 extends the approved CIB UDL platform foundation to support the Codify the Bank reauthoring and validation capability in a production-aligned environment. The focus of this phase is to enable controlled manual ingestion, document preparation, AI-assisted reauthoring, validation, human review, and persistence of processing outputs and metadata.
+
+This phase does not include knowledge graph generation, Neo4j integration, vector embedding, or knowledge management capabilities. These will be addressed separately as part of Phase 3.
+
+Scope — Phase 2
+
+In scope
+
+* Manual ingestion of policy and procedure documents
+* Document preprocessing and conversion into structured markdown
+* Chunking to support AI-assisted processing
+* AI-assisted reauthoring workflow
+* Validation workflow to compare outputs against source documents
+* Human-in-the-loop review and approval
+* Integration with Group AI platform for LLM-based reauthoring and validation
+* Storage of source documents, reauthored outputs, validation results, and operational metadata
+* UI/API support for upload, review, approval, and output retrieval
+
+Out of scope
+
+* Neo4j integration
+* Knowledge graph generation
+* Vector embedding generation
+* Hybrid retrieval / KG-RAG
+* Knowledge management capability
+* Event-driven GPPS / GMS source integration
+* Fabric publication of data products
+* External downstream consumer integrations
+
+Objectives — Phase 2
+
+* Productionise the core Codify reauthoring and validation workflow
+* Replace tactical AI integration patterns with Group AI platform integration
+* Enable controlled manual document processing through the CTB Workbench
+* Ensure AI-generated outputs are reviewed and approved before use
+* Persist source, reauthored, validation, and metadata artefacts for traceability
+* Establish a governed foundation for Phase 3 knowledge graph, embedding, and retrieval capabilities
+
