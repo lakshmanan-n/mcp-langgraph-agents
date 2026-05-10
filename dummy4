@@ -1155,3 +1155,4 @@ Objectives — Phase 2
 * Persist source, reauthored, validation, and metadata artefacts for traceability
 * Establish a governed foundation for Phase 3 knowledge graph, embedding, and retrieval capabilities
 
+As part of this phase, the platform hosting approach has been updated from the originally approved DMS EIM/GCP project direction to the CIB Metadata EIM/GCP project, following a change in the strategic direction for the DMS platform. This change does not materially alter the approved technical architecture or processing patterns but aligns the platform with the revised CIB hosting and operational model.
