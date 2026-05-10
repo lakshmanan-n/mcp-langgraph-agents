@@ -1168,3 +1168,12 @@ The Phase 2 changes are relatively minor compared to the previously approved Pha
 The core architecture pattern remains aligned to the approved CIB UDL platform approach, with Phase 2 focused on manual ingestion, reauthoring, validation, human review, and persistence of outputs/metadata.
 
 Please review the attached SDD and let me know if you are comfortable to approve, or if you would like to discuss any points.
+
+
+Thanks for the feedback — I agree with the direction that the longer-term UDL capability should be more generic and data-platform/domain aligned rather than tightly coupled to CIB. This also aligns with the emerging AI for Tech VectorDBaaS thinking, where common components such as the control plane, vector capability, AI integration patterns, and governance standards should remain platform/domain agnostic.
+
+For the immediate Codify the Bank release, however, the proposal is to continue with the CIB UDL platform approach as an interim implementation path, as the strategic data-platform-as-a-service model will take time to establish and the use case is planned to go live by end of this month. The change from the previously approved design is minimal and mainly relates to the hosting project direction, with the logical architecture and processing pattern remaining broadly unchanged.
+
+Could you please confirm whether you are comfortable to approve the logical design on this basis, with the understanding that reusable/agile components will be aligned to the broader UDL / VectorDBaaS strategy as it matures?
+
+Also, please let me know whether you would like this to be presented through Design Studio or the Data Enabled Design Forum for formal visibility/approval.
