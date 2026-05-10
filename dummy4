@@ -1156,3 +1156,15 @@ Objectives — Phase 2
 * Establish a governed foundation for Phase 3 knowledge graph, embedding, and retrieval capabilities
 
 As part of this phase, the platform hosting approach has been updated from the originally approved DMS EIM/GCP project direction to the CIB Metadata EIM/GCP project, following a change in the strategic direction for the DMS platform. This change does not materially alter the approved technical architecture or processing patterns but aligns the platform with the revised CIB hosting and operational model.
+
+
+I am sharing the Phase 2 SDD for your review and approval.
+
+The Phase 2 changes are relatively minor compared to the previously approved Phase 1 architecture. The key updates are:
+
+* Change of target GCP project from the earlier DMS EIM direction to the CIB Metadata EIM/project, following the change in DMS platform strategy.
+* Strategic integration with the Group AI platform for LLM access, replacing the tactical OAAI service approach.
+
+The core architecture pattern remains aligned to the approved CIB UDL platform approach, with Phase 2 focused on manual ingestion, reauthoring, validation, human review, and persistence of outputs/metadata.
+
+Please review the attached SDD and let me know if you are comfortable to approve, or if you would like to discuss any points.
