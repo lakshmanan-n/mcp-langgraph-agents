@@ -1177,3 +1177,12 @@ For the immediate Codify the Bank release, however, the proposal is to continue 
 Could you please confirm whether you are comfortable to approve the logical design on this basis, with the understanding that reusable/agile components will be aligned to the broader UDL / VectorDBaaS strategy as it matures?
 
 Also, please let me know whether you would like this to be presented through Design Studio or the Data Enabled Design Forum for formal visibility/approval.
+
+
+As part of Phase 1, approval was obtained to rebrand the DMS GCP project/EIM as the CIB UDL platform. This was based on the understanding at the time that DMS would be merged under CIB, and it also supported the broader objective of reducing the number of EIMs.
+
+However, I recently understood from Kiran that the direction has changed, and DMS will now remain independent of CIB. As a result, we will not be able to use the DMS GCP project/EIM for CIB use cases.
+
+To avoid the delay associated with creating a new EIM, Looson has proposed using the existing CIB Metadata GCP project/EIM as the hosting option for the CIB UDL capability. This project already hosts metadata and ACE control plane components. My understanding is that this should not introduce material challenges, as the longer-term direction is for the capability to align to the DPaaS layer.
+
+In addition, I have removed the Neo4j integration from the Phase 2 approval scope due to the current governance challenges. Phase 2 is now limited to the reauthoring and validation capability, with manual ingestion and Group AI integration, while Neo4j/KG-related scope will be handled separately in a later phase.
