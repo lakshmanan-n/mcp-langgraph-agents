@@ -1,0 +1,305 @@
+1. Opening framing
+
+Suggested opening remarks
+
+“Today I want to position the Unstructured Data workstream as an enterprise architecture and capability-shaping initiative, not as a single project or platform build.
+
+The problem we are trying to solve is that unstructured and semi-structured data is already being used across multiple AI use cases, but the delivery patterns are fragmented. Different teams are solving ingestion, preparation, semantic processing, storage, and retrieval locally, often with different controls and different assumptions.
+
+This workstream exists to define the reusable enterprise model for how unstructured data should be onboarded, processed, governed, stored, and consumed across the bank.”
+
+⸻
+
+2. Why this workstream exists
+
+Key message
+
+“This workstream exists because unstructured data is becoming a foundational input into enterprise AI, but the bank does not yet have a consistent platform-centric operating model for it.”
+
+Talk track
+
+* Structured data already has a more mature platform and product model.
+* Unstructured data is different because it introduces:
+    * multiple modalities
+    * more complex preparation
+    * semantic processing
+    * vector and graph patterns
+    * stronger runtime governance needs
+* Without a shared architecture and shared capability model, each use case will keep building its own local pattern.
+* That creates:
+    * duplicated cost
+    * inconsistent controls
+    * weaker auditability
+    * slower onboarding of future use cases
+    * and a growing divergence between structured and unstructured estates
+
+One-line summary
+
+“The workstream is about turning unstructured AI delivery from fragmented use-case implementation into a reusable, governed enterprise capability.”
+
+⸻
+
+3. Business value of the workstream
+
+Main business value themes
+
+I would present the value in four simple buckets.
+
+1. Reuse and reduced duplication
+
+“Instead of each use case building its own ingestion, preparation, chunking, embedding, and retrieval pattern, the bank can progressively shape reusable capabilities and shared services.”
+
+2. Better governance and regulatory defensibility
+
+“Unstructured AI introduces risks around sensitive data, provenance, lineage, runtime access, and AI-generated outputs. A shared architecture gives us stronger control points and more consistent evidence.”
+
+3. Faster onboarding of future use cases
+
+“If the capability model is defined once and adopted repeatedly, future use cases can onboard faster instead of starting from scratch.”
+
+4. Better alignment between Data Platforms and Group AI
+
+“This workstream provides a cleaner operating boundary: data platforms own platform-local execution and persistence boundaries, while Group AI owns approved model capability and shared AI services.”
+
+One-line summary
+
+“The business value is not just technical reuse; it is lower fragmentation, stronger control, faster onboarding, and a clearer enterprise operating model for AI on unstructured data.”
+
+⸻
+
+4. Slide-by-slide speaker notes
+
+⸻
+
+Slide: Reference Architecture Introduction
+
+What to say
+
+“This slide introduces the target architecture at a high level.
+
+The important message is that this is not one product and not one central platform. It is a reference model for the full lifecycle of unstructured data: from source onboarding, to preparation, to semantic processing, to governed persistence, to retrieval and publication.
+
+The reason this matters is that unstructured AI needs more than model access. It needs a controlled path for how content enters the bank’s AI processing landscape, how it is transformed, what gets stored, and how it is consumed.
+
+So this architecture gives us the enterprise backbone for that lifecycle.”
+
+Emphasise
+
+* lifecycle model
+* not a monolithic platform
+* reusable building blocks
+* governance across the lifecycle
+
+⸻
+
+Slide: OKRs
+
+What to say
+
+“The OKRs are intended to move the workstream from architecture definition into practical enterprise capability shaping.
+
+The objective is not only to document a reference architecture. It is to identify the shared capabilities that matter most, assess the current gaps, and define a realistic path to validate and progressively deliver them.
+
+So the OKRs should be read as:
+
+* define the target model
+* identify reusable capabilities
+* prioritise what matters most
+* prove the enterprise patterns through focused capability validation”
+
+Emphasise
+
+* not architecture for its own sake
+* architecture into capability prioritisation
+* link to delivery and roadmap
+
+⸻
+
+Slide: Deep Dive — Reference Architecture
+
+What to say
+
+“This slide shows the architecture in more detail.
+
+The key point is that the architecture is intentionally layered because different responsibilities sit in different parts of the lifecycle.
+
+For example:
+
+* ingestion is the first enterprise control boundary
+* preparation is where canonicalisation, metadata, classification, and redaction happen
+* semantic processing is where chunking, embeddings, graph, and validation sit
+* persistence is role-based, not one storage pattern
+* consumption includes both direct retrieval and governed publication
+
+The important leadership message here is that unstructured AI is not just a model problem. It is a data architecture and control problem as well.”
+
+Emphasise
+
+* role separation across layers
+* cross-cutting controls
+* dual access model
+* architecture as operating model
+
+⸻
+
+Slide: Core Capabilities
+
+What to say
+
+“This slide is where the workstream starts to become practical.
+
+The architecture tells us what the target model is. The core capability view tells us what the bank actually needs to shape or build to make that model real.
+
+These capabilities are not all separate products. They are the reusable building blocks and control points the bank needs across multiple use cases.
+
+The value of this slide is that it shifts the conversation from abstract architecture into enterprise capability priorities.”
+
+Talk track by bucket
+
+Ingestion and preparation
+
+“This creates a governed front door for unstructured content.”
+
+Processing and semantic capabilities
+
+“This turns raw content into reusable semantic assets rather than one-off local transformations.”
+
+Shared platform capabilities
+
+“This is where shared services begin to matter, especially for model-governed semantic processing and vector capability.”
+
+Access and consumption
+
+“This ensures the outputs can be consumed either through direct retrieval or through governed enterprise publication.”
+
+Leadership message
+
+“This is the bridge between architecture and delivery prioritisation.”
+
+⸻
+
+Slide: VectorDBaaS
+
+What to say
+
+“This slide zooms into one priority shared service: VectorDBaaS.
+
+The important point is that VectorDBaaS is not the workstream. It is one priority shared service within the wider target model.
+
+Why it matters is that vector capability is emerging in multiple AI use cases, and without an enterprise service model we will end up with fragmented local vector stores, inconsistent controls, and duplicated platform effort.”
+
+Core explanation
+
+“VectorDBaaS gives the bank a governed service model for vector persistence and retrieval:
+
+* central control plane for standards, lifecycle, contracts, and governance
+* federated data planes aligned to each data platform
+* vectors stay local to platform and residency boundaries
+* approved embeddings are consumed through Group AI
+* direct runtime retrieval and governed publication can both be supported”
+
+Critical distinction to make
+
+“Group AI owns models. VectorDBaaS does not own models.
+VectorDBaaS owns the governed vector service layer.”
+
+Leadership value message
+
+“This is how we separate model ownership from vector service ownership and avoid per-use-case vector sprawl.”
+
+⸻
+
+Slide: Codify the Bank reference use case
+
+What to say
+
+“This slide is important because it shows that the workstream is grounded in real delivery evidence.
+
+Codify the Bank is a strong reference use case because it exercises many of the architectural patterns we are trying to shape:
+
+* document ingestion
+* preparation and normalisation
+* deterministic and agentic workflow
+* validation and HITL
+* graph and vector coexistence
+* governed retrieval
+
+So this is not theoretical architecture. It is architecture shaped from real use-case evidence.”
+
+Leadership message
+
+“The role of the use case here is not to define the enterprise target on its own, but to validate that the target architecture is grounded and practical.”
+
+⸻
+
+5. How to explain the relationship between Data Platforms and Group AI
+
+This is likely to matter a lot in your audience.
+
+Suggested wording
+
+“The workstream is also valuable because it creates a cleaner boundary between Data Platforms and Group AI.
+
+From a target operating model perspective:
+
+* Data Platforms provide the platform-local execution boundary, storage boundary, and operational environment
+* Group AI provides approved model capability and shared AI services
+* The Unstructured workstream shapes the reusable architecture, shared control points, and selected shared services that connect those worlds coherently”
+
+One-line version
+
+“This workstream is where the data architecture and AI service model are brought together in a governed way.”
+
+⸻
+
+6. Suggested closing summary
+
+You need a strong close for this audience.
+
+Recommended close
+
+“The main message I want to leave is that this workstream is not about creating another isolated platform. It is about defining the enterprise capability model for unstructured data and AI.
+
+That matters because unstructured content is already becoming a critical input into AI use cases across the bank. Without a shared architecture and shared capability model, we will continue to see fragmented builds, inconsistent controls, duplicated cost, and slower scaling.
+
+The value of this workstream is that it gives the bank a clearer, more reusable, and more governable path for unstructured AI — and VectorDBaaS is one example of how that architecture can be productised into a shared service where the need is strong enough.”
+
+⸻
+
+7. Executive one-liners you can use in the meeting
+
+These are useful if you need short answers.
+
+Why this workstream?
+
+“Because unstructured AI is growing faster than the enterprise capability model to support it.”
+
+What value does it bring?
+
+“It reduces fragmentation, strengthens governance, and creates reusable platform-aligned capabilities for future AI use cases.”
+
+Why not let each use case solve this locally?
+
+“Because that leads to duplicated build, inconsistent controls, and no scalable enterprise operating model.”
+
+Why is VectorDBaaS important?
+
+“Because vector capability is emerging across use cases, and it needs a governed shared service model rather than disconnected local stores.”
+
+What is the difference between Group AI and VectorDBaaS?
+
+“Group AI owns the models; VectorDBaaS owns the governed vector persistence and retrieval service layer.”
+
+⸻
+
+8. Recommended presentation flow
+
+If you want to sound confident and structured, follow this sequence:
+
+1. Why the workstream exists
+2. Why unstructured data needs a different enterprise capability model
+3. How the reference architecture solves that
+4. What reusable capabilities the bank needs
+5. Why VectorDBaaS is one priority shared service
+6. How Codify the Bank validates the model
+7. What leadership support is needed next
