@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>UDL Conceptual Architecture - Clean Version</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Inter',sans-serif;background:#f8fafc;padding:40px; display:flex; justify-content:center;}
+
+.canvas {
+    width: 1500px; height: 1050px; position: relative;
+    background: #ffffff; border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+    overflow: hidden; border: 1px solid #e2e8f0;
+}
+
+/* Base Node */
+.node {
+    position: absolute; background: #ffffff; border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.03); border: 2px solid #cbd5e1;
+    display: flex; flex-direction: column; padding: 16px; transition: transform 0.2s;
+}
+.node:hover { transform: translateY(-2px); box-shadow: 0 8px 15px rgba(0,0,0,0.08); z-index: 20; }
+
+.node-title { font-weight: 700; font-size: 15px; color: #0f172a; margin-bottom: 12px; text-align: center; }
+.node-list { font-size: 13px; color: #475569; line-height: 2; margin-left: 20px; }
+
+/* Specific Nodes */
+.sor { background: #f1f5f9; border-color: #94a3b8; align-items:center; justify-content:center; }
+.udl { background: #f0f9ff; border: 3px solid #0284c7; }
+.udl-title { position: absolute; top: 18px; left: 0; width: 100%; text-align: center; font-size: 22px; font-weight: 800; color: #0369a1; letter-spacing: 0.5px; }
+
+.dag-box { position: absolute; border: 2px dashed #38bdf8; background: rgba(56, 189, 248, 0.05); border-radius: 12px; z-index: 1; }
+.dag-title { position: absolute; top: -12px; left: 24px; background: #e0f2fe; color: #0284c7; padding: 4px 12px; font-size: 12px; font-weight: 700; border-radius: 12px; border: 1px solid #7dd3fc; }
+
+.sub-node { position: absolute; background: #ffffff; border: 1px solid #bae6fd; border-radius: 8px; padding: 14px; z-index: 2; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+.sub-title { font-size: 14px; font-weight: 700; color: #0284c7; margin-bottom: 10px; border-bottom: 1px solid #e0f2fe; padding-bottom: 6px; }
+.sub-list { font-size: 12px; color: #334155; line-height: 1.8; list-style-type: none; margin-left: 4px; }
+.sub-list li::before { content: "•"; color: #38bdf8; font-weight: bold; display: inline-block; width: 12px; }
+
+.group-ai { background: #faf5ff; border-color: #a855f7; }
+.group-ai .node-title { color: #7e22ce; }
+
+.fabric { background: #eff6ff; border-color: #3b82f6; }
+.fabric .node-title { color: #1d4ed8; }
+
+.runtime { background: #f0fdf4; border-color: #22c55e; }
+.runtime .node-title { color: #15803d; }
+
+.consumers { background: #fffbeb; border-color: #f59e0b; flex-direction: row; justify-content: space-around; align-items: center; }
+.consumer-item { display:flex; flex-direction:column; align-items:center; font-size:14px; font-weight:700; color:#b45309; gap: 6px; }
+
+.xcut { background: #f8fafc; border-color: #64748b; flex-direction: row; justify-content: space-around; align-items: center; }
+.xcut-item { font-size: 13px; font-weight: 600; color: #475569; }
+
+/* SVG Canvas */
+.svg-layer { position: absolute; top:0; left:0; width:100%; height:100%; pointer-events: none; z-index: 10; }
+.svg-layer > path { fill: none; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+marker path { stroke: none !important; }
+.path-blue { stroke: #3b82f6; stroke-dasharray: 8 6; stroke-width: 4; }
+.path-green { stroke: #22c55e; stroke-dasharray: 8 6; stroke-width: 4; }
+.path-purple { stroke: #a855f7; stroke-width: 4; }
+.path-solid { stroke: #64748b; stroke-width: 4; }
+.path-writeback { stroke: #d97706; stroke-width: 4; stroke-dasharray: 6 8; }
+
+.badge { position: absolute; font-size: 13px; font-weight: 700; background: #ffffff; border: 2px solid; padding: 6px 16px; border-radius: 20px; z-index: 11; transform: translate(-50%, -50%); box-shadow: 0 4px 6px rgba(0,0,0,0.05); white-space: nowrap; }
+.badge-blue { color: #2563eb; border-color: #2563eb; background: #eff6ff; }
+.badge-green { color: #16a34a; border-color: #16a34a; background: #f0fdf4; }
+.badge-lock { color: #b91c1c; border-color: #b91c1c; background: #fef2f2; font-size: 14px; padding: 8px 18px; box-shadow: 0 4px 12px rgba(220, 38, 38, 0.2); border-width: 2px; }
+.badge-orange { color: #d97706; border-color: #d97706; background: #fffbeb; font-size: 12px; padding: 4px 12px;}
+
+</style>
+</head>
+<body>
+<div class="canvas">
+    
+    <!-- SVG Connections -->
+    <svg class="svg-layer">
+        <defs>
+            <marker id="arr-blue" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="16" markerHeight="16" orient="auto" markerUnits="userSpaceOnUse"><path d="M 0 0 L 12 6 L 0 12 z" fill="#3b82f6"/></marker>
+            <marker id="arr-green" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="16" markerHeight="16" orient="auto" markerUnits="userSpaceOnUse"><path d="M 0 0 L 12 6 L 0 12 z" fill="#22c55e"/></marker>
+            <marker id="arr-solid" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="16" markerHeight="16" orient="auto" markerUnits="userSpaceOnUse"><path d="M 0 0 L 12 6 L 0 12 z" fill="#64748b"/></marker>
+            <marker id="arr-lock" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="16" markerHeight="16" orient="auto" markerUnits="userSpaceOnUse"><path d="M 0 0 L 12 6 L 0 12 z" fill="#b91c1c"/></marker>
+            <marker id="arr-purple" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="16" markerHeight="16" orient="auto" markerUnits="userSpaceOnUse"><path d="M 0 0 L 12 6 L 0 12 z" fill="#a855f7"/></marker>
+            <marker id="arr-orange" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="16" markerHeight="16" orient="auto" markerUnits="userSpaceOnUse"><path d="M 0 0 L 12 6 L 0 12 z" fill="#d97706"/></marker>
+        </defs>
+
+        <!-- SoR to UDL -->
+        <path class="path-solid" d="M 750,90 L 750,135" marker-end="url(#arr-solid)" />
+        
+        <!-- ESS to UDL -->
+        <path class="path-solid" d="M 260,320 L 285,320" marker-end="url(#arr-solid)" />
+        <path class="path-solid" d="M 300,380 L 275,380" marker-end="url(#arr-solid)" />
+
+        <!-- UDL to Group AI & Back -->
+        <path class="path-purple" d="M 1200,260 L 1225,260" marker-end="url(#arr-purple)" />
+        <path class="path-purple" d="M 1240,320 L 1215,320" marker-end="url(#arr-purple)" />
+
+        <!-- Persist to Fabric -->
+        <path class="path-blue" d="M 510,570 L 510,605" marker-end="url(#arr-blue)" />
+        <!-- Persist to Runtime -->
+        <path class="path-green" d="M 990,570 L 990,605" marker-end="url(#arr-green)" />
+
+        <!-- Fabric to Consumers -->
+        <path class="path-solid" d="M 510,760 L 510,795" marker-end="url(#arr-solid)" />
+        
+        <!-- Runtime to Consumers WITH LOCK -->
+        <path class="path-solid" style="stroke:#b91c1c;" d="M 990,760 L 990,795" marker-end="url(#arr-lock)" />
+
+        <!-- Write Back (Clean orthogonal path routing around GAIP box) -->
+        <path class="path-writeback" d="M 1350,620 L 1350,605 Q 1350,595 1360,595 L 1475,595 Q 1485,595 1485,585 L 1485,75 Q 1485,65 1475,65 L 1215,65" marker-end="url(#arr-orange)" />
+    </svg>
+
+    <!-- Labels for SVG -->
+    <div class="badge badge-blue" style="left: 510px; top: 590px;">1. Published Data Path</div>
+    <div class="badge badge-green" style="left: 990px; top: 590px;">2. Runtime / AI Path</div>
+    
+    <!-- THE PADLOCK FIX -->
+    <div class="badge badge-lock" style="left: 990px; top: 780px;">🔒 Runtime Entitlement Gate</div>
+
+    <div class="badge badge-orange" style="left: 1250px; top: 65px;">Write-back</div>
+
+    <!-- Nodes -->
+    <div class="node sor" style="left: 300px; top: 30px; width: 900px; height: 60px;">
+        <div class="node-title" style="margin:0;">SoR / Source Systems (Documents originate)</div>
+    </div>
+
+    <div class="node" style="left: 40px; top: 150px; width: 220px; height: 420px; background: #f8fafc;">
+        <div class="node-title">Enterprise Shared<br>Services & Controls</div>
+        <ul class="node-list">
+            <li>Metadata / Catalogue</li>
+            <li>IAM / Access Control</li>
+            <li>DLP / Policy</li>
+            <li>KMS / Encryption</li>
+            <li>Monitoring / Observability</li>
+            <li>Data Quality</li>
+            <li>Lineage / Provenance</li>
+            <li>Audit / Compliance</li>
+        </ul>
+    </div>
+
+    <!-- UDL -->
+    <div class="node udl" style="left: 300px; top: 150px; width: 900px; height: 420px;">
+        <div class="udl-title">Unstructured Data Layer (UDL)</div>
+        
+        <!-- DAG ORCHESTRATION BOX (FIX) -->
+        <div class="dag-box" style="left: 20px; top: 60px; width: 856px; height: 240px;">
+            <div class="dag-title">Data Pipeline Orchestration (DAG)</div>
+        </div>
+
+        <div class="sub-node" style="left: 35px; top: 85px; width: 190px; height: 190px;">
+            <div class="sub-title">1. Ingestion & Onboarding</div>
+            <ul class="sub-list">
+                <li>Connectors / Adapters</li>
+                <li>Landing & Validation</li>
+                <li>Quarantine Queue</li>
+                <li>Policy-aware Routing</li>
+                <li>Source Registration</li>
+            </ul>
+        </div>
+        <div class="sub-node" style="left: 245px; top: 85px; width: 190px; height: 190px;">
+            <div class="sub-title">2. Preparation & Norm</div>
+            <ul class="sub-list">
+                <li>Extraction (OCR, STT)</li>
+                <li>Canonicalization</li>
+                <li>Deduplication</li>
+                <li>Metadata Enrichment</li>
+                <li>Redaction / Masking</li>
+            </ul>
+        </div>
+        <div class="sub-node" style="left: 455px; top: 85px; width: 190px; height: 190px;">
+            <div class="sub-title">3. Semantic Processing</div>
+            <ul class="sub-list">
+                <li>Chunking</li>
+                <li>Embedding Prep</li>
+                <li>Entity / Relation Extract</li>
+                <li>Graph Construction</li>
+                <li>HITL / Validation</li>
+            </ul>
+        </div>
+        <div class="sub-node" style="left: 665px; top: 85px; width: 190px; height: 190px;">
+            <div class="sub-title">4. Governance & Controls</div>
+            <ul class="sub-list">
+                <li>Business & Tech Rules</li>
+                <li>Lineage / Provenance</li>
+                <li>Quality & Compliance</li>
+                <li>Policy Enforcement</li>
+                <li>Audit & Monitoring</li>
+            </ul>
+        </div>
+
+        <div class="sub-node" style="left: 20px; top: 320px; width: 856px; height: 80px;">
+            <div class="sub-title" style="margin-bottom:8px; text-align:center; border:none; padding-bottom:0;">5. Persist to Governed Stores (Managed by UDL)</div>
+            <div style="display:flex; justify-content:space-around; font-size:12px; color:#334155; font-weight:700;">
+                <div style="text-align:center;">Raw / Processed<br><span style="font-size:10px;font-weight:400;color:#64748b;">(Object Store)</span></div>
+                <div style="text-align:center;">Metadata / Lineage<br><span style="font-size:10px;font-weight:400;color:#64748b;">(RDB / NoSQL)</span></div>
+                <div style="text-align:center;">Vector DBs<br><span style="font-size:10px;font-weight:400;color:#64748b;">(Embeddings)</span></div>
+                <div style="text-align:center;">Graph DBs<br><span style="font-size:10px;font-weight:400;color:#64748b;">(Knowledge Graph)</span></div>
+                <div style="text-align:center;">Relational<br><span style="font-size:10px;font-weight:400;color:#64748b;">(Derived Store)</span></div>
+                <div style="text-align:center;">Cache / Session<br><span style="font-size:10px;font-weight:400;color:#64748b;">(State Store)</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Group AI -->
+    <div class="node group-ai" style="left: 1240px; top: 150px; width: 220px; height: 420px;">
+        <div class="node-title">Group AI / GAIP Services</div>
+        <ul class="node-list">
+            <li>Approved Models (LLM)</li>
+            <li>Embedding Services</li>
+            <li>MCP / Tooling Services</li>
+            <li>AI Orchestration</li>
+            <li>Moderation / Guardrails</li>
+            <li>AI Observability / FinOps</li>
+        </ul>
+    </div>
+
+    <!-- Data Fabric -->
+    <div class="node fabric" style="left: 300px; top: 620px; width: 420px; height: 140px;">
+        <div class="node-title">Data Fabric (Publication)</div>
+        <div style="font-size:13px; color:#475569; text-align:center; padding: 0 10px; line-height:1.6;">
+            <div style="display:flex; justify-content:space-around; margin-bottom:12px; margin-top:8px; font-weight:700; color:#1e40af;">
+                <span>Curated Products</span>
+                <span>Semantic Graph</span>
+                <span>Contracts/SLAs</span>
+            </div>
+            Publication of governed, asynchronous data products for enterprise consumption.
+        </div>
+    </div>
+
+    <!-- AI Runtime -->
+    <div class="node runtime" style="left: 780px; top: 620px; width: 420px; height: 140px;">
+        <div class="node-title">AI Runtime & Retrieval</div>
+        <div style="font-size:13px; color:#475569; text-align:center; padding: 0 10px; line-height:1.6;">
+             <div style="display:flex; justify-content:space-around; margin-bottom:12px; margin-top:8px; font-weight:700; color:#166534;">
+                <span>Hybrid Search</span>
+                <span>RAG Assistants</span>
+                <span>Agents / APIs</span>
+            </div>
+            Direct, synchronous AI context layer for applications and copilots.
+        </div>
+    </div>
+
+    <!-- Write-back -->
+    <div class="node" style="left: 1240px; top: 620px; width: 220px; height: 140px; background:#fffbeb; border-color:#d97706;">
+        <div class="node-title" style="color:#b45309;">Write-back / Outputs</div>
+        <div style="font-size:13px; color:#78350f; text-align:center; line-height:1.6; margin-top:10px;">
+            Write back to SoR &amp; Operational Systems<br><br>
+            Deliver Insights directly to Apps
+        </div>
+    </div>
+
+    <!-- Consumers -->
+    <div class="node consumers" style="left: 300px; top: 810px; width: 900px; height: 80px;">
+        <div class="node-title" style="position:absolute; top:-12px; background:#fffbeb; padding:2px 14px; font-size:12px; border-radius:12px; border:1px solid #f59e0b;">Consumers</div>
+        <div class="consumer-item"><span style="font-size:22px;">📊</span> BI / Analytics</div>
+        <div class="consumer-item"><span style="font-size:22px;">🏢</span> Enterprise Applications</div>
+        <div class="consumer-item"><span style="font-size:22px;">🤖</span> AI / ML Use Cases</div>
+        <div class="consumer-item"><span style="font-size:22px;">🤝</span> Partners / External</div>
+    </div>
+
+    <!-- Cross-Cutting -->
+    <div class="node xcut" style="left: 40px; top: 930px; width: 1420px; height: 60px;">
+        <span style="font-weight:800; color:#1e293b; margin-right:20px; font-size:14px;">Cross-Cutting Governance, Security & Operations:</span>
+        <div class="xcut-item">Security & IAM</div>
+        <div class="xcut-item">Policy / DLP</div>
+        <div class="xcut-item">Encryption / KMS</div>
+        <div class="xcut-item">Data Quality</div>
+        <div class="xcut-item">Lineage & Prov.</div>
+        <div class="xcut-item">Observability</div>
+        <div class="xcut-item">Responsible AI</div>
+        <div class="xcut-item">Change / IaC</div>
+    </div>
+
+</div>
+</body>
+</html>
