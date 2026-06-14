@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Knowledge Management Architecture View - Revised</title>
+<style>
+  :root{
+    --bg:#f4f7fb; --card:#ffffff; --line:#d9e2ee; --text:#13233a; --muted:#5f7087;
+    --navy:#17355e; --blue:#2f6fde; --purple:#7b4bd6; --teal:#1285a6; --green:#1e9a5a; --amber:#d9822b; --grey:#7a8799;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;padding:24px;background:linear-gradient(180deg,#fbfcfe 0%,#f0f5fb 100%);font-family:Arial,sans-serif;color:var(--text)}
+  .canvas{max-width:1740px;margin:0 auto;background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px}
+  .header{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;border:1px solid var(--line);border-left:6px solid var(--blue);border-radius:12px;padding:16px 18px;margin-bottom:16px}
+  .header h1{margin:0;color:var(--navy);font-size:28px;line-height:1.08}
+  .header p{margin:8px 0 0;color:var(--muted);font-size:14px;line-height:1.45;max-width:1240px}
+  .badge{font-size:11px;font-weight:800;letter-spacing:.08em;color:#fff;background:linear-gradient(135deg,var(--blue),var(--purple));padding:10px 14px;border-radius:999px;white-space:nowrap}
+  .summary{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:14px}
+  .note{border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:#fafcff}
+  .note strong{display:block;font-size:12px;color:var(--navy);text-transform:uppercase;margin-bottom:4px}
+  .note span{font-size:12px;color:var(--muted);line-height:1.35}
+  .lane{border:1px solid var(--line);border-radius:14px;background:#fff;margin-bottom:14px;overflow:hidden}
+  .lane-head{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;color:#fff;font-size:14px;font-weight:700}
+  .lane-head.blue{background:var(--blue)}
+  .lane-head.purple{background:var(--purple)}
+  .lane-head .sub{font-size:11px;font-weight:600;opacity:.9}
+  .lane-body{padding:14px}
+  .flow-grid{display:grid;grid-template-columns:1.04fr 40px 1.42fr 40px 1.32fr 40px 1.08fr 40px 1.55fr;gap:0;align-items:stretch}
+  .arrow{display:flex;align-items:center;justify-content:center;color:#95a2b5;font-size:30px;font-weight:700}
+  .box{border:1px solid #dfe6f0;border-radius:12px;background:#fff;padding:12px;min-height:258px}
+  .box h3{margin:0 0 8px;font-size:16px;color:var(--navy)}
+  .box .sub{margin:0 0 10px;font-size:12px;color:var(--muted);line-height:1.4}
+  .stack{display:flex;flex-direction:column;gap:8px}
+  .mini{border:1px solid #e4eaf2;border-left:4px solid var(--blue);border-radius:10px;padding:8px 10px;background:#fbfdff}
+  .mini.grey{border-left-color:var(--grey)}
+  .mini.teal{border-left-color:var(--teal)}
+  .mini.green{border-left-color:var(--green)}
+  .mini.amber{border-left-color:var(--amber)}
+  .mini.purple{border-left-color:var(--purple)}
+  .mini strong{display:block;font-size:12px;color:#20324e;margin-bottom:3px}
+  .mini span{display:block;font-size:11px;color:var(--muted);line-height:1.3}
+  .interface-box{border:2px solid var(--green);background:#f9fffb}
+  .interface-box h3{color:var(--green)}
+  .consumers-box{border:2px solid var(--teal);background:#f8feff}
+  .consumers-box h3{color:var(--teal)}
+  .tag{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.04em;padding:4px 8px;border-radius:999px;margin-bottom:8px}
+  .tag.dp{background:#e9f1ff;color:#2457bf}
+  .tag.ga{background:#efe7ff;color:#633fc0}
+  .tag.if{background:#e8fbef;color:#19804d}
+  .tag.uc{background:#fff1e4;color:#b5631f}
+  .swim-grid{display:grid;grid-template-columns:1.04fr 40px 1.42fr 40px 1.32fr 40px 1.08fr 40px 1.55fr;gap:0;align-items:start}
+  .slot{min-height:190px;display:flex;align-items:flex-start;justify-content:center;padding-top:6px;position:relative}
+  .slot:before{content:"";position:absolute;top:-14px;left:50%;transform:translateX(-50%);height:14px;border-left:2px dashed #c8d2e3}
+  .ga-box{width:100%;border:1px solid #e4dbfa;border-radius:12px;background:#fbf8ff;padding:10px}
+  .ga-box h3{margin:0 0 6px;font-size:15px;color:#4f2ea1}
+  .ga-box p{margin:0 0 8px;font-size:12px;color:var(--muted);line-height:1.35}
+  .ga-list{display:flex;flex-direction:column;gap:7px}
+  .ga-item{border:1px solid #e7e0fb;border-radius:9px;background:#fff;padding:7px 9px}
+  .ga-item strong{display:block;font-size:12px;color:#37285d;margin-bottom:2px}
+  .ga-item span{display:block;font-size:11px;color:var(--muted);line-height:1.25}
+  .bar{margin:14px 0;border:1px solid var(--line);border-radius:12px;background:linear-gradient(90deg,#edf4ff 0%, #f5efff 52%, #eefaf5 100%);padding:12px 14px}
+  .bar h3{margin:0 0 4px;font-size:14px;color:var(--navy)}
+  .bar p{margin:0;font-size:12px;color:var(--muted);line-height:1.4}
+  .foot{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:6px}
+  .card{border:1px solid var(--line);border-radius:10px;background:#fff;padding:10px 12px}
+  .card strong{display:block;font-size:12px;color:var(--navy);margin-bottom:4px}
+  .card span{display:block;font-size:11px;color:var(--muted);line-height:1.35}
+  .footer{margin-top:12px;text-align:center;font-size:11px;color:#6c7b8f}
+  @media (max-width:1700px){body{overflow-x:auto}.canvas{min-width:1710px}}
+</style>
+</head>
+<body>
+<div class="canvas">
+  <div class="header">
+    <div>
+      <h1>Knowledge Management Architecture View</h1>
+      <p>Revised senior architecture view showing the target operating model for knowledge management. The primary lane shows the governed enterprise knowledge flow. The Group AI lane shows the reusable AI capabilities integrated at specific control points. Data Fabric is positioned as the primary governed interface for published knowledge products and managed enterprise access.</p>
+    </div>
+    <div class="badge">REVISED FOR REVIEW</div>
+  </div>
+
+  <div class="summary">
+    <div class="note"><strong>Design intent</strong><span>Present a realistic target-state view that is clearly use-case grounded, but does not simply restate the reference architecture layer by layer.</span></div>
+    <div class="note"><strong>Responsibility split</strong><span>Data Platform owns governed knowledge ingestion, preparation, semantic shaping, persistence and publication. Group AI provides reusable AI capabilities through shared products and services.</span></div>
+    <div class="note"><strong>Consumer model</strong><span>Data Fabric is the primary governed interface for published knowledge products and managed enterprise access; consumer experiences then use that interface in different ways.</span></div>
+  </div>
+
+  <div class="lane">
+    <div class="lane-head blue">
+      <span>Governed enterprise knowledge flow</span>
+      <span class="sub">Primary operating lane</span>
+    </div>
+    <div class="lane-body">
+      <div class="flow-grid">
+        <div class="box">
+          <div class="tag dp">Source side</div>
+          <h3>1. Source domains</h3>
+          <p class="sub">Representative sources aligned to the current knowledge-management agenda.</p>
+          <div class="stack">
+            <div class="mini grey"><strong>Policies, procedures and managed content</strong><span>Primary source base for Codify the Bank, Ops Assist and Bankers Assist.</span></div>
+            <div class="mini grey"><strong>Operational and business context</strong><span>Customer, deal, party and workflow context used alongside policy and procedure content.</span></div>
+            <div class="mini grey"><strong>Audio and interaction content</strong><span>Transcripts and interaction records supporting broader knowledge consumers.</span></div>
+            <div class="mini grey"><strong>Engineering and SDLC artefacts</strong><span>Code, documentation and support knowledge for SDLC-oriented scenarios.</span></div>
+          </div>
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="box">
+          <div class="tag dp">Governed processing</div>
+          <h3>2. Knowledge ingestion, preprocessing and control</h3>
+          <p class="sub">Governed unstructured-data processing aligned to the reference architecture, but expressed here as a single operating domain.</p>
+          <div class="stack">
+            <div class="mini"><strong>Onboarding and intake</strong><span>Connectors, landing, source registration, validation and policy-aware routing.</span></div>
+            <div class="mini"><strong>Extraction and normalisation</strong><span>Document and image extraction, parsing, canonicalisation and metadata capture.</span></div>
+            <div class="mini"><strong>Classification and control</strong><span>Sensitivity classification, redaction, provenance, lineage and quality control.</span></div>
+            <div class="mini"><strong>Preparation for knowledge use</strong><span>Knowledge-ready preparation for semantic use, publication and managed enterprise access.</span></div>
+          </div>
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="box">
+          <div class="tag dp">Knowledge assets</div>
+          <h3>3. Knowledge shaping and managed persistence</h3>
+          <p class="sub">Creation of reusable enterprise knowledge assets inside the governed platform domain.</p>
+          <div class="stack">
+            <div class="mini teal"><strong>Semantic shaping</strong><span>Chunking, enrichment, entity extraction and knowledge-graph shaping.</span></div>
+            <div class="mini teal"><strong>Governed knowledge assets</strong><span>Curated knowledge content, Codify knowledge graph, and vector / semantic retrieval assets.</span></div>
+            <div class="mini teal"><strong>Managed persistence</strong><span>Managed stores for raw, metadata, graph, vector and curated knowledge outputs.</span></div>
+            <div class="mini teal"><strong>Publishing readiness</strong><span>Knowledge assets structured for product publication and governed enterprise access.</span></div>
+          </div>
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="box interface-box">
+          <div class="tag if">Primary governed interface</div>
+          <h3>4. Data Fabric</h3>
+          <p class="sub">Primary governed interface for published knowledge products and managed enterprise access patterns.</p>
+          <div class="stack">
+            <div class="mini green"><strong>Published knowledge products</strong><span>Curated policy content and semantic or graph-backed knowledge products.</span></div>
+            <div class="mini green"><strong>Managed access patterns</strong><span>Product access, governed APIs, semantic access services and controlled discovery.</span></div>
+            <div class="mini green"><strong>Enterprise contract layer</strong><span>Common enterprise interface through which downstream consumers access governed knowledge.</span></div>
+          </div>
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="box consumers-box">
+          <div class="tag uc">Consumer groups</div>
+          <h3>5. Consumption channels and use-case groups</h3>
+          <p class="sub">Grouped consumer patterns so the architecture reads as an operating model rather than a flat list.</p>
+          <div class="stack">
+            <div class="mini amber"><strong>General knowledge access</strong><span>Productivity Suite and broad employee access to governed knowledge.</span></div>
+            <div class="mini amber"><strong>Operational assistants</strong><span>Bankers Assist and Ops Assist consuming policy, procedure and context-aware knowledge.</span></div>
+            <div class="mini amber"><strong>Specialist consumers</strong><span>Codify knowledge graph consumers, SDLC support scenarios and audio-led knowledge use cases.</span></div>
+            <div class="mini amber"><strong>Managed downstream use</strong><span>Enterprise channels consuming published knowledge products through Fabric.</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="lane">
+    <div class="lane-head purple">
+      <span>Group AI reusable capability lane</span>
+      <span class="sub">Capabilities integrated into the governed flow</span>
+    </div>
+    <div class="lane-body">
+      <div class="swim-grid">
+        <div></div>
+        <div></div>
+
+        <div class="slot">
+          <div class="ga-box">
+            <div class="tag ga">Supports stage 2</div>
+            <h3>Document Studio</h3>
+            <p>Integrated into preprocessing as the reusable extraction capability for document-centric knowledge flows.</p>
+            <div class="ga-list">
+              <div class="ga-item"><strong>Document and image extraction</strong><span>Schema-led structure capture and extraction support.</span></div>
+              <div class="ga-item"><strong>Reusable service model</strong><span>Consumed from the platform, not rebuilt locally inside the use case.</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div></div>
+
+        <div class="slot">
+          <div class="ga-box">
+            <div class="tag ga">Supports stage 3</div>
+            <h3>RAG Studio + Group AI Platform</h3>
+            <p>Integrated into knowledge shaping and retrieval preparation through managed AI services.</p>
+            <div class="ga-list">
+              <div class="ga-item"><strong>RAG Studio</strong><span>Managed vector embedding and indexing capability consumed through API integration.</span></div>
+              <div class="ga-item"><strong>Group AI Platform</strong><span>LLM access, moderation, model services and broader reusable AI capability.</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div></div>
+
+        <div class="slot">
+          <div class="ga-box">
+            <div class="tag ga">Supports stage 5</div>
+            <h3>Agent Hub</h3>
+            <p>Integrated into downstream consumer experiences that require agentic patterns over governed knowledge assets.</p>
+            <div class="ga-list">
+              <div class="ga-item"><strong>Agent integration and hosting</strong><span>Managed runtime for assistants and AI-enabled workflows.</span></div>
+              <div class="ga-item"><strong>MCP server hosting</strong><span>Tool integration and governed access to enterprise tools.</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bar">
+    <h3>Chief architect reading of the target model</h3>
+    <p>This architecture is intentionally not a restatement of the reference architecture. It is a use-case-oriented operating view. The primary lane shows the governed knowledge lifecycle as it applies to knowledge management. The lower lane shows where Group AI products are consumed into that lifecycle. The result is a joint architecture where responsibilities remain clear, but the end-to-end consumer outcome is also visible.</p>
+  </div>
+
+  <div class="foot">
+    <div class="card">
+      <strong>Data Platform responsibility</strong>
+      <span>Governed ingestion, preparation, semantic shaping, persistence, publication and lifecycle management of enterprise knowledge assets.</span>
+    </div>
+    <div class="card">
+      <strong>Group AI responsibility</strong>
+      <span>Provision of reusable AI capabilities including extraction, embedding and indexing services, model access, moderation, agent hosting and MCP-aligned integration.</span>
+    </div>
+    <div class="card">
+      <strong>Why this corrected view is stronger</strong>
+      <span>It is grounded in real consumer demand, shows clear integration points for Group AI, and avoids reading as a simple copy of the reference architecture.</span>
+    </div>
+  </div>
+
+  <div class="footer">Corrected version: tighter Data Fabric positioning, clearer Group AI integration points, grouped consumer patterns, stronger knowledge-management wording, and a more formal responsibility split.</div>
+</div>
+</body>
+</html>
